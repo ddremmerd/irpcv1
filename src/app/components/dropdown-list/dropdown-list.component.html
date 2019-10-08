@@ -1,0 +1,10 @@
+<div>
+    <span>WH:</span>
+    <select> 
+        <option *ngFor = "let tab of Tableheader">{{Tableheader}}</option>
+    </select>
+</div>
+
+<select [(ngModel)]="TableData.wh_no" (ngModelChange) = "SearchForWarehouse(TableData.wh_no)">
+    <option *ngFor="let whnum of TableData">{{whnum.wh_no}}</option>
+</select>

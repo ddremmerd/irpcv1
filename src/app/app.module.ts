@@ -29,6 +29,9 @@ import { Vendor3Component } from './components/vendor3/vendor3.component';
 import { SaveButtonComponent } from './components/save-button/save-button.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Ldlt3Component } from './components/ldlt3/ldlt3.component';
+import { RecallButtonComponent } from './components/recall-button/recall-button.component';
+import { DropdownListComponent } from './components/dropdown-list/dropdown-list.component';
 
 
 
@@ -37,6 +40,7 @@ const appRoutes: Routes = [
   { path: 'vendor1', component: Vendor1Component },
   { path: 'vendor2', component: Vendor2Component },
   { path: 'vendor3', component: Vendor3Component },
+  { path: 'ldlt3', component: Ldlt3Component },
   { path: '', redirectTo: '/login', pathMatch: 'full' }, 
   { path: '**', redirectTo: 'login' }
 ];
@@ -59,6 +63,9 @@ const appRoutes: Routes = [
     Vendor3Component,
     SaveButtonComponent,
     DatePickerComponent,
+    Ldlt3Component,
+    RecallButtonComponent,
+    DropdownListComponent,
 
  
   ],
