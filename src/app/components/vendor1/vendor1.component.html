@@ -1,0 +1,63 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<app-footer></app-footer>
+<div class="content-wrapper">
+    <app-content-header [ContentHeader]="content_header_name"></app-content-header>
+    <!-- Main content -->
+    <section class="content">
+        <div class="card">
+            <app-card-header [CardHeader]="card_header_name1"></app-card-header>
+            <div class="card-body">
+                <table>
+                    <tbody>
+                        <tr *ngFor="let data1 of TableData1 let i=index">
+                            <td>{{data1.type}}</td>
+                            <td>=</td>
+                            <td>{{data1.name}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <app-card-header [CardHeader]="card_header_name2"></app-card-header>
+
+            <div class="card-body pad table-responsive">
+                <table class="table table-valign-middle text-center">
+                    <thead>
+                        <tr>
+                            <th *ngFor="let head2 of TableHeader2">{{head2}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let rowData2 of TableData2; let nRow2 = index">
+                            <ng-container *ngFor="let objKey2 of _object.keys(rowData2); let nColumn2=index">
+
+                                <ng-container
+                                    *ngIf="nColumn2==0 || nColumn2==1 || nColumn2==TableHeader2.length-2; else input_box">
+                                    <td>{{rowData2[objKey2]}}</td>
+                                </ng-container>
+
+                                <ng-template #input_box>
+                                    <td>
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" placeholder="{{rowData2[objKey2]}}" class="form-control"
+                                                name="{{nColumn2}}">
+                                        </div>
+                                    </td>
+                                </ng-template>
+
+                            </ng-container>
+                            <td>
+                                <app-save-button></app-save-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+
+</div>

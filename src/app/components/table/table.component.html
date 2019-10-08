@@ -1,0 +1,15 @@
+<div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th *ngFor="let head of TableHeader2">{{head}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of TableData2; let i = index">
+          <td *ngFor="let column of _object.keys(row)">{{row[column]}} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
