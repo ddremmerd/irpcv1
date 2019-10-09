@@ -1,10 +1,8 @@
 <div>
-    <span>WH:</span>
-    <select> 
-        <option *ngFor = "let tab of Tableheader">{{Tableheader}}</option>
+  
+    <span>{{ListHeader}} </span>
+    <select class = "btn btn-default dropdown-toggle"  [(ngModel)]="selectedDay" (change)="selectChangeHandler()" > 
+        <option *ngFor = "let Droplist of DropdownHeader" [ngValue]= "Droplist">{{Droplist}}</option>
+        <!-- <option>{{DropdownHeader}}</option> -->
     </select>
 </div>
-
-<select [(ngModel)]="TableData.wh_no" (ngModelChange) = "SearchForWarehouse(TableData.wh_no)">
-    <option *ngFor="let whnum of TableData">{{whnum.wh_no}}</option>
-</select>

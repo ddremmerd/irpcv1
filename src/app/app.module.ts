@@ -32,6 +32,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ldlt3Component } from './components/ldlt3/ldlt3.component';
 import { RecallButtonComponent } from './components/recall-button/recall-button.component';
 import { DropdownListComponent } from './components/dropdown-list/dropdown-list.component';
+import { Ldlt4Component } from './components/ldlt4/ldlt4.component';
+import { Ldlt1Component } from './components/ldlt1/ldlt1.component';
 
 
 
@@ -41,6 +43,8 @@ const appRoutes: Routes = [
   { path: 'vendor2', component: Vendor2Component },
   { path: 'vendor3', component: Vendor3Component },
   { path: 'ldlt3', component: Ldlt3Component },
+  { path: 'ldlt4', component: Ldlt4Component },
+  { path: 'ldlt1', component: Ldlt1Component },
   { path: '', redirectTo: '/login', pathMatch: 'full' }, 
   { path: '**', redirectTo: 'login' }
 ];
@@ -66,6 +70,8 @@ const appRoutes: Routes = [
     Ldlt3Component,
     RecallButtonComponent,
     DropdownListComponent,
+    Ldlt4Component,
+    Ldlt1Component,
 
  
   ],

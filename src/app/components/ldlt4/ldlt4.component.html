@@ -4,13 +4,7 @@
 <div class="content-wrapper">
         <app-content-header [ContentHeader]="content_header_name"></app-content-header>
         <!-- Main content -->
-
-
         <section class="content">
-
-
-            <app-dropdown-list [ListHeader] = "ListHeader1" [DropdownHeader] = "DropdownHeader1"></app-dropdown-list>
-              
             <div class="card">
                 <app-card-header [CardHeader]="card_header_name2"></app-card-header>
 
@@ -21,11 +15,11 @@
                                 <th *ngFor="let head of TableHeader">{{head}}</th>
                             </tr>
                         </thead>
+                        
                         <tbody>
                             <tr *ngFor="let rowData of TableData; let nRow = index">
                            
                                 <td *ngFor="let objKey of _object.keys(rowData);">{{rowData[objKey]}}</td>
-                                <td><app-recall-button></app-recall-button></td>
                             </tr>
                         </tbody>
                     </table>

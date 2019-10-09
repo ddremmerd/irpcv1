@@ -1,14 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-ldlt3',
   templateUrl: './ldlt3.component.html',
-  styleUrls: ['./ldlt3.component.css']
+  styleUrls: ['./ldlt3.component.css'],
 })
+
 export class Ldlt3Component implements OnInit {
 
   content_header_name = "ระบบจัดการคิว (Queue Management)";
+  
+  ListHeader1 ="WH: ";
 
+  DropdownHeader1 = ["WH41", "WH42", "WH43"];
+  
   TableHeader = ["No.", "Shipment No.", "Booking No.", "Invoice No.", "Planning Time", "WH", "ประเภทรถ", "ทะเบียนรถ", "Driver Checking Time", "ลำดับคิว", ""]
 
   TableData = [
@@ -21,8 +27,6 @@ export class Ldlt3Component implements OnInit {
     ship_license:"75-1254รย", driver_check_time: "09:01", queue_no: "A003"},
     {number: 4, shipment_no: "6000vvv33", booking_no: "BK-0002", invoice_no: "BK-022772", planning_time: "09:00", wh_no: 42, shipment_type: "รถ 16 ล้อเปิดข้าง", 
     ship_license:"75-1254รย", driver_check_time: "09:01", queue_no: "A005"},
-
-
   ];
 
   _object = Object;
@@ -31,5 +35,12 @@ export class Ldlt3Component implements OnInit {
 
   ngOnInit() {
   }
+
+  selected(){
+    console.log(this.DropdownHeader1);
+  }
+
+
+
 
 }

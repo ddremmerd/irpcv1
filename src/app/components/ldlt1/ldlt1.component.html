@@ -1,0 +1,60 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<app-footer></app-footer>
+<div class="content-wrapper">
+        <!-- <app-content-header [ContentHeader]="content_header_name"></app-content-header> -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-lg-6">
+                    
+                    <!-- <app-content-header [ContentHeader]="content_header_name"></app-content-header> -->
+
+                    <div class="card">
+                        <div class ="card-body">                   
+                        
+                        <app-card-header [CardHeader]="content_header_name"></app-card-header>
+                            
+                            <app-dropdown-list [ListHeader] = "ListHeader1" [DropdownHeader] = "shipment_Type"></app-dropdown-list>
+                            <app-dropdown-list [ListHeader] = "ListHeader2" [DropdownHeader] = "transportor_Name"></app-dropdown-list>
+                            <app-dropdown-list [ListHeader] = "ListHeader3" [DropdownHeader] = "shipment_Status"></app-dropdown-list>                             
+                        </div> 
+                    </div>            
+                </div>
+                
+                <div class="col-lg-6" style ="display: inline-block;">
+                    <div class="card">
+                        <app-card-header [CardHeader]="content_header_name2"></app-card-header>
+
+                        
+                        INFor
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="card">
+                    <app-card-header [CardHeader]="card_header_name2"></app-card-header>
+    
+                    <div class="card-body pad table-responsive">
+                        <table class="table table-valign-middle text-center">
+                            <thead>
+                                <tr>
+                                    <th *ngFor="let head of TableHeader">{{head}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let rowData of TableData; let nRow = index">
+                               
+                                    <td *ngFor="let objKey of _object.keys(rowData);">{{rowData[objKey]}}</td>
+                                    <td><app-recall-button></app-recall-button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+    
+        </section>
+    
+    </div>
