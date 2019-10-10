@@ -1,8 +1,10 @@
 <div>
   
     <span>{{ListHeader}} </span>
-    <select class = "btn btn-default dropdown-toggle"  [(ngModel)]="selectedDay" (change)="selectChangeHandler()" > 
+    <select class = "btn btn-default dropdown-toggle"  [(ngModel)]="Droplist" (change)="selected(Droplist)" > 
         <option *ngFor = "let Droplist of DropdownHeader" [ngValue]= "Droplist">{{Droplist}}</option>
         <!-- <option>{{DropdownHeader}}</option> -->
     </select>
+
+    <!-- <p>{{Droplist}}</p> -->
 </div>

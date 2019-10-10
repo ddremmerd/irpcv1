@@ -11,6 +11,15 @@
 
             <app-dropdown-list [ListHeader] = "ListHeader1" [DropdownHeader] = "DropdownHeader1"></app-dropdown-list>
               
+            <span>WAREHOUSE: </span>
+            <select class="form-control" [(ngModel)]="sexs" (change)="checkValue(sexs)">
+
+          
+                <option [value]="sexs" *ngFor="let sexs of DropdownHeader2" >{{sexs}}</option>
+            
+            
+            </select> 
+          
             <div class="card">
                 <app-card-header [CardHeader]="card_header_name2"></app-card-header>
 
@@ -24,13 +33,27 @@
                         <tbody>
                             <tr *ngFor="let rowData of TableData; let nRow = index">
                            
-                                <td *ngFor="let objKey of _object.keys(rowData);">{{rowData[objKey]}}</td>
+                                <td *ngFor="let objKey of _object.keys(rowData);" >{{rowData[objKey]}}</td>
                                 <td><app-recall-button></app-recall-button></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
+
+            <table class="table table-valign-middle text-center">
+                <thead>
+                    <th *ngFor="let header of TableHeader">{{header}}</th>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let data of TableData1 | tableFilter: sexs">
+ 
+                            <td *ngFor="let objKey of _object.keys(data);">{{data[objKey]}}</td>        
+                    </tr>
+                </tbody>
+            </table>
     
         </section>
     

@@ -14,9 +14,11 @@
                         <div class ="card-body">                   
                         
                         <app-card-header [CardHeader]="content_header_name"></app-card-header>
-                            
+                           
                             <app-dropdown-list [ListHeader] = "ListHeader1" [DropdownHeader] = "shipment_Type"></app-dropdown-list>
+                            
                             <app-dropdown-list [ListHeader] = "ListHeader2" [DropdownHeader] = "transportor_Name"></app-dropdown-list>
+                            
                             <app-dropdown-list [ListHeader] = "ListHeader3" [DropdownHeader] = "shipment_Status"></app-dropdown-list>                             
                         </div> 
                     </div>            
@@ -26,8 +28,9 @@
                     <div class="card">
                         <app-card-header [CardHeader]="content_header_name2"></app-card-header>
 
-                        
-                        INFor
+                        <div style ="background-color: aquamarine; padding: 10px;">
+                        {{transportor_Name}}
+                        </div>
                         
                     </div>
                     
@@ -45,15 +48,55 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let rowData of TableData; let nRow = index">
-                               
-                                    <td *ngFor="let objKey of _object.keys(rowData);">{{rowData[objKey]}}</td>
-                                    <td><app-recall-button></app-recall-button></td>
-                                </tr>
+                                    <tr *ngFor="let rowData of TableData; let nRow = index">
+                                            <ng-container *ngFor="let objKey of _object.keys(rowData); let nColumn=index">
+                
+                                                <ng-container
+                                                    *ngIf="nColumn==1 || nColumn==2 || nColumn==3 || nColumn==5 || nColumn==TableHeader.length-2; else dropdown">
+                                                    <td>{{rowData[objKey]}}</td>
+                                                </ng-container>
+
+                                                <ng-container
+                                                    *ngIf="nColumn==3 ">
+                                                    <td><input type ="checkbox" [(ngModel)]="checked"><p>{{checked}}</p></td>
+                                                    
+                                                </ng-container>
+
+
+
+                                                <ng-template #dropdown>
+                                                        <td>
+                                                            <app-dropdown-list></app-dropdown-list>
+                                                        </td>
+                                                    </ng-template>
+
+
+                
+                                                <ng-template #input_box>
+                                                    <td>
+                                                        <div class="input-group input-group-sm">
+                                                            <input type="text" placeholder="{{rowData[objKey]}}" class="form-control"
+                                                                name="{{nColumn}}">
+                                                        </div>
+                                                    </td>
+                                                </ng-template>
+                
+                                            </ng-container>
+                                            <td>
+                                                <button type="button" class="btn btn-block btn-success btn-sm">ส่ง Quota</button>
+                                            </td>
+
+                                            <td>
+                                                <app-delete-button></app-delete-button>
+                                            </td>
+
+
+                                        </tr>
                             </tbody>
                         </table>
                     </div>
-                </div>
+            </div>
+
     
         </section>
     

@@ -38,6 +38,7 @@ export class Vendor1Component {
 
   ngOnInit() {
     
+    // console.log("table data head"+ this.nColumn2);
   }
 
 }

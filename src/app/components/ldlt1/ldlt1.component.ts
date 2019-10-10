@@ -20,12 +20,24 @@ export class Ldlt1Component implements OnInit {
   transportor_Name = ["ตะวันรุ่ง ทรานส์", "KEERY xpress", "TRUCK 999"];
   shipment_Status = ["รอแผนกขนส่งลง Planning", "รอผู้ขนส่ง confirm"];
 
-  TableHeader = ["No.", "Shipment No.", "DO No.", "Remarks", "WH", "ประเภทรถ", "Shipment (หาง)", "Planning Time", "", "",""]
+  TableHeader = ["", "No.", "Shipment No.", "DO No.", "Remarks", "WH", "ประเภทรถ", "Shipment (หาง)", "Planning Time", "", "",""];
 
+  TableData = [
+    {check: true, number:"1", shipmentNum: "6asfdasf", 
+    DONum: "DO-87897", Remark: true, wh_no: 41, 
+    shimentType: true, shipmentTail: true, planningTime: "11.44"},
 
+    {check: true, number:"2", shipmentNum: "99SDAFFSAD", 
+    DONum: "DO-1111", Remark: true, wh_no: 41, 
+    shimentType: true, shipmentTail: true, planningTime: "12.44"}
+  ];
+  _object = Object;
+  
   constructor() { }
 
   ngOnInit() {
+
+    console.log(this._object);
   }
 
 }

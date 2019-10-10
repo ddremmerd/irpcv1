@@ -34,6 +34,10 @@ import { RecallButtonComponent } from './components/recall-button/recall-button.
 import { DropdownListComponent } from './components/dropdown-list/dropdown-list.component';
 import { Ldlt4Component } from './components/ldlt4/ldlt4.component';
 import { Ldlt1Component } from './components/ldlt1/ldlt1.component';
+import { DeleteButtonComponent } from './components/delete-button/delete-button.component';
+import { QuotaButtonComponent } from './components/quota-button/quota-button.component';
+
+import { TableFilterPipe } from './components/ldlt3/table-filter.pipe';
 
 
 
@@ -72,6 +76,9 @@ const appRoutes: Routes = [
     DropdownListComponent,
     Ldlt4Component,
     Ldlt1Component,
+    DeleteButtonComponent,
+    QuotaButtonComponent,
+    TableFilterPipe
 
  
   ],

@@ -1,31 +1,40 @@
 # IRPCversion1
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.0.
+## Update: progress
 
-## Development server
+**TABLE: COMPONENT**
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+| Page | Component | **<span class="colour" style="color:rgb(34, 34, 34)">**✔**</span>** | date |
+| ---- | --------- | --- | ---- |
+| ldlt1 | DD: type | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 |
+|  | DD: งานผู้ขนส่ง | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 |
+|  | DD: สถานะ | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 |
+|  | info: part1 |  |  |
+|  | info: all info |  |  |
+|  | info: remarks |  |  |
+|  | input box: shipment no., booking No., car license |  |  |
+|  | table | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 |
+|  | DD(for sort): status |  |  |
+|  | DD (for search): date from |  |  |
+|  | DD (for search): date to |  |  |
+|  | button:  ส่ง quota | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 |
+|  | button: ลบ | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 |
+| ldlt 2 (ระบบติดตามรถบรรทุก) | รอคอนเฟิร์มจากพี่โจ้ |  |  |
+| ldlt 3 (ระบบจัดการคิว) | table | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 9-10-19 |
+|  | DD: WH | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 9-10-19 |
+| ldlt 4 (ทะเบียนรถตู้) | table | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** |  |
 
-## Code scaffolding
+<br>
+<br>
+<br>
+Passing Data Method:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+<span class="colour" style="color:rgb(0, 0, 0)">**1 child component**</span>
+<span class="colour" style="color:rgb(0, 0, 0)">**2 parent component**</span>
 
-## Build
+<span class="colour" style="color:rgb(0, 0, 0)">**child component.ts: @input ตัวแปร global ที่จะรับค่ามา**</span>
+<span class="colour" style="color:rgb(0, 0, 0)">**child component.html: “let XXX of global (ที่ประกาศใน @input)” = {{XXX}}**</span>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+<span class="colour" style="color:rgb(0, 0, 0)">**parent component.html: \<app [global] = “ตัวแปรที่ต้องการ pass”>\</app>**</span>
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
-\-\-\-8 oct
-
-bind a data from table to dropdown list
+<span class="colour" style="color:rgb(0, 0, 0)">**parent component.ts: ประกาศตัวแปรที่ต้องการ pass = [ “    ”, “ ” ]**</span>

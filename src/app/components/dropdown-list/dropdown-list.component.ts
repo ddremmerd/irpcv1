@@ -11,6 +11,8 @@ export class DropdownListComponent implements OnInit {
   @Input() DropdownHeader;
   @Input() ListHeader;
 
+
+  // public x;
   selectedDay: string = '';
 
   selectChangeHandler (event: any) {
@@ -26,9 +28,17 @@ export class DropdownListComponent implements OnInit {
   ngOnInit() {
   }
 
-  // selected(){
-  //   console.log(this.DropdownHeader);
-  // }
+  selected(Droplist){
+    // var x = Droplist;
+    console.log(Droplist);
+    
+  }
+
+  sortingData(Droplist){
+
+    
+
+  }
 
 
 
