@@ -38,3 +38,12 @@ Passing Data Method:
 <span class="colour" style="color:rgb(0, 0, 0)">**parent component.html: \<app [global] = “ตัวแปรที่ต้องการ pass”>\</app>**</span>
 
 <span class="colour" style="color:rgb(0, 0, 0)">**parent component.ts: ประกาศตัวแปรที่ต้องการ pass = [ “    ”, “ ” ]**</span>
+
+<br>
+
+
+## To-do:
+
+| Compont | Function | Method | Date |
+| ------- | -------- | ------ | ---- |
+| Dropdown: WH | sorting table | WIP: table pipe filter | 10-10-19 |
