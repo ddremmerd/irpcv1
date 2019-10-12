@@ -14,12 +14,34 @@
                         <div class ="card-body">                   
                         
                         <app-card-header [CardHeader]="content_header_name"></app-card-header>
-                           
-                            <app-dropdown-list [ListHeader] = "ListHeader1" [DropdownHeader] = "shipment_Type"></app-dropdown-list>
+
+                        <table>
+                            <tr>
+                                <td style ="padding: 20px;">{{ListHeader1}}</td>
+                                <td><select class = "btn btn-default dropdown-toggle"  [(ngModel)]="Droplist" (change)="selected(Droplist)" > 
+                                    <option *ngFor = "let Droplist of shipment_Type" [ngValue]= "Droplist" placeholder ="WAREHOUSE">{{Droplist}}</option>
+                                </select></td>
+                            </tr>
+
+                            <tr>
+                                <td style ="padding: 20px;">{{ListHeader2}}</td>
+                                <td>
+                                    <select class = "btn btn-default dropdown-toggle"  [(ngModel)]="Droplist" (change)="selected(Droplist)" > 
+                                        <option *ngFor = "let Droplist of transportor_Name" [ngValue]= "Droplist" placeholder ="WAREHOUSE">{{Droplist}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style ="padding: 20px;">{{ListHeader3}}</td>
+                                <td><select class = "btn btn-default dropdown-toggle"  [(ngModel)]="Droplist" (change)="selected(Droplist)" > 
+                                        <option *ngFor = "let Droplist of shipment_Status" [ngValue]= "Droplist" placeholder ="WAREHOUSE">{{Droplist}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                        </table>
                             
-                            <app-dropdown-list [ListHeader] = "ListHeader2" [DropdownHeader] = "transportor_Name"></app-dropdown-list>
-                            
-                            <app-dropdown-list [ListHeader] = "ListHeader3" [DropdownHeader] = "shipment_Status"></app-dropdown-list>                             
                         </div> 
                     </div>            
                 </div>

@@ -9,16 +9,24 @@
         <section class="content">
 
 
-            <app-dropdown-list [ListHeader] = "ListHeader1" [DropdownHeader] = "DropdownHeader1"></app-dropdown-list>
+            <!-- <app-dropdown-list [ListHeader] = "ListHeader1" [DropdownHeader] = "DropdownHeader1"></app-dropdown-list> -->
+
+            <div>
+                <span>{{ListHeader1}}</span>
+                <select class = "btn btn-default dropdown-toggle"  [(ngModel)]="Droplist" (change)="selected(Droplist)" > 
+                    <option *ngFor = "let Droplist of DropdownHeader2" [ngValue]= "Droplist" placeholder ="WAREHOUSE">WH{{Droplist}}</option>
+                </select>
+            </div>
+
               
-            <span>WAREHOUSE: </span>
+            <!-- <span>WAREHOUSE: </span>
             <select class="form-control" [(ngModel)]="sexs" (change)="checkValue(sexs)">
 
           
                 <option [value]="sexs" *ngFor="let sexs of DropdownHeader2" >{{sexs}}</option>
             
             
-            </select> 
+            </select>  -->
           
             <div class="card">
                 <app-card-header [CardHeader]="card_header_name2"></app-card-header>

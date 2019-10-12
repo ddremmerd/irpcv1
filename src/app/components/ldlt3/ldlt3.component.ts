@@ -60,6 +60,10 @@ export class Ldlt3Component implements OnInit {
     console.log(item);
   }
 
+  selected(Droplist){
+    console.log(Droplist);
+  }
+
   
 
 }

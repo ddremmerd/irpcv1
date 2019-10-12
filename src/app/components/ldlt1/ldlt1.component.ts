@@ -40,4 +40,8 @@ export class Ldlt1Component implements OnInit {
     console.log(this._object);
   }
 
+  selected(Droplist){
+    console.log(Droplist);
+  }
+
 }
