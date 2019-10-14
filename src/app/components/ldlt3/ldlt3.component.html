@@ -13,22 +13,15 @@
 
             <div>
                 <span>{{ListHeader1}}</span>
-                <select class = "btn btn-default dropdown-toggle"  [(ngModel)]="Droplist" (change)="selected(Droplist)" > 
-                    <option *ngFor = "let Droplist of DropdownHeader2" [ngValue]= "Droplist" placeholder ="WAREHOUSE">WH{{Droplist}}</option>
+                <select class = "btn btn-default dropdown-toggle"  [(ngModel)]="Droplist1" (change)="selected(Droplist)" > 
+                    <option *ngFor = "let Droplist of DropdownHeader2" [value]= "Droplist" placeholder ="WAREHOUSE">WH{{Droplist}}</option>
                 </select>
             </div>
 
-              
-            <!-- <span>WAREHOUSE: </span>
-            <select class="form-control" [(ngModel)]="sexs" (change)="checkValue(sexs)">
+            <p>{{Droplist1}}</p>
 
           
-                <option [value]="sexs" *ngFor="let sexs of DropdownHeader2" >{{sexs}}</option>
-            
-            
-            </select>  -->
-          
-            <div class="card">
+            <!-- <div class="card">
                 <app-card-header [CardHeader]="card_header_name2"></app-card-header>
 
                 <div class="card-body pad table-responsive">
@@ -47,7 +40,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> -->
 
 
             <table class="table table-valign-middle text-center">
@@ -56,9 +49,10 @@
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let data of TableData1 | tableFilter: sexs">
+                    <tr *ngFor="let data of TableData | tableFilter: Droplist1">
  
-                            <td *ngFor="let objKey of _object.keys(data);">{{data[objKey]}}</td>        
+                            <td *ngFor="let objKey of _object.keys(data);">{{data[objKey]}}</td> 
+                            <td><app-recall-button></app-recall-button></td>       
                     </tr>
                 </tbody>
             </table>

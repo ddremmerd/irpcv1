@@ -60,8 +60,44 @@
             </div>
 
             <div class="card">
-                    <app-card-header [CardHeader]="card_header_name2"></app-card-header>
-    
+                    <div class="input-group input-group-sm" style="padding: 10px;">
+
+                        
+                        <input [(ngModel)] = "sorting" class="form-control form-control-navbar" placeholder="Shipment No., Booking No., ทะเบียนรถ"> 
+                        <p>{{sorting}}</p>
+                      
+                        
+                  
+                            <select class = "form-control form-control-navbar" [(ngModel)]="Droplist1">
+                                    <option [ngValue]="undefined" hidden selected> Status </option>
+                                <option *ngFor = "let Droplist of shipment_Status" [value]= "Droplist" placeholder ="WAREHOUSE">{{Droplist}}</option>                           
+                            </select>
+                      
+
+                        
+                                <select class = "form-control form-control-navbar" [(ngModel)]="Droplist1">
+                                        <option [ngValue]="undefined" hidden selected> Dt From </option>
+                                    <option *ngFor = "let Droplist of shipment_Status" [value]= "Droplist" placeholder ="WAREHOUSE">{{Droplist}}</option>                           
+                                </select>
+                        
+
+                     
+                                <select class = "form-control form-control-navbar" [(ngModel)]="Droplist1">
+                                        <option [ngValue]="undefined" hidden selected> Dt To </option>
+                                    <option *ngFor = "let Droplist of shipment_Status" [value]= "Droplist" placeholder ="WAREHOUSE">{{Droplist}}</option>                           
+                                </select>
+                        
+                            
+                            
+                        
+
+
+                      
+                    
+                    </div>
+
+                    
+
                     <div class="card-body pad table-responsive">
                         <table class="table table-valign-middle text-center">
                             <thead>

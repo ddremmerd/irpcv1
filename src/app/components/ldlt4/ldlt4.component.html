@@ -4,10 +4,19 @@
 <div class="content-wrapper">
         <app-content-header [ContentHeader]="content_header_name"></app-content-header>
         <!-- Main content -->
+        
+        <div>ค้นหา:
+            <div style="display: inline-block;">
+                <input [(ngModel)] = "sorting" class="form-control form-control-navbar" placeholder="Booking No., Invoice No., Container No., Seal No."> 
+                <p>{{sorting}}</p>
+            </div>
+            
+        </div>
+
         <section class="content">
             <div class="card">
-                <app-card-header [CardHeader]="card_header_name2"></app-card-header>
 
+                
                 <div class="card-body pad table-responsive">
                     <table class="table table-valign-middle text-center">
                         <thead>
