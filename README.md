@@ -80,6 +80,15 @@ Passing Data Method:
 | ------- | -------- | ------ | ---- |
 | Dropdown: WH | sorting table | WIP: table pipe filter | 10-10-19 |
 
+## Progress Note:
+
+**Filter table with Angular Pipe Filter**
+
+| Component.html | Component.ts | **table--filter.pipe.ts |
+| -------------- | ------------ | ----------------------- |
+| [ngModel] = genders<br>*ngFor = "let gen of sex"<br>[value] = gen | sex = ['female','male']; | return value? list.filter(item => item.gender === value):list;<br><br>gender: main parameter in dataset that we weant to use as a filter  |
+| *ngFor = "ket user of users" | users: any[] = {<br>name:\_\_\_\, gender:\_\_\_\_\_\} |  |
+
 ## **Page Reference**
 
 ##### [LDLT1: Quota](https://github.com/ddremmerd/irpcv1/blob/master/ldlt1.PNG)
