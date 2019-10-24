@@ -9,6 +9,9 @@ export class TableFilterPipe implements PipeTransform {
   
 
     return value ? list.filter(item => item.wareNum === value) : list;
+    // return value ? list.filter(item => {
+    //   return item.wareNum.includes(value);}); list;
+    
   }
 
 }

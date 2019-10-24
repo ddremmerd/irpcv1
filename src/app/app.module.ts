@@ -8,6 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { MatNativeDateModule } from '@angular/material';
+import {MatSelectModule} from '@angular/material/select';
+
 
 
 
@@ -38,6 +40,7 @@ import { DeleteButtonComponent } from './components/delete-button/delete-button.
 import { QuotaButtonComponent } from './components/quota-button/quota-button.component';
 
 import { TableFilterPipe } from './components/ldlt3/table-filter.pipe';
+import { FindButtonComponent } from './components/find-button/find-button.component';
 
 
 
@@ -78,7 +81,8 @@ const appRoutes: Routes = [
     Ldlt1Component,
     DeleteButtonComponent,
     QuotaButtonComponent,
-    TableFilterPipe
+    TableFilterPipe,
+    FindButtonComponent
 
  
   ],
@@ -93,6 +97,7 @@ const appRoutes: Routes = [
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
+    MatSelectModule
     
   ],
   providers: [],

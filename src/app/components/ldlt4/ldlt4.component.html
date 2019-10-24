@@ -5,13 +5,22 @@
         <app-content-header [ContentHeader]="content_header_name"></app-content-header>
         <!-- Main content -->
         
-        <div>ค้นหา:
+        <div style = "padding: 10px;">ค้นหา:
             <div style="display: inline-block;">
-                <input [(ngModel)] = "sorting" class="form-control form-control-navbar" placeholder="Booking No., Invoice No., Container No., Seal No."> 
-                <p>{{sorting}}</p>
+                <input [(ngModel)] = "sorting" class="form-control d-inline-block space-left" style="width: 25rem;" placeholder="Booking No., Invoice No., Container No., Seal No."> 
+                
+
             </div>
+            <div  class="btn-group d-inline-block space-left"><app-find-button style="width: 5rem; margin-top: 1rem; padding: 10px;"></app-find-button></div>
+
+            <p>{{sorting}}</p>
+
+            <!-- <div  class="btn-group" style="text-align: right; width: 40%"><app-find-button style="width: 4rem; margin-top: 1rem;"></app-find-button></div> -->
+
+
             
         </div>
+        
 
         <section class="content">
             <div class="card">
@@ -27,7 +36,7 @@
                         
                         <tbody>
                             <tr *ngFor="let rowData of TableData; let nRow = index">
-                           
+                                <td>{{nRow + 1}}</td>
                                 <td *ngFor="let objKey of _object.keys(rowData);">{{rowData[objKey]}}</td>
                             </tr>
                         </tbody>
@@ -36,5 +45,34 @@
             </div>
     
         </section>
+
+        <!---------------------------------- unused container section -->
+
+        <app-content-header [ContentHeader]="content_header_name2"></app-content-header>
+        <section class="content">
+            <div class="card">
+                <div class="card-body pad table-responsive">
+                    <table class="table table-valign-middle text-center">
+                        <thead>
+                            <tr>
+                                <th *ngFor="let head of TableHeader">{{head}}</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr *ngFor="let rowData of TableData; let nRow = index">
+
+
+                                <td>{{nRow + 1}}</td>
+                                <td *ngFor="let objKey of _object.keys(rowData);">{{rowData[objKey]}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    
+        </section>
+
+
     
     </div>

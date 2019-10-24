@@ -49,8 +49,10 @@
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let data of TableData | tableFilter: Droplist1">
- 
+                    <tr *ngFor="let data of TableData | tableFilter: Droplist1; let nRow = index">
+
+
+                            <td>{{nRow + 1}}</td>
                             <td *ngFor="let objKey of _object.keys(data);">{{data[objKey]}}</td> 
                             <td><app-recall-button></app-recall-button></td>       
                     </tr>

@@ -4,27 +4,36 @@
 
 | Page | Component | **<span class="colour" style="color:rgb(34, 34, 34)">**✔**</span>** | date | Function | **<span class="colour" style="color:rgb(34, 34, 34)">**✔**</span>** | date |
 | ---- | --------- | --- | ---- | -------- | --- | ---- |
-| ldlt1 | DD: type | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 | send data |  |  |
+| ldlt1 | DD: ประเภทงาน | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 | send data |  |  |
+|  | (update) DD: date from - date picker | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 | test: console.log(date) |  |  |
+|  | (update) DD: date to - date picker | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 | test: console.log(date) |  |  |
 |  | DD: งานผู้ขนส่ง | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 | send data |  |  |
-|  | DD: สถานะ | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 | send data |  |  |
-|  | info: part1 |  |  | retrieve data from p'JOE |  |  |
-|  | info: all info |  |  | retrieve data from p'JOE |  |  |
-|  | info: remarks |  |  | retrieve data from p'JOE |  |  |
-|  | input box: shipment no., booking No., car license | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 14-10-19 | filter data |  |  |
+|  | DD: สถานะ | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 | รอแผนกขนส่งลง planning -> show button: ส่ง quota (no function)<br><br>รอผขส confirm -> button: ลบ (no function) | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 |
+|  | (update) button: ค้นหา | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 25-10-19 | send data to P'JOE to retrieved the table |  |  |
+|  | info: part1 | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 | retrieve data from p'JOE |  |  |
+|  | info: all info | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 | retrieve data from p'JOE |  |  |
+|  | info: remarks | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 | retrieve data from p'JOE |  |  |
+|  | input box: shipment no., booking No., car license | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 14-10-19 |  |  |  |
+|  | icon: seach (for filter function) |  |  | filter data |  |  |
 |  | table | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 |  |  |  |
-|  | DD(for sort): status | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 14-10-19 | filter table with 'status |  |  |
-|  | DD (for search): date from | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 14-10-19 | filter table with 'date' |  |  |
-|  | DD (for search): date to | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 14-10-19 | filter table with 'date' |  |  |
-|  | DD (in table): truck_type |  |  | retrieve car_type from p'JOE<br>select Car_type<br>send data |  |  |
-|  | DD (in table): shipment_tail |  |  | retrieve shipment_tail from p'JOE<br>select shipment_tail<br>senddata |  |  |
-|  | Date\_picker: planning\_time |  |  | send date |  |  |
+|  | DD (in table): ประเภทรถ | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 | retrieve car\_type from p'JOE<br>select Car\_type<br>send data |  |  |
+|  | DD (in table): shipment\_tail | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 | ถ้าไม่ใช่รถพ่วง -> blind |  |  |
+|  | DD: รถตีด่วน | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 |  |  |  |
+|  | DD: ต้องการอุปกรณ์ | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 |  |  |  |
+|  | DD: คนบรรจุสินค้า | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 |  |  |  |
+|  | Remark: button | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 | ถ้าติ้กให้ show ใน Info | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 |
+|  | DD: Route | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 | <span lang="en-US">Retrieved&nbsp;</span><span lang="th">จากที่ติดใน&nbsp;</span><span lang="en-US">SAP</span><span lang="th">มาก่อน</span><br><span lang="th">ถ้าเป็น&nbsp;</span><span lang="en-US">Domestic&nbsp;</span><span lang="th">ให้</span><span lang="en-US">Blind ddl</span><br><span lang="th">ถ้าเป็น&nbsp;</span><span lang="en-US">export&nbsp;</span><span lang="th">ให้&nbsp;</span><span lang="en-US">load&nbsp;</span><span lang="th">ตัวเลือกจาก&nbsp;</span><span lang="en-US">tbConfig</span> |  |  |
+|  | DD: รับของข้างนอก | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 |  |  |  |
+|  | Date\_picker: planning\_time | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 24-10-19 | send date |  |  |
 |  | button:  ส่ง quota | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 | send quota |  |  |
 |  | button: ลบ | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 10-10-19 | delete row |  |  |
 | ldlt 2 (ระบบติดตามรถบรรทุก) | รอคอนเฟิร์มจากพี่โจ้ |  |  |  |  |  |
-| ldlt 3 (ระบบจัดการคิว) | table | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 9-10-19 |  |  |  |
+| ldlt 3 (ระบบจัดการคิว) | table | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 9-10-19 | sorting table with queue |  |  |
 |  | DD: WH | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 9-10-19 | filter table with "WH"<br>testing method: PIPE LIBRARY | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 14-10-19 |
+|  | (update) button: recall | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 9-10-19 | send **UID** to P'JOE |  |  |
 | ldlt 4 (ทะเบียนรถตู้) | table | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 9-10-19 | retrieved data from p'JOE |  |  |
-|  | input box: shipment no., booking No., car license | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 14-10-19 | filter table by<br>-shipment no.<br>-booking No.<br>-car license |  |  |
+|  | input box: shipment no., booking No., car license | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 14-10-19 |  |  |  |
+|  | (update) button: SERACH | **<span class="highlight" style="background-color:rgb(255, 255, 255)"><span class="colour" style="color:rgb(34, 34, 34)"><span class="font" style="font-family:Arial"><span class="size" style="font-size:10.5pt">✔</span></span></span></span>** | 25-10-19 | filter table by<br>-shipment no.<br>-booking No.<br>-car license |  |  |
 
 Passing Data Method:
 
@@ -41,38 +50,55 @@ Passing Data Method:
 <br>
 <br>
 <br>
-
-
 ### Header for sending data
 
 | Page | Component | Name | Type |
 | ---- | --------- | ---- | ---- |
-| ldlt3 | table | <span class="colour" style="color:rgb(156, 220, 254)">shipment_no</span> | string |
-|  |  | <span class="colour" style="color:rgb(156, 220, 254)">booking_no</span> | string |
-|  |  | <span class="colour" style="color:rgb(156, 220, 254)">invoice_no</span> | string |
-|  |  | <span class="colour" style="color:rgb(156, 220, 254)">planning_time</span> | string |
-|  |  | <span class="colour" style="color:rgb(156, 220, 254)">wh_no</span> | number |
-|  |  | <span class="colour" style="color:rgb(156, 220, 254)">shipment_type</span> | string |
-|  |  | <span class="colour" style="color:rgb(156, 220, 254)">ship_license</span> | string |
+| ldlt1 | table | shipment\_no | string |
+|  |  | delivery\_no | string |
+|  |  | invoice\_no | string |
+|  |  | booking\_no | string |
+|  |  | closing\_time | timestamp? |
+|  |  | grade | string |
+|  |  | Qtt | number |
+|  |  | truck\_load | number |
+|  | ddl | car\_type | string |
+|  | ddl | shipment\_tail | string |
+|  | ddl | urgent\_car | string |
+|  | ddl | prodPacker | string |
+|  | checkbox? | remarks | string |
+|  |  | pickupAt | string |
+|  |  | returnTo | string |
+|  | ddl | route | string |
+|  | ddl | outside | string |
+|  |  | numberofWorker | number |
+|  | date-picker | planningTime | string? |
+| ldlt3 | table | shipment\_no | string |
+|  |  | <span class="colour" style="color:rgb(156, 220, 254)">booking\_no</span> | string |
+|  |  | <span class="colour" style="color:rgb(156, 220, 254)">invoice\_no</span> | string |
+|  |  | <span class="colour" style="color:rgb(156, 220, 254)">planning\_time</span> | string |
+|  |  | <span class="colour" style="color:rgb(156, 220, 254)">wh\_no</span> | number |
+|  |  | <span class="colour" style="color:rgb(156, 220, 254)">shipment\_type</span> | string |
+|  |  | <span class="colour" style="color:rgb(156, 220, 254)">ship\_license</span> | string |
 |  |  | <span class="colour" style="color:rgb(156, 220, 254)">driver\_check\_time</span> | timestamp |
-|  |  | <span class="colour" style="color:rgb(156, 220, 254)">queue_no</span> | string |
+|  |  | <span class="colour" style="color:rgb(156, 220, 254)">queue\_no</span> | string |
 | ldlt4 | table | date | string |
 |  |  | inv | string |
 |  |  | agent | string |
 |  |  | booking | string |
 |  |  | pickup | string |
 |  |  | return | string |
-|  |  | close_date | string |
-|  |  | close_time | string |
+|  |  | close\_date | string |
+|  |  | close\_time | string |
 |  |  | ETD | string |
-|  |  | empty_count | string |
-|  |  | count_num | string |
-|  |  | seal_num | string |
-|  |  | cont_weight | float |
-|  |  | cont_size | float |
-|  |  | give_date | string |
+|  |  | empty\_count | string |
+|  |  | count\_num | string |
+|  |  | seal\_num | string |
+|  |  | cont\_weight | float |
+|  |  | cont\_size | float |
+|  |  | give\_date | string |
 |  |  | remark | string |
-|  |  | latest_time | string |
+|  |  | latest\_time | string |
 
 ## To-do:
 
@@ -84,14 +110,14 @@ Passing Data Method:
 
 **Filter table with Angular Pipe Filter**
 
-| Component.html | Component.ts | **table--filter.pipe.ts |
+| Component.html | Component.ts | \*\*table--filter.pipe.ts |
 | -------------- | ------------ | ----------------------- |
-| [ngModel] = genders<br>*ngFor = "let gen of sex"<br>[value] = gen | sex = ['female','male']; | return value? list.filter(item => item.gender === value):list;<br><br>gender: main parameter in dataset that we weant to use as a filter  |
-| *ngFor = "ket user of users" | users: any[] = {<br>name:\_\_\_\, gender:\_\_\_\_\_\} |  |
+| [ngModel] = genders<br>\*ngFor = "let gen of sex"<br>[value] = gen | sex = ['female','male']; | return value? list.filter(item => item.gender === value):list;<br><br>gender: main parameter in dataset that we weant to use as a filter |
+| \*ngFor = "ket user of users" | users: any[] = {<br>name:\_\_\_, gender:\_\_\_\_\_} |  |
 
 ## **Page Reference**
 
-##### [LDLT1: Quota](https://github.com/ddremmerd/irpcv1/blob/master/ldlt1.PNG)
+##### [LDLT1: Quota](https://github.com/ddremmerd/irpcv1/blob/master/ldlt1%20update.PNG)
 
 ##### [LDLT3: Queue Management](https://github.com/ddremmerd/irpcv1/blob/master/ldlt3.PNG)
 
