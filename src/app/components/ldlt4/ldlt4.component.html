@@ -7,6 +7,17 @@
 
     <div style="padding: 20px;">
 
+        <mat-form-field (selectionChange)="disableDropdown($event.value)">
+            <mat-select matNativeControl required>
+                <mat-option value="All">All</mat-option>
+                <mat-option value="InvoiveNo">Invoice No.</mat-option>
+                <mat-option value="BookingNo">Booking No.</mat-option>
+                <mat-option value="ContainerNo">Container No.</mat-option>
+                <mat-option value="SealNo">Seal No.</mat-option>
+
+            </mat-select>
+        </mat-form-field>
+
         <form class="example-form">
             <mat-form-field class="example-full-width" style="width:70%">
                 <mat-label>ค้นหา: </mat-label>
@@ -21,7 +32,7 @@
     </div>
 
 
-    <div style="padding: 10px;">ค้นหา:
+    <!-- <div style="padding: 10px;">ค้นหา:
         <div style="display: inline-block;">
             <input [(ngModel)]="sorting" class="form-control d-inline-block space-left" style="width: 25rem;"
                 placeholder="Booking No., Invoice No., Container No., Seal No.">
@@ -31,15 +42,15 @@
         <div class="btn-group d-inline-block space-left">
             <app-find-button style="width: 5rem; margin-top: 1rem; padding: 10px;"
                 (click)="printSearch($event, sorting)"></app-find-button>
-        </div>
+        </div> -->
 
-        <p>{{sorting}}</p>
+        <!-- <p>{{sorting}}</p> -->
 
         <!-- <div  class="btn-group" style="text-align: right; width: 40%"><app-find-button style="width: 4rem; margin-top: 1rem;"></app-find-button></div> -->
 
 
 
-    </div>
+    <!-- </div> -->
 
 
     <section class="content">
