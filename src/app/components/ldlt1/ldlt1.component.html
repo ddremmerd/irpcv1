@@ -18,18 +18,30 @@
                         <table>
                             <tr>
                                 <td style="padding: 20px;">{{ListHeader1}}</td>
-                                <td><select class="btn btn-default dropdown-toggle" [(ngModel)]="Droplist"
-                                        (change)="selected(Droplist)">
-                                        <option *ngFor="let Droplist of shipment_Type" [ngValue]="Droplist"
-                                            placeholder="WAREHOUSE">{{Droplist}}</option>
-                                    </select></td>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-select (selectionChange)="disableDropdown($event.value)">
+                                            <mat-option *ngFor="let shipmType of shipment_Type" [value]="shipmType">
+                                                {{shipmType}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
                             </tr>
 
                             <tr>
                                 <td style="padding: 20px;">Date from:</td>
                                 <td>
-                                    <app-date-picker></app-date-picker>
+                                    <app-date-picker (selectedChange)="inputEvent($event)">
+                                    </app-date-picker>
                                 </td>
+                            </tr>
+
+                            <tr>
+                                <div class="example-events">
+                                    <div *ngFor="let e of events">{{e}}</div>
+                                </div>
+
                             </tr>
 
                             <tr>
@@ -42,28 +54,36 @@
                             <tr>
                                 <td style="padding: 20px;">{{ListHeader2}}</td>
                                 <td>
-                                    <select class="btn btn-default dropdown-toggle" [(ngModel)]="Droplist"
-                                        (change)="selected(Droplist)">
-                                        <option *ngFor="let Droplist of transportor_Name" [ngValue]="Droplist"
-                                            placeholder="WAREHOUSE">{{Droplist}}</option>
-                                    </select>
+
+                                    <mat-form-field>
+                                        <mat-select (selectionChange)="disableDropdown($event.value)">
+                                            <mat-option *ngFor="let transName of transportor_Name" [value]="transName">
+                                                {{transName}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
                                 </td>
                             </tr>
 
                             <tr>
                                 <td style="padding: 20px;">{{ListHeader3}}</td>
-                                <td><select class="btn btn-default dropdown-toggle" [(ngModel)]="Droplist"
-                                        (change)="selected(Droplist)">
-                                        <option *ngFor="let Droplist of shipment_Status" [ngValue]="Droplist"
-                                            placeholder="WAREHOUSE">{{Droplist}}</option>
-                                    </select>
+                                <td>
+
+                                    <mat-form-field>
+                                        <mat-select (selectionChange)="selected($event.value)">
+                                            <mat-option *ngFor="let shipStatus of shipment_Status" [value]="shipStatus">
+                                                {{shipStatus}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
                                 </td>
                             </tr>
 
                         </table>
 
                         <div class="btn-group" style="text-align: right; width: 40%">
-                            <app-find-button style="width: 4rem; margin-top: 1rem;"></app-find-button>
+                            <app-find-button style="width: 4rem; margin-top: 1rem;" (click)="datatoSearch(shipStatus)">
+                            </app-find-button>
                         </div>
                     </div>
                 </div>
@@ -76,7 +96,7 @@
 
                         <div class="col-lg-6">
                             <div class="info-box mb-3" style="background-color: rgb(173, 206, 158);">
-                                {{transportor_Name}}
+
                             </div>
                         </div>
 
@@ -102,18 +122,21 @@
 
 
 
-            <div class="input-group input-group-sm form-inline ml-3" style="padding: 10px;">
+            <!-- <div class="input-group input-group-sm form-inline ml-3" style="padding: 10px;"> -->
+            <div style="padding: 20px">
+                <form class="example-form">
+                    <mat-form-field class="example-full-width" style="width:70%">
+                        <input matInput placeholder="Shipment No., Booking No., ทะเบียนรถ" value="">
 
-                <input [(ngModel)]="sorting" class="form-control form-control-navbar"
-                    placeholder="Shipment No., Booking No., ทะเบียนรถ">
-                <div class="input-group-append">
-                    <button class="btn btn-navbar" type="submit" (change)="filterTab(this)">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-                <p>{{sorting}}</p>
+                    </mat-form-field>
+                    <mat-icon matDatepickerToggleIcon (click)="searchTable($event)">search</mat-icon>
 
+                </form>
             </div>
+
+
+            <!-- </div> -->
+
 
 
 
@@ -144,97 +167,161 @@
                         <th></th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let data of TableData; let i = index;">
+                        <tr *ngFor="let data of TableData; let i = index;" [attr.id]="i">
                             <td>{{i+1}}</td>
-                            <td>SHIPMENT NO.</td>
-                            <td>Del No.</td>
-                            <td>Inv no.</td>
-                            <td>Booking</td>
-                            <td>Closing</td>
-                            <td>Grade</td>
-                            <td>Qty</td>
-                            <td>Truck</td>
+                            <td>{{data.shipmentNum}}</td>
+                            <td>{{data.deliveryNum}}</td>
+                            <td>{{data.invoiceNum}}</td>
+                            <td>{{data.BookingNum}}</td>
+                            <td>{{data.closingTime}}</td>
+                            <td>{{data.grade}}</td>
+                            <td>{{data.quantity}}</td>
+                            <td>{{data.truckLoad}}</td>
                             <td>
-                                <mat-form-field>
-                                    <mat-select  (click)="disableShiptail(car)">
-                                        <mat-option *ngFor="let carType of cartype" [(value)]="carType.value">
-                                            {{carType.viewValue}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
+                                <ng-container *ngIf="shipdiv1">
+
+                                    <mat-form-field>
+                                        <mat-select (selectionChange)="disableDropdown($event.value,i)">
+                                            <mat-option *ngFor="let carType of cartype" [value]="carType.value">
+                                                {{carType.viewValue}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </ng-container>
+
+                                <ng-container *ngIf="shipdiv">
+                                    {{data.shipmentType}}
+                                </ng-container>
 
                             </td>
 
                             <td>
-                                <select class="btn btn-default dropdown-toggle" [(ngModel)]="Droplist" [disabled]='disableShip'
-                                    (change)="selected(Droplist)">
-                                    <option *ngFor="let Droplist of shipment_Status" [ngValue]="Droplist"
-                                        placeholder="WAREHOUSE">{{Droplist}}</option>
-                                </select>
+                                <ng-container *ngIf="shipdiv1">
+                                    <mat-form-field>
+                                        <mat-select (selectionChange)="disableDropdown($event.value)"
+                                            [disabled]="!bt_save[i]">
+                                            <mat-option *ngFor="let tail of shiptail" [value]="tail.value">
+                                                {{tail.value}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </ng-container>
+
+                                <ng-container *ngIf="shipdiv">
+                                    {{data.shipmentTail}}
+                                </ng-container>
                             </td>
 
                             <td>
-                                <mat-form-field [(ngModel)]="urgent">
-                                    <select matNativeControl required>
-                                        <option value="no">ไม่</option>
-                                        <option value="yes">ใช่</option>
-                                    </select>
-                                </mat-form-field>
-                                <b>{{urgent}}</b>
+                                <ng-container *ngIf="shipdiv1">
+                                    <mat-form-field (selectionChange)="disableDropdown($event.value)">
+                                        <mat-select matNativeControl required>
+                                            <mat-option value="no">ไม่</mat-option>
+                                            <mat-option value="yes">ใช่</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </ng-container>
+
+                                <ng-container *ngIf="shipdiv">
+                                    {{data.urgentCar}}
+                                </ng-container>
                             </td>
 
                             <td>
-                                <mat-form-field>
-                                    <mat-select [(ngModel)]="tool">
-                                        <mat-option *ngFor="let addtool of additionalTool" [value]="addtool.value">
-                                            {{addtool.viewValue}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <b>{{tool}}</b>
+                                <ng-container *ngIf="shipdiv1">
+                                    <mat-form-field (selectionChange)="disableDropdown($event.value)">
+                                        <mat-select>
+                                            <mat-option *ngFor="let addtool of additionalTool" [value]="addtool.value">
+                                                {{addtool.viewValue}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </ng-container>
+
+                                <ng-container *ngIf="shipdiv">
+                                    {{data.additionalTool}}
+                                </ng-container>
                             </td>
 
                             <td>
-                                <mat-form-field>
-                                    <mat-select [(ngModel)]="packer" (change)="print(this)">
-                                        <mat-option *ngFor="let packer of productPacker" [value]="packer.value">
-                                            {{packer.viewValue}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <b>{{packer}}</b>
-                            </td>
 
-                            <td>
-                                <button class="red-square" (click)="toggleRemark()"></button>
-                            </td>
+                                <ng-container *ngIf="shipdiv1">
 
-                            <td>Pick up At</td>
-                            <td>Return to</td>
+                                    <mat-form-field>
+                                        <mat-select (selectionChange)="disableDropdown($event.value)">
+                                            <mat-option *ngFor="let packer of productPacker" [value]="packer.value">
+                                                {{packer.viewValue}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </ng-container>
 
-                            <td>ROUTE</td>
+                                <ng-container *ngIf="shipdiv">
+                                    {{data.packer}}
+                                </ng-container>
 
-                            <td>
-                                <mat-form-field [(ngModel)]="outside">
-                                    <select matNativeControl required>
-                                        <option value="no">ไม่</option>
-                                        <option value="yes">ใช่</option>
-                                    </select>
-                                </mat-form-field>
-                                <b>{{outside}}</b>
 
                             </td>
 
-                            <td>number of worker</td>
+                            <td>
+                                <button class="red-square" (click)="toggleRemark(i)"></button>
+                            </td>
+
+                            <td>{{data.pickupAt}}</td>
+                            <td>{{data.returnTo}}</td>
 
                             <td>
-                                <app-date-picker></app-date-picker>
+                                <ng-container *ngIf="shipdiv1">
+
+                                    <mat-form-field (selectionChange)="disableDropdown($event.value)">
+                                        <mat-select matNativeControl required [disabled]="!route_save">
+                                            <mat-option value="no">ไม่</mat-option>
+                                            <mat-option value="yes">ใช่</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </ng-container>
+
+                                <ng-container *ngIf="shipdiv">
+                                    {{data.route}}
+                                </ng-container>
+
+
+                            </td>
+
+                            <td>
+                                <ng-container *ngIf="shipdiv1">
+
+                                    <mat-form-field (selectionChange)="disableDropdown($event.value)">
+                                        <mat-select matNativeControl required>
+                                            <mat-option value="no">ไม่</mat-option>
+                                            <mat-option value="yes">ใช่</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </ng-container>
+
+                                <ng-container *ngIf="shipdiv">
+                                    {{data.outsidePickup}}
+                                </ng-container>
+
+                            </td>
+
+                            <td>{{data.workerNum}}</td>
+
+                            <td>
+                                <ng-container *ngIf="shipdiv1">
+
+                                    <app-date-picker></app-date-picker>
+                                </ng-container>
+
+                                <ng-container *ngIf="shipdiv">
+                                    {{data.planningTime}}
+                                </ng-container>
                             </td>
 
                             <td>
                                 <ng-container *ngIf="show">
-
-                                    <button type="button" class="btn btn-block btn-success btn-sm">ส่ง Quota</button>
+                                    <button type="button" class="btn btn-block btn-success btn-sm"
+                                        (click)="deleteRow(i)">ส่ง Quota</button>
                                 </ng-container>
 
                                 <ng-container *ngIf="show1">

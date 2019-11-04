@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
+import {FormControl, FormGroupDirective, FormGroup, NgForm, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-ldlt4',
@@ -6,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ldlt4.component.css']
 })
 export class Ldlt4Component implements OnInit {
+
+  public sorting: string;
+  // public keyword: string;
+
+  keyword = new FormControl('',Validators.required);
 
   content_header_name = "ทะเบียนตู้คอนเทนเนอร์ (Container Register) ฝั่งแผนกขนส่ง";
 
@@ -31,6 +37,16 @@ export class Ldlt4Component implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  printSearch(evt, sort){
+    console.log("print serach"+sort);
+  }
+
+  searchTable(event){
+
+    console.log("searchTable llop"+ event.value)
+
   }
 
 }

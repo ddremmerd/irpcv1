@@ -8,9 +8,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { MatNativeDateModule } from '@angular/material';
-import {MatSelectModule} from '@angular/material/select';
-
-
+import { MatSelectModule} from '@angular/material/select';
+import { MatIconModule} from '@angular/material/icon';
+import { MatSortModule } from '@angular/material/sort'; 
+import { MatTableModule } from '@angular/material/table';
 
 
 
@@ -82,7 +83,8 @@ const appRoutes: Routes = [
     DeleteButtonComponent,
     QuotaButtonComponent,
     TableFilterPipe,
-    FindButtonComponent
+    FindButtonComponent,
+  
 
  
   ],
@@ -97,7 +99,10 @@ const appRoutes: Routes = [
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatIconModule,
+    MatSortModule,
+    MatTableModule,
     
   ],
   providers: [],
