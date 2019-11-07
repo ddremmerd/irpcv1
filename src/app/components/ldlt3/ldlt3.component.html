@@ -1,61 +1,79 @@
 <app-header></app-header>
 <app-sidebar></app-sidebar>
-<app-footer></app-footer>
 <div class="content-wrapper">
-        <app-content-header [ContentHeader]="content_header_name"></app-content-header>
-        <!-- Main content -->
+    <app-content-header [ContentHeader]="content_header_name"></app-content-header>
+    <!-- Main content -->
 
 
-        <section class="content">
+    <section class="content">
+        <div class="card">
 
 
             <!-- <app-dropdown-list [ListHeader] = "ListHeader1" [DropdownHeader] = "DropdownHeader1"></app-dropdown-list> -->
 
-            <div>
+            <!-- <div>
                 <span>{{ListHeader1}}</span>
-                <select class = "btn btn-default dropdown-toggle"  [(ngModel)]="Droplist1" (change)="selected(Droplist)" > 
-                    <option *ngFor = "let Droplist of DropdownHeader2" [value]= "Droplist" placeholder ="WAREHOUSE">WH{{Droplist}}</option>
+                <select class="bottom-border" [(ngModel)]="Droplist1" (change)="selected(Droplist)">
+                    <option *ngFor="let Droplist of warehouseNum" [value]="Droplist" placeholder="WAREHOUSE">
+                        WH{{Droplist}}</option>
                 </select>
+            </div> -->
+
+            <div style="padding: 20px">
+                <span>WH: </span>
+                <mat-form-field>
+                    <mat-select (selectionChange)="getSelected($event.value)" [(value)]="search">
+                        <mat-option *ngFor="let Droplist of warehouseNum" [value]="Droplist">
+                            WH{{Droplist}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
 
-            <p>{{Droplist1}}</p>
+            <div class="card">
+                <div class="card-body">
+
+                    <table matSort class="table table-valign-middle text-center" (matSortChange)="sortData($event)"
+                        matSortActive="queue_no">
+                        <thead>
+                            <!-- <th *ngFor="let header of TableHeader">{{header}}</th> -->
+                            <th class="light-gray-bg" mat-sort-header="">No.</th>
+                            <th class="light-gray-bg" mat-sort-header="shipment_no">Shipment No.</th>
+                            <th class="light-gray-bg" mat-sort-header="booking_no">Booking No.</th>
+                            <th class="light-gray-bg" mat-sort-header="invoice_no">Invoice No.</th>
+                            <th class="light-gray-bg" mat-sort-header="planning_time">Planning Time</th>
+                            <th class="light-gray-bg" mat-sort-header="wareNum">WH</th>
+                            <th class="light-gray-bg" mat-sort-header="shipment_type">ประเภทรถ</th>
+                            <th class="light-gray-bg" mat-sort-header="ship_license">ทะเบียนรถ</th>
+                            <th class="light-gray-bg" mat-sort-header="driver_check_time">Driver Checking Time</th>
+                            <th class="light-gray-bg" mat-sort-header="queue_no">ลำดับคิว</th>
+                            <th class="light-gray-bg" mat-sort-header=""></th>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let data of sortedData | tableFilter: search; let nRow = index">
 
 
-            <table matSort class="table table-valign-middle text-center" (matSortChange)="sortData($event)" matSortActive="queue_no">
-                <thead>
-                    <!-- <th *ngFor="let header of TableHeader">{{header}}</th> -->
-                    <th mat-sort-header="">No.</th>
-                    <th mat-sort-header="shipment_no">Shipment No.</th>
-                    <th mat-sort-header="booking_no">Booking No.</th>
-                    <th mat-sort-header="invoice_no">Invoice No.</th>
-                    <th mat-sort-header="planning_time">Planning Time</th>
-                    <th mat-sort-header="wareNum">WH</th>
-                    <th mat-sort-header="shipment_type">ประเภทรถ</th>
-                    <th mat-sort-header="ship_license">ทะเบียนรถ</th>
-                    <th mat-sort-header="driver_check_time">Driver Checking Time</th>
-                    <th mat-sort-header="queue_no">ลำดับคิว</th>
-                    <th mat-sort-header=""></th>
-                </thead>
+                                <td>{{nRow + 1}}</td>
+                                <td>{{data.shipment_no}}</td>
+                                <td>{{data.booking_no}}</td>
+                                <td>{{data.invoice_no}}</td>
+                                <td>{{data.planning_time}}</td>
+                                <td>{{data.wareNum}}</td>
+                                <td>{{data.shipment_type}}</td>
+                                <td>{{data.ship_license}}</td>
+                                <td>{{data.driver_check_time}}</td>
+                                <td>{{data.queue_no}}</td>
+                                <td>
+                                    <app-recall-button (click)="recall($event,nRow, data.booking_no)">
+                                    </app-recall-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <tbody>
-                    <tr *ngFor="let data of sortedData | tableFilter: Droplist1; let nRow = index">
-
-
-                            <td>{{nRow + 1}}</td>
-                            <td>{{data.shipment_no}}</td>
-                            <td>{{data.booking_no}}</td>
-                            <td>{{data.invoice_no}}</td>
-                            <td>{{data.planning_time}}</td>
-                            <td>{{data.wareNum}}</td>
-                            <td>{{data.shipment_type}}</td>
-                            <td>{{data.ship_license}}</td>
-                            <td>{{data.driver_check_time}}</td>
-                            <td>{{data.queue_no}}</td>
-                            <td><app-recall-button></app-recall-button></td>       
-                    </tr>
-                </tbody>
-            </table>
-    
-        </section>
-    
-    </div>
+</div>

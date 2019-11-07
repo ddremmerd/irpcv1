@@ -4,23 +4,19 @@
 <div class="content-wrapper">
     <!-- <app-content-header [ContentHeader]="content_header_name"></app-content-header> -->
     <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-lg-6">
+    <section class="content" style="padding: 20px;">
+        <div class="card">
+            <div class="card-body" style="font-size: 20px;">
+                <div class="row">
+                    <div class="col-lg-6">
 
-                <!-- <app-content-header [ContentHeader]="content_header_name"></app-content-header> -->
-
-                <div class="card">
-                    <div class="card-body">
-
-                        <app-card-header [CardHeader]="content_header_name"></app-card-header>
-
+                        <app-content-header [ContentHeader]="content_header_name"></app-content-header>
                         <table>
                             <tr>
                                 <td style="padding: 20px;">{{ListHeader1}}</td>
                                 <td>
                                     <mat-form-field>
-                                        <mat-select (selectionChange)="disableDropdown($event.value)">
+                                        <mat-select (selectionChange)="disableDropdown($event.value)"  [formControl]="ShipType" [(value)]="selected1">
                                             <mat-option *ngFor="let shipmType of shipment_Type" [value]="shipmType">
                                                 {{shipmType}}
                                             </mat-option>
@@ -32,16 +28,12 @@
                             <tr>
                                 <td style="padding: 20px;">Date from:</td>
                                 <td>
-                                    <app-date-picker (selectedChange)="inputEvent($event)">
-                                    </app-date-picker>
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker1" [formControl]="dateFrom">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
                                 </td>
-                            </tr>
-
-                            <tr>
-                                <div class="example-events">
-                                    <div *ngFor="let e of events">{{e}}</div>
-                                </div>
-
                             </tr>
 
                             <tr>
@@ -56,7 +48,7 @@
                                 <td>
 
                                     <mat-form-field>
-                                        <mat-select (selectionChange)="disableDropdown($event.value)">
+                                        <mat-select (selectionChange)="disableDropdown($event.value)" [formControl]="shipperName" [(ngModel)]="transName1">
                                             <mat-option *ngFor="let transName of transportor_Name" [value]="transName">
                                                 {{transName}}
                                             </mat-option>
@@ -70,7 +62,7 @@
                                 <td>
 
                                     <mat-form-field>
-                                        <mat-select (selectionChange)="selected($event.value)">
+                                        <mat-select (selectionChange)="selected($event.value)" [formControl]="shipmentStatus">
                                             <mat-option *ngFor="let shipStatus of shipment_Status" [value]="shipStatus">
                                                 {{shipStatus}}
                                             </mat-option>
@@ -79,57 +71,68 @@
                                 </td>
                             </tr>
 
+                            <tr>
+                                <td style="padding: 20px;"></td>
+                                <td style="text-align: right;">
+                                    <div class="btn-group" style="text-align: right; width: 40%">
+                                        <app-find-button style="width: 4rem; margin-top: 1rem; font-size: 50px;"
+                                            (click)="datatoSearch()">
+                                        </app-find-button>
+                                    </div>
+                                </td>
+                            </tr>
+
                         </table>
 
-                        <div class="btn-group" style="text-align: right; width: 40%">
-                            <app-find-button style="width: 4rem; margin-top: 1rem;" (click)="datatoSearch(shipStatus)">
-                            </app-find-button>
-                        </div>
+
                     </div>
-                </div>
-            </div>
+                    <!--------------------------------------------- infomation zone -->
+                    <div class="col-lg-6">
 
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <app-card-header [CardHeader]="content_header_name2"></app-card-header>
-
-                        <div class="col-lg-6">
-                            <div class="info-box mb-3" style="background-color: rgb(173, 206, 158);">
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6" style="display: inline-block;">
-                            <div class="info-box mb-3" style="background-color: rgb(111, 166, 197);">
-                                <b>ข้อมูลทั้งหมด</b>
-                            </div>
-
-
-                            <ng-container *ngIf="remark">
-                                <div class="info-box mb-3" style="background-color: rgb(250, 227, 153);">
-                                    <b>Remarks</b>
+                        <app-content-header [ContentHeader]="content_header_name2"></app-content-header>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="info-box mb-3" style="background-color: rgb(173, 206, 158); padding-bottom: 30px; height: 200px;">
+                                    <b>{{transName1}}</b>
                                 </div>
-                            </ng-container>
+                            </div>
+
+                            <div class="col-lg-6" style="display: inline-block;">
+                                <div class="info-box mb-3" style="background-color: rgb(111, 166, 197); height: 200px;">
+                                    <b>ข้อมูลทั้งหมด</b>
+                                </div>
+
+
+                                <ng-container *ngIf="remark">
+                                    <div class="info-box mb-3" style="background-color: rgb(250, 227, 153); height: 200px;">
+                                        <b>Remarks</b>
+                                    </div>
+                                </ng-container>
+                            </div>
+
                         </div>
+
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <div class="card">
+
+        <!------------------------------------------------------------ table zone -->
+
+        <div class="card" style="font-size: 20px;">
 
 
 
             <!-- <div class="input-group input-group-sm form-inline ml-3" style="padding: 10px;"> -->
-            <div style="padding: 20px">
+            <div style="padding: 20px; width: 40%;">
                 <form class="example-form">
                     <mat-form-field class="example-full-width" style="width:70%">
-                        <input matInput placeholder="Shipment No., Booking No., ทะเบียนรถ" value="">
+                        <input matInput placeholder="Shipment No., Booking No., ทะเบียนรถ" value=""
+                            [formControl]="searchkeyword">
 
                     </mat-form-field>
-                    <mat-icon matDatepickerToggleIcon (click)="searchTable($event)">search</mat-icon>
+                    <mat-icon matDatepickerToggleIcon (click)="searchTable()">search</mat-icon>
 
                 </form>
             </div>
@@ -143,26 +146,26 @@
             <div class="card-body pad table-responsive">
                 <table class="table table-valign-middle text-center table-bordered">
                     <thead>
-                        <th class="gray-bg">No.</th>
-                        <th class="gray-bg">Shipment No.</th>
-                        <th class="gray-bg">Delivery No.</th>
-                        <th class="gray-bg">Invoice No.</th>
-                        <th class="gray-bg">Booking No.</th>
-                        <th class="gray-bg">Closing Time</th>
-                        <th class="gray-bg">Grade</th>
-                        <th class="gray-bg">Qty(kg)</th>
-                        <th class="gray-bg">Truck Load</th>
+                        <th class="light-gray-bg">No.</th>
+                        <th class="light-gray-bg">Shipment No.</th>
+                        <th class="light-gray-bg">Delivery No.</th>
+                        <th class="light-gray-bg">Invoice No.</th>
+                        <th class="light-gray-bg">Booking No.</th>
+                        <th class="light-gray-bg">Closing Time</th>
+                        <th class="light-gray-bg">Grade</th>
+                        <th class="light-gray-bg">Qty(kg)</th>
+                        <th class="light-gray-bg">Truck Load</th>
                         <th class="yellow-bg">ประเภทรถ</th>
                         <th class="yellow-bg">Shipment (หาง)</th>
                         <th class="yellow-bg">รถตีด่วน</th>
                         <th class="yellow-bg">ต้องการอุปกรณ์</th>
                         <th class="yellow-bg">คนบรรจุสินค้า</th>
-                        <th class="gray-bg">Remarks</th>
-                        <th class="gray-bg">Pick Up At</th>
-                        <th class="gray-bg">Return To</th>
+                        <th class="light-gray-bg">Remarks</th>
+                        <th class="light-gray-bg">Pick Up At</th>
+                        <th class="light-gray-bg">Return To</th>
                         <th class="yellow-bg">Route</th>
                         <th class="yellow-bg">รับของข้างนอก</th>
-                        <th class="gray-bg">จำนวนกรรมกรลงสินค้า</th>
+                        <th class="light-gray-bg">จำนวนกรรมกรลงสินค้า</th>
                         <th class="yellow-bg">Planning Time</th>
                         <th></th>
                     </thead>
@@ -215,7 +218,7 @@
                             <td>
                                 <ng-container *ngIf="shipdiv1">
                                     <mat-form-field (selectionChange)="disableDropdown($event.value)">
-                                        <mat-select matNativeControl required>
+                                        <mat-select matNativeControl required [formControl]="UrgentShipment">
                                             <mat-option value="no">ไม่</mat-option>
                                             <mat-option value="yes">ใช่</mat-option>
                                         </mat-select>
@@ -230,7 +233,7 @@
                             <td>
                                 <ng-container *ngIf="shipdiv1">
                                     <mat-form-field (selectionChange)="disableDropdown($event.value)">
-                                        <mat-select>
+                                        <mat-select [formControl]="AddTool">
                                             <mat-option *ngFor="let addtool of additionalTool" [value]="addtool.value">
                                                 {{addtool.viewValue}}
                                             </mat-option>
@@ -248,7 +251,7 @@
                                 <ng-container *ngIf="shipdiv1">
 
                                     <mat-form-field>
-                                        <mat-select (selectionChange)="disableDropdown($event.value)">
+                                        <mat-select (selectionChange)="disableDropdown($event.value)" [formControl]="ShipmentPacker">
                                             <mat-option *ngFor="let packer of productPacker" [value]="packer.value">
                                                 {{packer.viewValue}}
                                             </mat-option>
@@ -264,7 +267,7 @@
                             </td>
 
                             <td>
-                                <button class="red-square" (click)="toggleRemark(i)"></button>
+                                <button class="square_bt_enable btn-danger" (click)="toggleRemark(i)"></button>
                             </td>
 
                             <td>{{data.pickupAt}}</td>
@@ -292,7 +295,7 @@
                                 <ng-container *ngIf="shipdiv1">
 
                                     <mat-form-field (selectionChange)="disableDropdown($event.value)">
-                                        <mat-select matNativeControl required>
+                                        <mat-select matNativeControl required [formControl]="OutPickUp">
                                             <mat-option value="no">ไม่</mat-option>
                                             <mat-option value="yes">ใช่</mat-option>
                                         </mat-select>
@@ -325,7 +328,7 @@
                                 </ng-container>
 
                                 <ng-container *ngIf="show1">
-                                    <app-delete-button></app-delete-button>
+                                    <app-delete-button (click)="returnQuota(i)"></app-delete-button>
                                 </ng-container>
 
                             </td>

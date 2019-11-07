@@ -2,81 +2,69 @@
 <app-sidebar></app-sidebar>
 <app-footer></app-footer>
 <div class="content-wrapper">
+
     <app-content-header [ContentHeader]="content_header_name"></app-content-header>
-    <!-- Main content -->
 
-    <div style="padding: 20px;">
-
-        <mat-form-field (selectionChange)="disableDropdown($event.value)">
-            <mat-select matNativeControl required>
-                <mat-option value="All">All</mat-option>
-                <mat-option value="InvoiveNo">Invoice No.</mat-option>
-                <mat-option value="BookingNo">Booking No.</mat-option>
-                <mat-option value="ContainerNo">Container No.</mat-option>
-                <mat-option value="SealNo">Seal No.</mat-option>
-
-            </mat-select>
-        </mat-form-field>
-
-        <form class="example-form">
-            <mat-form-field class="example-full-width" style="width:70%">
-                <mat-label>ค้นหา: </mat-label>
-                <input matInput placeholder="Booking No., Invoice No., Container No., Seal No.">
+    <div class="card">
+        <div class="card-body">
+            <!-- Main content -->
 
 
-            </mat-form-field>
-            <mat-icon matDatepickerToggleIcon (click)="searchTable($event)">search</mat-icon>
+            <table>
+                <tr>
+                    <td>
+                        <mat-form-field>
+                            <mat-label>ค้นหาด้วย: </mat-label>
 
-        </form>
+                            <mat-select matNativeControl required [formControl]="searchwithkey">
 
+                                <mat-option *ngFor="let kw of searchkey" [value]="kw.value">
+                                    {{kw.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </td>
+
+                    <td>
+
+                        <form class="example-form">
+                            <mat-form-field class="example-full-width" style="width:80%; display: inline-block;">
+                                <!-- <mat-label>ค้นหา: </mat-label> -->
+                                <input matInput placeholder="" [formControl]="searchkeyword">
+                            </mat-form-field>
+                            <mat-icon matDatepickerToggleIcon (click)="keyword()">search</mat-icon>
+
+                        </form>
+                    </td>
+                </tr>
+            </table>
+
+            <section class="content">
+                <div class="card">
+
+
+                    <div class="card-body pad table-responsive">
+                        <table class="table table-valign-middle text-center">
+                            <thead>
+                                <tr>
+                                    <th *ngFor="let head of TableHeader">{{head}}</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let rowData of TableData; let nRow = index">
+                                    <td>{{nRow + 1}}</td>
+                                    <td *ngFor="let objKey of _object.keys(rowData);">{{rowData[objKey]}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+        </div>
     </div>
-
-
-    <!-- <div style="padding: 10px;">ค้นหา:
-        <div style="display: inline-block;">
-            <input [(ngModel)]="sorting" class="form-control d-inline-block space-left" style="width: 25rem;"
-                placeholder="Booking No., Invoice No., Container No., Seal No.">
-
-
-        </div>
-        <div class="btn-group d-inline-block space-left">
-            <app-find-button style="width: 5rem; margin-top: 1rem; padding: 10px;"
-                (click)="printSearch($event, sorting)"></app-find-button>
-        </div> -->
-
-        <!-- <p>{{sorting}}</p> -->
-
-        <!-- <div  class="btn-group" style="text-align: right; width: 40%"><app-find-button style="width: 4rem; margin-top: 1rem;"></app-find-button></div> -->
-
-
-
-    <!-- </div> -->
-
-
-    <section class="content">
-        <div class="card">
-
-
-            <div class="card-body pad table-responsive">
-                <table class="table table-valign-middle text-center">
-                    <thead>
-                        <tr>
-                            <th *ngFor="let head of TableHeader">{{head}}</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr *ngFor="let rowData of TableData; let nRow = index">
-                            <td>{{nRow + 1}}</td>
-                            <td *ngFor="let objKey of _object.keys(rowData);">{{rowData[objKey]}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-    </section>
-
     <!---------------------------------- unused container section -->
 
     <app-content-header [ContentHeader]="content_header_name2"></app-content-header>

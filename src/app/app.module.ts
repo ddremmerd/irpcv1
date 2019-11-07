@@ -42,7 +42,8 @@ import { QuotaButtonComponent } from './components/quota-button/quota-button.com
 
 import { TableFilterPipe } from './components/ldlt3/table-filter.pipe';
 import { FindButtonComponent } from './components/find-button/find-button.component';
-
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 const appRoutes: Routes = [
@@ -103,6 +104,8 @@ const appRoutes: Routes = [
     MatIconModule,
     MatSortModule,
     MatTableModule,
+    SweetAlert2Module,
+    ReactiveFormsModule
     
   ],
   providers: [],
