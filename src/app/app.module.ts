@@ -1,18 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'
-import { RouterModule,Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AngularMaterialModule } from './angular-material.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { MatNativeDateModule } from '@angular/material';
-import { MatSelectModule} from '@angular/material/select';
-import { MatIconModule} from '@angular/material/icon';
-import { MatSortModule } from '@angular/material/sort'; 
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
+
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -43,8 +46,9 @@ import { QuotaButtonComponent } from './components/quota-button/quota-button.com
 import { TableFilterPipe } from './components/ldlt3/table-filter.pipe';
 import { FindButtonComponent } from './components/find-button/find-button.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import {ReactiveFormsModule} from '@angular/forms';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { Ldlt2Component } from './components/ldlt2/ldlt2.component';
+import { KeysPipe } from './components/ldlt2/keys.pipe';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -54,7 +58,8 @@ const appRoutes: Routes = [
   { path: 'ldlt3', component: Ldlt3Component },
   { path: 'ldlt4', component: Ldlt4Component },
   { path: 'ldlt1', component: Ldlt1Component },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }, 
+  { path: 'ldlt2', component: Ldlt2Component },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }
 ];
 
@@ -85,9 +90,11 @@ const appRoutes: Routes = [
     QuotaButtonComponent,
     TableFilterPipe,
     FindButtonComponent,
-  
+    Ldlt2Component,
+    KeysPipe
 
- 
+
+
   ],
   imports: [
     BrowserModule,
@@ -105,8 +112,10 @@ const appRoutes: Routes = [
     MatSortModule,
     MatTableModule,
     SweetAlert2Module,
-    ReactiveFormsModule
-    
+    ReactiveFormsModule,
+    Ng2SearchPipeModule,
+    MatCheckboxModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

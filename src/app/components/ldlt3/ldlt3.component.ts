@@ -1,5 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material';
 
 export interface TableDat {
   shipment_no: string;
@@ -62,11 +63,21 @@ export class Ldlt3Component implements OnInit {
   // _object = Object;
 
   sortedData: TableDat[];
+  dataSource: MatTableDataSource<TableDat>;
 
 
   constructor() {
     this.sortedData = this.TableData.slice();
+
+    
   }
+
+  
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  
 
   sortData(sort: Sort) {
     const data = this.TableData.slice();

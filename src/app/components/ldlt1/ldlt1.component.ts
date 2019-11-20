@@ -48,6 +48,7 @@ export class Ldlt1Component implements OnInit {
   events: string[] = [];
   public shipdiv: boolean = false;
   public shipdiv1: boolean = true;
+  search1;
 
 
   //-------------------------- get data
@@ -84,7 +85,7 @@ export class Ldlt1Component implements OnInit {
 
   TableData = [
     {
-      shipmentNum: "6asfdasf", deliveryNum: "DO-87897", invoiceNum: "IRPC-0909",
+      shipmentNum: "SN-88989", deliveryNum: "DO-87897", invoiceNum: "IRPC-0909",
       BookingNum: "BB-023113", closingTime: "09:10", grade: "A", quantity: 60, truckLoad: 90,
       shipmentType: "รถสิบล้อ", shipmentTail: "ipasdfp", urgentCar: "no",
       additionalTool: "on Pallet", packer: "folk-lift", remark: "KOPPER",
@@ -93,7 +94,7 @@ export class Ldlt1Component implements OnInit {
     },
 
     {
-      shipmentNum: "99SDAFFSAD", deliveryNum: "DO-1111", invoiceNum: "IRPC-11111",
+      shipmentNum: "SN-887765", deliveryNum: "DO-1111", invoiceNum: "IRPC-11111",
       BookingNum: "BB-32467", closingTime: "09:10", grade: "A", quantity: 40, truckLoad: 50,
       shipmentType: "รถพ่วง", shipmentTail: "qqqqqqqqq", urgentCar: "no",
       additionalTool: "None", packer: "Bulk", remark: "KDLLAO",
@@ -103,7 +104,16 @@ export class Ldlt1Component implements OnInit {
 
 
     {
-      shipmentNum: "sdfaff324234", deliveryNum: "DO-1971", invoiceNum: "IRPC-11111",
+      shipmentNum: "SN-878718", deliveryNum: "DO-1971", invoiceNum: "IRPC-116123",
+      BookingNum: "BB-32467", closingTime: "09:10", grade: "A", quantity: 40, truckLoad: 50,
+      shipmentType: "รถสิบล้อ พ่วงข้าง", shipmentTail: "qqqqqqqqq", urgentCar: "no",
+      additionalTool: "None", packer: "Bulk", remark: "KDLLAO",
+      pickupAt: "CNX", returnTo: "BKK", route: "no", outsidePickup: "no",
+      workerNum: 3, planningTime: "12.44"
+    },
+
+    {
+      shipmentNum: "SN-875165", deliveryNum: "DO-1977", invoiceNum: "IRPC-116123",
       BookingNum: "BB-32467", closingTime: "09:10", grade: "A", quantity: 40, truckLoad: 50,
       shipmentType: "รถสิบล้อ พ่วงข้าง", shipmentTail: "qqqqqqqqq", urgentCar: "no",
       additionalTool: "None", packer: "Bulk", remark: "KDLLAO",

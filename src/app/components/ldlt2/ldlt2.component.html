@@ -1,0 +1,170 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<app-footer></app-footer>
+
+<div class="content-wrapper">
+
+    <section class="content" style="padding: 10px;">
+        <div class="card">
+
+
+            <div class="card-body" style="font-size: 20px;">
+                <app-content-header [ContentHeader]="content_header_name"></app-content-header>
+
+                <div class="row">
+
+                    <table>
+                        <tr>
+                            <td style="padding: 30px;"> Loading Date:</td>
+                            <td style="padding: 5px;">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker1">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </td>
+                            <td style="padding: 30px;"> Invoice: </td>
+                            <td style="padding: 5px;">
+                                <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
+                                    <input matInput placeholder="Invoice No.">
+                                </mat-form-field>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding: 30px;"> Plant:</td>
+                            <td style="padding: 5px;">
+                                <mat-form-field style="width:100%;">
+                                    <mat-select [formControl]="plantNum" multiple>
+                                        <mat-option *ngFor="let plantno of plantList" [value]="plantno">{{plantno}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td style="padding: 30px;"> Shipment: </td>
+                            <td style="padding: 5px;">
+                                <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
+                                    <input matInput placeholder="Shipment No.">
+                                </mat-form-field>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding: 30px;"> DC:</td>
+                            <td style="padding: 5px;">
+                                <mat-form-field style="width:100%;">
+                                    <mat-select [formControl]="warehouseNum" multiple>
+                                        <mat-option *ngFor="let wareno of plantList" [value]="wareno">{{wareno}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td style="padding: 30px;"> Delivery: </td>
+                            <td style="padding: 5px;">
+                                <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
+                                    <input matInput placeholder="D/O No.">
+                                </mat-form-field>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding: 30px;"> Type:</td>
+                            <td style="padding: 5px;">
+                                <mat-form-field style="width:100%;">
+                                    <mat-select [formControl]="shipmentType" multiple>
+                                        <mat-option *ngFor="let shipType of shipmenttypeList" [value]="shipType">
+                                            {{shipType}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </td>
+                            <td style="padding: 5px;"> </td>
+                            <td style="padding: 5px;" style="text-align: right;">
+                                <div class="btn-group" style="text-align: right; width: 40%">
+                                    <app-find-button style="width: 10rem; margin-top: 1rem; font-size: 50px;"
+                                        (click)="datatoSearch()">
+                                    </app-find-button>
+                                </div>
+                                <br>
+                                <mat-checkbox class="example-margin" [(ngModel)]="checked" (change)="refresh($event)">
+                                    รีเฟรชทุก 1 นาที</mat-checkbox>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td style="padding: 30px;"> Status:</td>
+                            <td style="padding: 5px;">
+                                <mat-form-field style="width:100%;">
+                                    <mat-select [formControl]="statusNum" multiple>
+                                        <mat-option *ngFor="let stat of statusList" [value]="stat">{{stat}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td style="padding: 5px;"> </td>
+                            <td style="padding: 5px;">
+
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
+                <div class="card-body pad table-responsive" style="font-size: 20px;">
+                    <div class="row">
+
+                        <table class="table table-valign-middle text-center " style="max-width: 100%;">
+                            <!-- header of table -->
+                            <thead>
+                                <th>Step No.</th>
+                                <!-- <th *ngFor="let head2 of tableHeader; let nHeader=index">
+                                {{head2}}
+                            </th> -->
+
+                                <th *ngFor="let head2 of tableData[0] | keys">
+                                    <div *ngIf="head2 ==='loadingDate'">Loading Data</div>
+                                    <div *ngIf="head2 ==='dcNo'">DC No</div>
+                                    <div *ngIf="head2 ==='shipType'">Shipment Type</div>
+                                    <div *ngIf="head2 ==='status'">Status</div>
+                                    <div *ngIf="head2 ==='cusPickup'">ข้อมูลการขับรถลูกค้ารับเอง</div>
+                                    <div *ngIf="head2 ==='shipmentNo'">Shipment No.</div>
+                                    <div *ngIf="head2 ==='deliverNo'">Delivery No.</div>
+                                    <div *ngIf="head2 ==='matDoc'">Mat Doc.</div>
+                                    <div *ngIf="head2 ==='grade'">Grade</div>
+                                    <div *ngIf="head2 ==='lot'">LOT</div>
+                                    <div *ngIf="head2 ==='quantity'">QTY</div>
+                                    <div *ngIf="head2 ==='truckload'">Turck Load</div>
+                                    <div *ngIf="head2 ==='customer'">CUSTOMER</div>
+                                    <div *ngIf="head2 ==='planningTime'">Planning Time</div>
+                                    <div *ngIf="head2 ==='prodPrepTime'">Production Preparation Time</div>
+                                    <div *ngIf="head2 ==='truckCheckTime'">Truck Check in Time</div>
+                                    <div *ngIf="head2 ==='driverCheckTime'">Driver Check in Time</div>
+                                    <div *ngIf="head2 ==='LoadingTime'">Loading Start Time</div>
+                                    <div *ngIf="head2 ==='weightinTime'">Weight In Time</div>
+                                    <div *ngIf="head2 ==='labourRegTime'">Labour Register Time</div>
+                                    <div *ngIf="head2 ==='weightoutTime'">Weight Out Time</div>
+
+                                </th>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let item of tableData; let nRow = index;">
+                                    <td>{{nRow+1}}</td>
+                                    <td *ngFor="let list of item | keys">{{item[list]}}</td>
+
+                                </tr>
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+</div>

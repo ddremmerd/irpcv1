@@ -27,8 +27,7 @@ export class Ldlt4Component implements OnInit {
 
   content_header_name2 = "ตู้คอนเทนเนอร์ที่ไม่ถูกใช้งานใน .... วัน";
 
-  TableHeader = ["No.", "วันที่เข้ารับสินค้า", "INVOICE NO.", "AGENT", "รับตู้ (PICK UP AT)", "คืนตู้ (RETURN TO)",
-    "คืนตู้ (RETURN TO)", "CLOSING DATE", "CLOSING TIME", "ETD LCB", "วันที่รับตู้เปล่า", "CONTAINER NO.", "SEAL NO.",
+  TableHeader = ["No.", "วันที่เข้ารับสินค้า", "INVOICE NO.", "AGENT","Bookig No.", "รับตู้ (PICK UP AT)", "คืนตู้ (RETURN TO)", "CLOSING DATE", "CLOSING TIME", "ETD LCB", "วันที่รับตู้เปล่า", "CONTAINER NO.", "SEAL NO.",
     "น้ำหนักตู้เปล่า(VGM Tare)", "SIZE CONTAINER (“)", "วันที่คืนตู้หนัก", "REMARKS", "เวลาบันทึกล่าสุด"];
 
   TableData = [
