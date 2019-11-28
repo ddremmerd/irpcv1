@@ -42,30 +42,30 @@ export class Ldlt2Component implements OnInit {
     //   shipmentNo: "62123"
     // },
 
-    // {
-    //   loadingDate: "21-11-2019",
-    //   shipType: "Z105",
-    //   dcNo: "WH44",
-    //   // status:"Planning Time", 
-    //   shipmentNo: "66666"
-    // },
-
-
-
     {
-      loadingDate: "22-11-2019",
-      shipType: "Z115",
-      dcNo: "WH40",
-      status: "Planning Time", cusPickup: "10-395 สมเดช",
-      shipmentNo: "66666", deliverNo: "30219123", matDoc: "Default",
-      // grade: "1102K", lot: "123019", quantity: "10000",
-      // truckload: "15000", customer: "ABC", planningTime: "09:00",
-      // prodPrepTime: "08:30", truckCheckTime: "08:50", driverCheckTime: "08:30",
-      // LoadingTime: "09:00", weightinTime: "09:12",
-      labourRegTime: "09:35", weightoutTime: "09:39"
-
-
+      loadingDate: "21-11-2019",
+      shipType: "Z105",
+      dcNo: "WH44",
+      // status:"Planning Time", 
+      shipmentNo: "66666"
     }
+
+
+
+    // {
+    //   loadingDate: "22-11-2019",
+    //   shipType: "Z115",
+    //   dcNo: "WH40",
+    //   status: "Planning Time", cusPickup: "10-395 สมเดช",
+    //   shipmentNo: "66666", deliverNo: "30219123", matDoc: "Default",
+    //   grade: "1102K", lot: "123019", quantity: "10000",
+    //   truckload: "15000", customer: "ABC", planningTime: "09:00",
+    //   prodPrepTime: "08:30", truckCheckTime: "08:50", driverCheckTime: "08:30",
+    //   LoadingTime: "09:00", weightinTime: "09:12",
+    //   labourRegTime: "09:35", weightoutTime: "09:39"
+
+
+    // }
 
 
 
@@ -80,22 +80,27 @@ export class Ldlt2Component implements OnInit {
 
 
   datatoSearch() {
-    console.log("ค้นหา");
+    console.log(Math.floor(Date.now() / 1000)+"ค้นหา");
+    console.warn(this.plantNum.value);
 
   }
 
+
   refresh(check){
 
+   
       if(check.checked == true){
-        setInterval(this.datatoSearch, 5000);
+        var t = setInterval(this.datatoSearch, 5000);
       }else{
         console.log("cancel refresh");
+        clearInterval(t);
       }
       
     
  
   }
 
+  
 
 
 }

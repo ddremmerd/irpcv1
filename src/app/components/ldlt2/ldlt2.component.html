@@ -15,16 +15,16 @@
 
                     <table>
                         <tr>
-                            <td style="padding: 30px;"> Loading Date:</td>
-                            <td style="padding: 5px;">
+                            <td style="padding-left: 30px;"> Loading Date:</td>
+                            <td>
                                 <mat-form-field>
                                     <input matInput [matDatepicker]="picker1">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>
                             </td>
-                            <td style="padding: 30px;"> Invoice: </td>
-                            <td style="padding: 5px;">
+                            <td style="padding-left: 30px;"> Invoice: </td>
+                            <td>
                                 <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
                                     <input matInput placeholder="Invoice No.">
                                 </mat-form-field>
@@ -32,8 +32,8 @@
                         </tr>
 
                         <tr>
-                            <td style="padding: 30px;"> Plant:</td>
-                            <td style="padding: 5px;">
+                            <td style="padding-left: 30px;"> Plant:</td>
+                            <td>
                                 <mat-form-field style="width:100%;">
                                     <mat-select [formControl]="plantNum" multiple>
                                         <mat-option *ngFor="let plantno of plantList" [value]="plantno">{{plantno}}
@@ -41,8 +41,8 @@
                                     </mat-select>
                                 </mat-form-field>
                             </td>
-                            <td style="padding: 30px;"> Shipment: </td>
-                            <td style="padding: 5px;">
+                            <td style="padding-left: 30px;"> Shipment: </td>
+                            <td>
                                 <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
                                     <input matInput placeholder="Shipment No.">
                                 </mat-form-field>
@@ -50,17 +50,17 @@
                         </tr>
 
                         <tr>
-                            <td style="padding: 30px;"> DC:</td>
-                            <td style="padding: 5px;">
+                            <td style ="padding-left: 30px;"> DC:</td>
+                            <td>
                                 <mat-form-field style="width:100%;">
                                     <mat-select [formControl]="warehouseNum" multiple>
-                                        <mat-option *ngFor="let wareno of plantList" [value]="wareno">{{wareno}}
+                                        <mat-option *ngFor="let wareno of warehouseList" [value]="wareno">{{wareno}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </td>
-                            <td style="padding: 30px;"> Delivery: </td>
-                            <td style="padding: 5px;">
+                            <td style ="padding-left: 30px;"> Delivery: </td>
+                            <td>
                                 <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
                                     <input matInput placeholder="D/O No.">
                                 </mat-form-field>
@@ -68,8 +68,8 @@
                         </tr>
 
                         <tr>
-                            <td style="padding: 30px;"> Type:</td>
-                            <td style="padding: 5px;">
+                            <td style ="padding-left: 30px;"> Type:</td>
+                            <td>
                                 <mat-form-field style="width:100%;">
                                     <mat-select [formControl]="shipmentType" multiple>
                                         <mat-option *ngFor="let shipType of shipmenttypeList" [value]="shipType">
@@ -79,10 +79,10 @@
                                 </mat-form-field>
 
                             </td>
-                            <td style="padding: 5px;"> </td>
-                            <td style="padding: 5px;" style="text-align: right;">
-                                <div class="btn-group" style="text-align: right; width: 40%">
-                                    <app-find-button style="width: 10rem; margin-top: 1rem; font-size: 50px;"
+                            <td> </td>
+                            <td style="text-align: right;">
+                                <div class="btn-group" style="text-align: right; width: 100%">
+                                    <app-find-button style="width: 10rem;" class="d-inline-block"
                                         (click)="datatoSearch()">
                                     </app-find-button>
                                 </div>
@@ -94,8 +94,8 @@
                         </tr>
 
                         <tr>
-                            <td style="padding: 30px;"> Status:</td>
-                            <td style="padding: 5px;">
+                            <td style ="padding-left: 30px;"> Status:</td>
+                            <td>
                                 <mat-form-field style="width:100%;">
                                     <mat-select [formControl]="statusNum" multiple>
                                         <mat-option *ngFor="let stat of statusList" [value]="stat">{{stat}}
@@ -103,15 +103,14 @@
                                     </mat-select>
                                 </mat-form-field>
                             </td>
-                            <td style="padding: 5px;"> </td>
-                            <td style="padding: 5px;">
-
-                            </td>
+             
                         </tr>
 
 
                     </table>
                 </div>
+
+
                 <div class="card-body pad table-responsive" style="font-size: 20px;">
                     <div class="row">
 
