@@ -1,0 +1,174 @@
+<app-header></app-header>
+<app-sidebarldls></app-sidebarldls>
+<app-footer></app-footer>
+<div class="content-wrapper">
+    <section class="content" style="padding: 10px;">
+        <div class="card">
+            <div class="card-body" style="font-size: 20px;">
+                <app-content-header [ContentHeader]="content_header_name"></app-content-header>
+                <div class="row">
+
+                    <table>
+                        <tr>
+                            <td style="padding-left: 30px;">Loading Date:</td>
+                            <td>
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker1">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td style="padding-left: 30px;">WH:</td>
+                            <td>
+                                <mat-form-field style="width:100%;">
+                                    <mat-select [formControl]="warehouseNum" multiple>
+                                        <mat-option *ngFor="let wareno of warehouseList" [value]="wareno">{{wareno}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td style="padding-left: 30px;">สถานะ:</td>
+                            <td>
+                                <mat-form-field style="width:100%;">
+                                    <mat-select [formControl]="statusNum" (selectionChange)="selected($event.value)">
+                                        <mat-option *ngFor="let stat of statusList" [value]="stat">{{stat}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td></td>
+
+                            <td style="text-align: right;">
+                                <div class="btn-group" style="text-align: right; width: 100%">
+                                    <app-find-button style="width: 10rem;" class="d-inline-block"
+                                        (click)="datatoSearch()">
+                                    </app-find-button>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="card-body pad table-responsive" style="font-size: 20px;">
+                <div class="row">
+                    <table class="table table-valign-middle text-center " style="max-width: 100%;">
+                        <!-- header of table -->
+                        <thead>
+                            <th class="light-gray-bg">ลำดับ</th>
+                            <th class="light-gray-bg">Shipment Type</th>
+                            <th class="light-gray-bg">ทะเบียน</th>
+                            <th class="light-gray-bg">หน้าท่า</th>
+                            <th class="light-gray-bg">ช่องบรรจุสินค้า</th>
+                            <th class="light-gray-bg">Shipment No.</th>
+                            <th class="light-gray-bg">Deliver No.</th>
+                            <th class="light-gray-bg">Grade</th>
+                            <th class="light-gray-bg">Qty</th>
+                            <th class="light-gray-bg">ประเภท</th>
+                            <th class="light-gray-bg">คนงานที่ 1</th>
+                            <th class="light-gray-bg">คนงานที่ 2</th>
+                            <th class="light-gray-bg"></th>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let data of TableData; let i =index;" [attr.id]="i">
+                                <td>{{i+1}}</td>
+                                <td>{{data.shipmentType}}</td>
+                                <td>{{data.carLicense}}</td>
+                                <td>{{data.wareNum}}</td>
+                                <td>{{data.containNum}}</td>
+                                <td>{{data.shipmentNum}}</td>
+                                <td>{{data.deliverNo}}</td>
+                                <td>{{data.grade}}</td>
+                                <td>{{data.qty}}</td>
+                                <td>
+                                    <ng-container *ngIf="show">
+                                        <mat-form-field style="width:100%;">
+                                            <mat-select [formControl]="prodPack">
+                                                <mat-option *ngFor="let prod of prodPackList" [value]="prod">
+                                                    {{prod}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="show1">
+                                        {{data.prodType}}
+                                    </ng-container>
+                                </td>
+
+                                <td>
+                                    <ng-container *ngIf="show">
+                                        <mat-form-field style="width:100%;">
+                                            <mat-select [formControl]="worker1">
+                                                <mat-option *ngFor="let work1 of worker1List" [value]="work1">
+                                                    {{work1}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="show1">
+                                        {{data.workern1}}
+                                    </ng-container>
+
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="show">
+                                        <mat-form-field style="width:100%;">
+                                            <mat-select [formControl]="worker2">
+                                                <mat-option *ngFor="let work2 of worker2List" [value]="work2">
+                                                    {{work2}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="show1">
+                                        {{data.workern2}}
+                                    </ng-container>
+
+                                </td>
+
+                                <td>
+                                    <ng-container *ngIf="show">
+                                        <button type="button" class="btn btn-block btn-success btn-sm"
+                                            (click)="sendStart(i)">เริ่ม</button>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="show1">
+                                        <button type="button" class="btn btn-block btn-warning btn-sm"
+                                            (click)="sendEnd(i)">จบงาน</button>
+                                    </ng-container>
+                                </td>
+
+
+
+
+                            </tr>
+                        </tbody>
+
+
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+</div>

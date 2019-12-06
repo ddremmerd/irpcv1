@@ -1,0 +1,141 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<app-footer></app-footer>
+<div class="content-wrapper">
+    <section class="content" style="padding: 10px;">
+        <div class="card">
+            <div class="card-body" style="font-size: 20px;">
+                <app-content-header [ContentHeader]="content_header_name"></app-content-header>
+
+                <div class="row">
+                    <!-- <br> -->
+                    <div style="padding-left: 20px; max-width: 100%;">
+                        <table>
+                            <tr>
+                                <td style="padding: 5px;">ประเภทงาน:</td>
+                                <td style="padding: 5px;">ผู้ขนส่ง:</td>
+                                <td style="padding: 5px;">สถานะรถ:</td>
+                                <td style="padding: 5px;"></td>
+                                <td style="padding: 5px;"></td>
+                                <td style="padding: 5px;"></td>
+
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 5px;">
+                                    <mat-form-field style="width:100%;">
+                                        <mat-select [formControl]="ShipType">
+                                            <mat-option *ngFor="let ship of shipTypeList" [value]="ship">{{ship}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+
+                                <td style="padding: 5px;">
+                                    <mat-form-field style="width:100%;">
+                                        <mat-select [formControl]="transportName">
+                                            <mat-option *ngFor="let transName of transNameList" [value]="transName">
+                                                {{transName}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+
+                                <td style="padding: 5px;">
+                                    <mat-form-field style="width:100%;">
+                                        <mat-select [formControl]="tranStatus">
+                                            <mat-option *ngFor="let transtat of tranStatusList" [value]="transtat">
+                                                {{transtat}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+
+                                <td style="padding: 5px;">
+                                    <mat-form-field class="example-full-width"
+                                        style="width:100%; display: inline-block;">
+                                        <input matInput placeholder="Shipment No." [formControl]="shipNum">
+                                    </mat-form-field>
+                                </td>
+
+                                <td style="padding: 5px;">
+                                    <mat-form-field class="example-full-width"
+                                        style="width:100%; display: inline-block;">
+                                        <input matInput placeholder="License No." [formControl]="licenseNum">
+                                    </mat-form-field>
+                                </td>
+
+                                <td style="padding: 5px; padding-bottom: 30px;">
+                                    <app-find-button style="width: rem;" class="d-inline-block"
+                                        (click)="datatoSearch()">
+                                    </app-find-button>
+                                </td>
+
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <form class="example-form">
+                                        <mat-form-field class="example-full-width">
+                                            <input type="text" placeholder="Pick one" aria-label="Number" matInput
+                                                [formControl]="myControl" [matAutocomplete]="auto">
+                                            <mat-autocomplete #auto="matAutocomplete">
+                                                <mat-option *ngFor="let option of filteredOptions | async"
+                                                    [value]="option">
+                                                    {{option}}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                    </form>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- table and gmap section -->
+            <div class="card-body" style="font-size: 20px;">
+                <div class="row">
+
+                    <div class="col-lg-4">
+
+                        <div class="card-body pad table-responsive p-0" style="height: 500px;">
+
+                            <table class="table table-head-fixed table-valign-middle text-center table-bordered">
+                                <thead>
+                                    <th class="light-gray-bg">ลำดับ</th>
+                                    <th class="light-gray-bg" *ngFor="let head of TableHeader">{{head}}</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of TableData; let i = index;">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data.shipNum}}</td>
+                                        <td>{{data.carStatus}}</td>
+                                        <td>{{data.transName}}</td>
+                                        <td>{{data.carLicense}}</td>
+                                        <td>{{data.workName}}</td>
+                                        <td>{{data.departTime}}</td>
+                                        <td>{{data.feedTime}}</td>
+                                        <td>{{data.arriveCus}}</td>
+                                        <td>{{data.estTime}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-8" style="background-color: rgb(61, 146, 101);">
+                        LIOOOONNN KINGGGF
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+</div>

@@ -21,8 +21,16 @@ export class LoginComponent implements OnInit {
       // window.alert("log in success");
       this.router.navigate(["vendor1"]);
     }
+    
+
+    else if(this.mUsername =="ship" && this.mPassword == "1234"){
+      this.router.navigate(["ldls1"]);
+      console.log("ship page");
+    }
+    
     else{
       window.alert("log in fail");
     }
+
   }
 }

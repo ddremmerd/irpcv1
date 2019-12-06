@@ -14,7 +14,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
@@ -49,6 +49,11 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Ldlt2Component } from './components/ldlt2/ldlt2.component';
 import { KeysPipe } from './components/ldlt2/keys.pipe';
+import { Ldls1Component } from './components/ldls1/ldls1.component';
+import { SidebarldlsComponent } from './components/sidebarldls/sidebarldls.component';
+import { Ldls2Component } from './components/ldls2/ldls2.component';
+import { Ldls3Component } from './components/ldls3/ldls3.component';
+import { Ldlt5Component } from './components/ldlt5/ldlt5.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -57,8 +62,13 @@ const appRoutes: Routes = [
   { path: 'vendor3', component: Vendor3Component },
   { path: 'ldlt3', component: Ldlt3Component },
   { path: 'ldlt4', component: Ldlt4Component },
+  { path: 'ldlt5', component: Ldlt5Component },
   { path: 'ldlt1', component: Ldlt1Component },
   { path: 'ldlt2', component: Ldlt2Component },
+  { path: 'ldls1', component: Ldls1Component },
+  { path: 'ldls2', component: Ldls2Component },
+  { path: 'ldls3', component: Ldls3Component },
+
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }
 ];
@@ -91,7 +101,12 @@ const appRoutes: Routes = [
     TableFilterPipe,
     FindButtonComponent,
     Ldlt2Component,
-    KeysPipe
+    KeysPipe,
+    Ldls1Component,
+    SidebarldlsComponent,
+    Ldls2Component,
+    Ldls3Component,
+    Ldlt5Component
 
 
 
@@ -114,7 +129,8 @@ const appRoutes: Routes = [
     SweetAlert2Module,
     ReactiveFormsModule,
     Ng2SearchPipeModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatAutocompleteModule
 
   ],
   providers: [],
