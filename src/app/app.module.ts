@@ -12,9 +12,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
@@ -55,6 +55,12 @@ import { Ldls2Component } from './components/ldls2/ldls2.component';
 import { Ldls3Component } from './components/ldls3/ldls3.component';
 import { Ldlt5Component } from './components/ldlt5/ldlt5.component';
 
+
+//-----date picker
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+
+
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'vendor1', component: Vendor1Component },
@@ -72,6 +78,18 @@ const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }
 ];
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'L',
+  },
+  display: {
+    dateInput: 'L',
+    monthYearLabel: 'MM YYYY',
+    dateA11yLabel: 'L',
+    monthYearA11yLabel: 'MM YYYY',
+  },
+}
 
 
 @NgModule({
@@ -133,7 +151,16 @@ const appRoutes: Routes = [
     MatAutocompleteModule
 
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

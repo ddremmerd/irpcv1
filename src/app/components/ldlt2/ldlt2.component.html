@@ -17,16 +17,19 @@
                         <tr>
                             <td style="padding-left: 30px;"> Loading Date:</td>
                             <td>
-                                <mat-form-field>
+                                <!-- <mat-form-field>
                                     <input matInput [matDatepicker]="picker1">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
-                                </mat-form-field>
+                                </mat-form-field> -->
+
+                                <app-date-picker (FindDateSelected)="GetDate($event)"></app-date-picker>
+
                             </td>
                             <td style="padding-left: 30px;"> Invoice: </td>
                             <td>
                                 <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
-                                    <input matInput placeholder="Invoice No.">
+                                    <input matInput placeholder="Invoice No." [formControl] ="invoiceNo">
                                 </mat-form-field>
                             </td>
                         </tr>
@@ -44,7 +47,7 @@
                             <td style="padding-left: 30px;"> Shipment: </td>
                             <td>
                                 <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
-                                    <input matInput placeholder="Shipment No.">
+                                    <input matInput placeholder="Shipment No." [formControl] ="shipmentNo">
                                 </mat-form-field>
                             </td>
                         </tr>
@@ -62,7 +65,7 @@
                             <td style ="padding-left: 30px;"> Delivery: </td>
                             <td>
                                 <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
-                                    <input matInput placeholder="D/O No.">
+                                    <input matInput placeholder="D/O No." [formControl] ="deliveryNo">
                                 </mat-form-field>
                             </td>
                         </tr>
@@ -81,6 +84,8 @@
                             </td>
                             <td> </td>
                             <td style="text-align: right;">
+                                <p (click)="clearSearch()"><u>Click เพื่อล้างข้อมูลการค้นหา</u></p>
+                            
                                 <div class="btn-group" style="text-align: right; width: 100%">
                                     <app-find-button style="width: 10rem;" class="d-inline-block"
                                         (click)="datatoSearch()">
@@ -89,6 +94,7 @@
                                 <br>
                                 <mat-checkbox class="example-margin" [(ngModel)]="checked" (change)="refresh($event)">
                                     รีเฟรชทุก 1 นาที</mat-checkbox>
+
                             </td>
 
                         </tr>
