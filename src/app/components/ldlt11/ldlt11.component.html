@@ -1,0 +1,122 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<app-footer></app-footer>
+<div class="content-wrapper">
+    <section class="content" style="padding: 10px;">
+        <div class="card">
+            <div class="card-body" style="font-size: 20px;">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <app-content-header [ContentHeader]="content_header_name"></app-content-header>
+                        <table>
+                            <tr>
+                                <td style="padding-left: 20px;">ประเภทงาน:</td>
+                                <td style="padding-left: 20px;">
+                                    <app-dropdown [options]="AllAgentOptions" [selectValue]="SelectedAgent"
+                                        [ddName]="'agent'" (SelectedDdValue)="SelectedToSearch($event)">
+                                    </app-dropdown>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding-left: 20px;">สถานะ:</td>
+                                <td style="padding-left: 20px;">
+                                    <mat-form-field>
+                                        <mat-select [formControl]="shipmentStatus">
+                                            <mat-option *ngFor="let shipStatus of shipment_Status" [value]="shipStatus">
+                                                {{shipStatus}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!-- ----------------------------table area -->
+
+
+            <div class="card-body pad table-responsive">
+                <table class="table table-valign-middle text-center table-bordered">
+                    <thead>
+                        <th class="light-gray-bg">No.</th>
+                        <th class="light-gray-bg">Shipment No.</th>
+                        <th class="light-gray-bg">Delivery No.</th>
+                        <th class="light-gray-bg">Invoice No.</th>
+                        <th class="light-gray-bg">Booking No.</th>
+                        <th class="light-gray-bg">Closing Time</th>
+                        <th class="light-gray-bg">Grade</th>
+                        <th class="light-gray-bg">Qty(kg)</th>
+                        <th class="light-gray-bg">Truck Load</th>
+                        <th class="yellow-bg">ประเภทรถ</th>
+                        <th class="yellow-bg">Shipment (หาง)</th>
+                        <th class="yellow-bg">รถตีด่วน</th>
+                        <th class="yellow-bg">ต้องการอุปกรณ์</th>
+                        <th class="yellow-bg">คนบรรจุสินค้า</th>
+                        <th class="light-gray-bg">Remarks</th>
+                        <th class="light-gray-bg">Pick Up At</th>
+                        <th class="light-gray-bg">Return To</th>
+                        <th class="yellow-bg">Route</th>
+                        <th class="yellow-bg">รับของข้างนอก</th>
+                        <th class="light-gray-bg">จำนวนกรรมกรลงสินค้า</th>
+                        <th class="yellow-bg">Planning Time</th>
+                        <th class="light-gray-bg"></th>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let data of sim_ResProcessSearch.result; let i =index;">
+                            <td>{{i+1}}</td>
+                            <td>{{data.shipment_No}}</td>
+                            <td>{{data.deliver_No}}</td>
+                            <td>{{data.invoice_No}}</td>
+                            <td>{{data.booinkg_No}}</td>
+                            <td>{{data.closing_time}}</td>
+                            <td>{{data.qty}}</td>
+                            <td>{{data.mat_no}}</td>
+                            <td>{{data.truck_Load}}</td>
+                            <!-------- DONT FORGET TO SET CONDITION FOR DISPLAY -->
+                            <td>
+                                <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                    <ng-container *ngIf="AllVehicleOption.length > 0">
+                                        <app-dropdown [options]="AllVehicleOption"
+                                            [selectValue]="SelectedVehicleGroup[i]" [ddName]="'vehicleGroup'"
+                                            [index_row]="i" (SelectedDdValue)="SelectedToSearch($event)">
+                                        </app-dropdown>
+                                    </ng-container>
+                                </ng-container>
+
+                                <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                    {{data.vehicle_group_desc}}
+                                </ng-container>
+                            </td>
+                            <td>{{data.shipments_link_id}}</td>
+                            <td>{{data.isStat}}</td>
+                            <td>{{data.req_qequipments}}</td>
+                            <td>{{data.type_packing_name}}</td>
+                            <td>{{data.remark}}</td>
+                            <td>{{data.pick_up_at}}</td>
+                            <td>{{data.return_to}}</td>
+                            <td>{{data.route_name}}</td>
+                            <td>{{data.isOutside}}</td>
+                            <td>{{data.total_worker}}</td>
+                            <td>{{data.plannig_Datetime}}</td>
+                            <td>
+                                <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                    <button type="button" class="btn btn-block btn-success btn-sm">ส่ง Quota</button>
+                                </ng-container>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+</div>

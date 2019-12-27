@@ -1,8 +1,9 @@
-<!-- Main content -->
-<section class="content">
-  <mat-form-field>
-    <input matInput [matDatepicker]="picker3" [value]="date.value">
-    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-    <mat-datepicker #picker3></mat-datepicker>
-  </mat-form-field>
-</section>
+<mat-form-field class="example-full-width" style="width:7em">
+
+  <input matInput [matDatepicker]="picker" 
+  (dateChange)="GetDate('change',$event.value)" [value]="date.value">
+  <mat-datepicker-toggle matSuffix [for]="picker">
+    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+  </mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>

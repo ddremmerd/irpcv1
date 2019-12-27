@@ -59,6 +59,8 @@ import { Ldlt5Component } from './components/ldlt5/ldlt5.component';
 //-----date picker
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { Ldlt11Component } from './components/ldlt11/ldlt11.component';
 
 
 const appRoutes: Routes = [
@@ -74,6 +76,9 @@ const appRoutes: Routes = [
   { path: 'ldls1', component: Ldls1Component },
   { path: 'ldls2', component: Ldls2Component },
   { path: 'ldls3', component: Ldls3Component },
+  { path: 'ldlt11', component: Ldlt11Component },
+
+
 
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }
@@ -124,7 +129,9 @@ export const MY_FORMATS = {
     SidebarldlsComponent,
     Ldls2Component,
     Ldls3Component,
-    Ldlt5Component
+    Ldlt5Component,
+    DropdownComponent,
+    Ldlt11Component
 
 
 

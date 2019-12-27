@@ -17,19 +17,12 @@
                         <tr>
                             <td style="padding-left: 30px;"> Loading Date:</td>
                             <td>
-                                <!-- <mat-form-field>
-                                    <input matInput [matDatepicker]="picker1">
-                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker1></mat-datepicker>
-                                </mat-form-field> -->
-
                                 <app-date-picker (FindDateSelected)="GetDate($event)"></app-date-picker>
-
                             </td>
                             <td style="padding-left: 30px;"> Invoice: </td>
                             <td>
                                 <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
-                                    <input matInput placeholder="Invoice No." [formControl] ="invoiceNo">
+                                    <input matInput placeholder="Invoice No." [formControl]="invoiceNo">
                                 </mat-form-field>
                             </td>
                         </tr>
@@ -47,13 +40,13 @@
                             <td style="padding-left: 30px;"> Shipment: </td>
                             <td>
                                 <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
-                                    <input matInput placeholder="Shipment No." [formControl] ="shipmentNo">
+                                    <input matInput placeholder="Shipment No." [formControl]="shipmentNo">
                                 </mat-form-field>
                             </td>
                         </tr>
 
                         <tr>
-                            <td style ="padding-left: 30px;"> DC:</td>
+                            <td style="padding-left: 30px;"> DC:</td>
                             <td>
                                 <mat-form-field style="width:100%;">
                                     <mat-select [formControl]="warehouseNum" multiple>
@@ -62,16 +55,16 @@
                                     </mat-select>
                                 </mat-form-field>
                             </td>
-                            <td style ="padding-left: 30px;"> Delivery: </td>
+                            <td style="padding-left: 30px;"> Delivery: </td>
                             <td>
                                 <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
-                                    <input matInput placeholder="D/O No." [formControl] ="deliveryNo">
+                                    <input matInput placeholder="D/O No." [formControl]="deliveryNo">
                                 </mat-form-field>
                             </td>
                         </tr>
 
                         <tr>
-                            <td style ="padding-left: 30px;"> Type:</td>
+                            <td style="padding-left: 30px;"> Type:</td>
                             <td>
                                 <mat-form-field style="width:100%;">
                                     <mat-select [formControl]="shipmentType" multiple>
@@ -85,7 +78,7 @@
                             <td> </td>
                             <td style="text-align: right;">
                                 <p (click)="clearSearch()"><u>Click เพื่อล้างข้อมูลการค้นหา</u></p>
-                            
+
                                 <div class="btn-group" style="text-align: right; width: 100%">
                                     <app-find-button style="width: 10rem;" class="d-inline-block"
                                         (click)="datatoSearch()">
@@ -100,7 +93,7 @@
                         </tr>
 
                         <tr>
-                            <td style ="padding-left: 30px;"> Status:</td>
+                            <td style="padding-left: 30px;"> Status:</td>
                             <td>
                                 <mat-form-field style="width:100%;">
                                     <mat-select [formControl]="statusNum" multiple>
@@ -109,7 +102,7 @@
                                     </mat-select>
                                 </mat-form-field>
                             </td>
-             
+
                         </tr>
 
 
@@ -118,54 +111,35 @@
 
 
                 <div class="card-body pad table-responsive" style="font-size: 20px;">
-                    <div class="row">
 
-                        <table class="table table-valign-middle text-center " style="max-width: 100%;">
-                            <!-- header of table -->
-                            <thead>
-                                <th>Step No.</th>
-                                <!-- <th *ngFor="let head2 of tableHeader; let nHeader=index">
-                                {{head2}}
-                            </th> -->
-
-                                <th *ngFor="let head2 of tableData[0] | keys">
-                                    <div *ngIf="head2 ==='loadingDate'">Loading Data</div>
-                                    <div *ngIf="head2 ==='dcNo'">DC No</div>
-                                    <div *ngIf="head2 ==='shipType'">Shipment Type</div>
-                                    <div *ngIf="head2 ==='status'">Status</div>
-                                    <div *ngIf="head2 ==='cusPickup'">ข้อมูลการขับรถลูกค้ารับเอง</div>
-                                    <div *ngIf="head2 ==='shipmentNo'">Shipment No.</div>
-                                    <div *ngIf="head2 ==='deliverNo'">Delivery No.</div>
-                                    <div *ngIf="head2 ==='matDoc'">Mat Doc.</div>
-                                    <div *ngIf="head2 ==='grade'">Grade</div>
-                                    <div *ngIf="head2 ==='lot'">LOT</div>
-                                    <div *ngIf="head2 ==='quantity'">QTY</div>
-                                    <div *ngIf="head2 ==='truckload'">Turck Load</div>
-                                    <div *ngIf="head2 ==='customer'">CUSTOMER</div>
-                                    <div *ngIf="head2 ==='planningTime'">Planning Time</div>
-                                    <div *ngIf="head2 ==='prodPrepTime'">Production Preparation Time</div>
-                                    <div *ngIf="head2 ==='truckCheckTime'">Truck Check in Time</div>
-                                    <div *ngIf="head2 ==='driverCheckTime'">Driver Check in Time</div>
-                                    <div *ngIf="head2 ==='LoadingTime'">Loading Start Time</div>
-                                    <div *ngIf="head2 ==='weightinTime'">Weight In Time</div>
-                                    <div *ngIf="head2 ==='labourRegTime'">Labour Register Time</div>
-                                    <div *ngIf="head2 ==='weightoutTime'">Weight Out Time</div>
-
-                                </th>
-                            </thead>
-
-                            <tbody>
-                                <tr *ngFor="let item of tableData; let nRow = index;">
-                                    <td>{{nRow+1}}</td>
-                                    <td *ngFor="let list of item | keys">{{item[list]}}</td>
-
-                                </tr>
-                            </tbody>
-
-
-                        </table>
-                    </div>
                 </div>
+
+                <!-- ----------------------------------create table -->
+                <ng-container *ngIf="getTable != undefined">
+                    <ng-container *ngIf="getTable.message =='OK'">
+                    <div class="card-body pad table-responsive" style="font-size: 20px;">
+                        <div class="row">
+                            <table class="table table-valign-middle text-center " style="max-width: 100%;">
+                                <thead>
+                                    <th>Step No.</th>
+                                    <th *ngFor="let items of getTable.header">{{items}}</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of getTable.result; let nR = index;">
+                                        <td>{{nR+1}}</td>
+                                        <td *ngFor="let items of getTable.header; let nC = index;">
+                                            {{tabdat[nR][nC]}}
+                                        </td>
+
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </ng-container>
+                </ng-container>
+
             </div>
 
 

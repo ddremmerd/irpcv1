@@ -23,9 +23,9 @@ export class GetAgentContainer {
 }
 
 export class GetPlant {
-    plantid: number;
-    code: string;
+    id: number;
     name: string;
+    is_active: string;
 }
 
 export class GetStorage {
@@ -196,6 +196,123 @@ export class ProcessSearchstatusOverAllbyuserid {
     dock_name: string;
     shipment_storage_name: string;
 }
+
+export class ProcessSearchCarrierQuota {
+    loading_Datetime: string
+    shipment_Type: string
+    current_status: string
+    shipment_No: string
+    deliver_No: string
+    invoice_No: any
+    booinkg_No: any
+    container_No: any
+    seal_No: any
+    queue_Number: any
+    item_no: string
+    mat_no: string
+    mat_desc: string
+    do_qty: number
+    do_saleunit: string
+    lot_no: any
+    qty: any
+    uom: any
+    truck_Load: number
+    customer_name: any
+    regis_confirm_datetime: any
+    queue_Call_DateTime: any
+    queue_End_DateTime: any
+    plannig_Datetime: string
+    product_preparing_Datetime: any
+    truck_Checkin_Datetime: any
+    driver_Checkin_Datetime: any
+    driver_text: any
+    vehicle_text: any
+    firstname_driver: any
+    lastname_driver: any
+    dO_Loading_Confirm_Datetime: any
+    dO_Loading_Start_Datetime: any
+    dO_Loading_End_Datetime: any
+    storage_name: any
+    dock_name: any
+    packing_rem: any
+    fumigation_rem: any
+    surveyor_rem: any
+    marking_rem: any
+    shipping_ins: any
+    shipment_storage_name: string
+    route_name: any
+    type_packing_name: any
+    shipment_id: number
+    shipments_link_id: any
+    is_Trailer: any
+    carrier_id: any
+    customer_id: any
+    vehicle_id: any
+    current_status_id: number
+    shipment_storage_id: number
+    dO_id: number
+    grade_id: number
+    lot_id: any
+}
+
+export class ProcessSearchWarehouseConfirmByItem
+{
+    loading_date: Date;
+    dc: any;
+    planning_time: Date;
+    prepairing_time: any;
+    shipment: string;
+    delivery_no: string;
+    grade: string;
+    delivery_qty: number;
+    truck_load: number;
+    customer_lot_no: string;
+    lot_no_from_wms: string;
+    new_lot_from_lo: string;
+    invoice_no: any;
+    ship_to: string;
+    sold_to: any;
+    delivery_item_note: any;
+    packing_remark: any;
+    other_intruction: string;
+    marking_remark: any;
+    fumigation_remark: any;
+    storage_location: any;
+    product: string;
+    type_loading: string;
+    material_document: string;
+    province: string;
+}
+
+export class ProcessSearchWarehouseConfirmByGroup
+{
+    loading_date: Date;
+    dc: any;
+    planning_time: Date;
+    prepairing_time: any;
+    shipment: string;
+    delivery_no: string;
+    grade: string;
+    delivery_qty: number;
+    truck_load: number;
+    customer_lot_no: string;
+    lot_no_from_wms: string;
+    new_lot_from_lo: string;
+    invoice_no: any;
+    ship_to: string;
+    sold_to: any;
+    delivery_item_note: any;
+    packing_remark: any;
+    other_intruction: string;
+    marking_remark: any;
+    fumigation_remark: any;
+    storage_location: any;
+    product: string;
+    type_loading: string;
+    material_document: string;
+    province: string;
+}
+
 /*------- End Process --------*/
 
 /*-------  ProcessCb  --------*/
@@ -267,6 +384,12 @@ export class Response {
     storage_name: string;
 }
 
+export class CbStorage {
+    storageid: number
+    storage_code: string
+    storage_name: string
+}
+
 export class StorageDock {
     stroragedockid: number;
     dock_name: string;
@@ -284,10 +407,12 @@ export class Vehicle {
     veH_TEXT: string;
 }
 
+// แก้ --- เพิ่ม isTail
 export class VehicleGroup {
     vehiclegroupid: number;
     code: string;
     description: string;
+    isTail:string;
 }
 
 export class VehicleType {
@@ -486,7 +611,8 @@ export interface ResponseProcessSerachContainerReg {
 
 export interface ResponseProcessSearchstatusOverAllbyuserid {
     header: [];
-    result: ProcessSearchstatusOverAllbyuserid[];
+    result: [];
+    // result: ProcessSearchstatusOverAllbyuserid[];
     message: string;
 }
 
@@ -498,10 +624,29 @@ export interface SendProcessSearchstatusOverAllbyuserid {
     loadingDate: string,
     storageList: string,
     plantList: string,
-    shipmentTypeId: number,
-    currentStatusId: number
+    // ------แก้ type
+    shipmentTypeId: string,
+    currentStatusId: string
 }
 
+export interface ResponseProcessSearchCarrierQuota
+{
+    result: ProcessSearchCarrierQuota[];
+    message: string;
+}
+
+export interface ResponseProcessSearchWarehouseConfirmByItem
+{
+    result: ProcessSearchWarehouseConfirmByItem[];
+    message: string;
+}
+
+
+export interface ResponseProcessSearchWarehouseConfirmByGroup
+{
+    result: ProcessSearchWarehouseConfirmByGroup[];
+    message: string;
+}
 //*******End Process*********
 
 //******* ProcessCb*********
@@ -556,7 +701,7 @@ export interface ResponseStatus {
 }
 
 export interface ResponseStorage {
-    result: Storage[];
+    result: CbStorage[];
     message: string;
 }
 

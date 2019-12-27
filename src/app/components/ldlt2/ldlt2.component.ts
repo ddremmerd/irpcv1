@@ -3,7 +3,7 @@ import { MatSelectChange, MatDatepickerInputEvent } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import { FormControl, FormGroupDirective, FormGroup, NgForm, Validators } from '@angular/forms';
-import { ResponseGetPlant, ResponseGetStorage, ResponseGetShipmentType, ResponseGetStatus } from 'src/models/VariablesType';
+import * as Type from 'src/models/VariablesType';
 
 import * as moment from 'moment';
 
@@ -15,23 +15,17 @@ import * as moment from 'moment';
 })
 export class Ldlt2Component implements OnInit {
   // ----------- get data from server
-  getPlantNum: ResponseGetPlant;
-  getStoreNum: ResponseGetStorage;
-  getShipT: ResponseGetShipmentType;
-  getStat: ResponseGetStatus;
+  getPlantNum: Type.ResponsePlant;
+  getStoreNum: Type.ResponseStorage;
+  getShipT: Type.ResponseShipmentType;
+  getStat: Type.ResponseStatus;
 
-  SendPlantNum = {
-    loadingDate: null,
-    plantId: null,
-    storageId: null,
-    shipmentId: null,
-    statusId: null,
-    invoiceNo: null,
-    shipmentNo: null,
-    deliveryNo: null
-  }
+  //------------- get data to display table
+  getTable: Type.ResponseProcessSearchstatusOverAllbyuserid;
 
-  SendOverAllbyuserid = {
+
+  //------------ data format packing
+  SendOverAllbyuserid: Type.SendProcessSearchstatusOverAllbyuserid = {
     userId: null,
     invoiceNo: null,
     shipmentNo: null,
@@ -42,95 +36,74 @@ export class Ldlt2Component implements OnInit {
     shipmentTypeId: null,
     currentStatusId: null
   }
-
   // ----------- sim data
   sim_GetPlant = {
     "result": [
       {
         "plantid": 1,
         "code": "120201",
-        "name": "PP1"
-
+        "name": "PP"
       },
       {
         "plantid": 2,
-        "code": "120201",
-        "name": "PP2",
-
+        "code": "120101",
+        "name": "PP2"
       },
       {
         "plantid": 3,
-        "code": "120201",
-        "name": "PP3",
-
+        "code": "120101",
+        "name": "PP3"
       },
-      {
-        "plantid": 5,
-        "code": "120201",
-        "name": "PP5"
-      },
-
-      //---test different id with diff name
       {
         "plantid": 4,
-        "code": "120201",
-        "name": "PP66"
-
-
+        "code": "120101",
+        "name": "PP4"
       }
-    ]
+    ],
+    "message": "OK"
   }
 
   sim_GetStorage = {
     "result": [
       {
-        "id": 1,
+        "storageid": 1,
         "storage_code": "36",
-        "storage_name": "WH36",
-        "is_active": "Y"
+        "storage_name": "WH36"
       },
       {
-        "id": 2,
+        "storageid": 2,
         "storage_code": "3643",
-        "storage_name": "WH36 & WH43",
-        "is_active": "Y"
-      },
-
-      {
-        "id": 3,
-        "storage_code": "36T",
-        "storage_name": "WH36 WMS",
-        "is_active": "Y"
-
+        "storage_name": "WH36 & WH43"
       },
       {
-        "id": 4,
-        "storage_code": "34T",
-        "storage_name": "WH090 BMW",
-        "is_active": "Y"
-
+        "storageid": 3,
+        "storage_code": "3555",
+        "storage_name": "WH35 & WH55"
+      },
+      {
+        "storageid": 4,
+        "storage_code": "3622",
+        "storage_name": "WH36 & WH22"
       }
-
     ],
     "message": "OK"
   }
-
   sim_getType = {
     "result": [
       {
-        "id": 1,
+        "shipmenttypeid": 1,
         "code": "Z101",
         "description": "WMS Trk Deliver DOM"
       },
       {
-        "id": 2,
+        "shipmenttypeid": 2,
         "code": "Z102",
         "description": "WMS Trk Deliver EXP"
       },
       {
-        "id": 3,
+        "shipmenttypeid": 3,
         "code": "Z103",
-        "description": "WMS Trk Own Pickup"
+        "description": "WMB Trk Deliver BBB"
       }
     ],
     "message": "OK"
@@ -139,26 +112,60 @@ export class Ldlt2Component implements OnInit {
   sim_getStatus = {
     "result": [
       {
-        "id": 1,
+        "currentstatusid": 1,
         "code": "1",
-        "name": "Create Shipment",
-        "is_active": "Y"
+        "name": "Create Shipment"
       },
       {
-        "id": 2,
+        "currentstatusid": 2,
         "code": "2",
-        "name": "Planning",
-        "is_active": "Y"
-      },
-      {
-        "id": 3,
-        "code": "3",
-        "name": "Estimate Check in",
-        "is_active": "Y"
+        "name": "Planning"
       }
     ],
     "message": "OK"
   }
+
+  // sim_getTable = {
+  //   "header": [
+  //     "shipment_No",
+  //     "current_status",
+  //     "Loading_Datetime",
+  //     "Shipment_Type",
+  //     "current_status_id",
+  //   ],
+  //   "result": [
+  //     {
+  //       "shipment_No": "ship-1111",
+  //       "current_status": "ZZZZ",
+  //       "loading_Datetime": "13/11/2562 0:00:00",
+  //       "shipment_Type": "Z101",
+  //       "current_status_id": "1",
+  //     },
+  //     {
+  //       "shipment_No": "ship-222222",
+  //       "current_status": "",
+  //       "loading_Datetime": "",
+  //       "shipment_Type": "Z222",
+  //       "current_status_id": null,
+  //     },
+  //     {
+  //       "shipment_No": "ship-33333",
+  //       "current_status": "ZZZZ",
+  //       "loading_Datetime": "11/11/2562 0:00:00",
+  //       "shipment_Type": "Z111",
+  //       "current_status_id": "2",
+  //     },
+  //     {
+  //       "shipment_No": "ship-44444",
+  //       "current_status": "bbbbbb",
+  //       "loading_Datetime": "11/11/2562 0:00:00",
+  //       "shipment_Type": "Z4444",
+  //       "current_status_id": "2",
+  //     },
+
+  //   ],
+  //   "message": "OK"
+  // }
 
   //------------------------------------------------ content
 
@@ -185,65 +192,48 @@ export class Ldlt2Component implements OnInit {
   shipmentNo = new FormControl();
   deliveryNo = new FormControl();
 
-
-
   checked = false;
 
-  tableHeader = ["Loading Date", "Shipment Type",
-    "DC No.", "Status",
-    "Deliver No.", "Shipment No."];
-
-  //--------------------sim table data
-  tableData = [
-    // {
-    //   loadingDate: "20-11-2019",
-    //   shipType: "Z103",
-    //   dcNo: "WH40",
-    //   // status:"create shipment", 
-    //   shipmentNo: "62123"
-    // },
-
-    {
-      loadingDate: "21-11-2019",
-      shipType: "Z105",
-      dcNo: "WH44",
-      // status:"Planning Time", 
-      shipmentNo: "66666"
-    }
+  //-------------- table data
 
 
-
-    // {
-    //   loadingDate: "22-11-2019",
-    //   shipType: "Z115",
-    //   dcNo: "WH40",
-    //   status: "Planning Time", cusPickup: "10-395 สมเดช",
-    //   shipmentNo: "66666", deliverNo: "30219123", matDoc: "Default",
-    //   grade: "1102K", lot: "123019", quantity: "10000",
-    //   truckload: "15000", customer: "ABC", planningTime: "09:00",
-    //   prodPrepTime: "08:30", truckCheckTime: "08:50", driverCheckTime: "08:30",
-    //   LoadingTime: "09:00", weightinTime: "09:12",
-    //   labourRegTime: "09:35", weightoutTime: "09:39"
-
-
-    // }
-
-
-
-  ];
+  tabdat = new Array();
+  head: Array<string>;
 
   constructor() { }
 
   ngOnInit() {
 
-    this.date_loading = moment().format("YYYY-MM-DDTHH:mm:ss"); //init datetime
+
+    //init datetime
+    this.date_loading = moment().format("YYYY-MM-DDTHH:mm:ss");
 
 
-    this.getPlantNum = this.sim_GetPlant as ResponseGetPlant;
-    this.getStoreNum = this.sim_GetStorage as ResponseGetStorage;
-    this.getShipT = this.sim_getType as ResponseGetShipmentType;
-    this.getStat = this.sim_getStatus as ResponseGetStatus;
+    this.getPlantNum = this.sim_GetPlant as Type.ResponsePlant;
+    this.getStoreNum = this.sim_GetStorage as Type.ResponseStorage;
+    this.getShipT = this.sim_getType as Type.ResponseShipmentType;
+    this.getStat = this.sim_getStatus as Type.ResponseStatus;
+
+    //-----------------create ddl
     this.createPlantDropDown();
+    // this.ResponseTable();
+
+
+    // this.getTable = this.sim_getTable as ResponseProcessSearchstatusOverAllbyuserid;
+
+    // if (this.getTable != undefined) {
+    //   if (this.getTable.message == "OK") {
+    //     for (let i = 0; i < this.sim_getTable.result.length; i++) {
+    //       this.tabdat[i] = new Array();
+    //       let data = Object.values(this.sim_getTable.result[i]);
+    //       for (let j = 0; j < data.length; j++) {
+    //         this.tabdat[i][j] = data[j];
+    //       }
+    //     }
+    //     console.log("tabdat:", this.tabdat[0][1]);
+    //   }
+
+    // }
 
   }
 
@@ -256,49 +246,79 @@ export class Ldlt2Component implements OnInit {
   //------------------- create dropdown
   createPlantDropDown() {
 
+    console.log("FUCKKKKKKKK")
 
-    ////--------plant
-    let agent_list_ary = [];
-    for (let l = 0; l < this.getPlantNum.result.length; l++) {
+    ////---------------------------plant
+    if (this.getPlantNum != undefined) {
+      if (this.getPlantNum.message == "OK") {
+        let agent_list_ary = [];
+        for (let l = 0; l < this.getPlantNum.result.length; l++) {
+          agent_list_ary[l] = this.getPlantNum.result[l].name;
 
-
-      agent_list_ary[l] = this.getPlantNum.result[l].name;
-
-      // agent_list_ary[l] = "{name:" + this.getPlantNum.result[l].name + ",id:" + this.getPlantNum.result[l].id + "}";
+          // agent_list_ary[l] = "{name:" + this.getPlantNum.result[l].name + ",id:" + this.getPlantNum.result[l].id + "}";
+        }
+        this.plantList = agent_list_ary;
+        this.createDCDropDown();
+      }
+      else {
+        console.warn("PLANT NUM DLL NOT SUCCESS");
+      }
     }
-    this.plantList = agent_list_ary;
-
-    // ---------DC
-    let dc_list_ary = [];
-    for (let l = 0; l < this.getStoreNum.result.length; l++) {
-      dc_list_ary[l] = this.getStoreNum.result[l].storage_name;
-    }
-    this.warehouseList = dc_list_ary;
-
-    //----------shipmentType
-    let shipType_list_ary = [];
-    for (let l = 0; l < this.getShipT.result.length; l++) {
-      shipType_list_ary[l] = this.getShipT.result[l].description;
-    }
-    this.shipmenttypeList = shipType_list_ary;
-
-    //------------status
-    let status_list_ary = [];
-    for (let l = 0; l < this.getStat.result.length; l++) {
-      status_list_ary[l] = this.getStat.result[l].name;
-    }
-    this.statusList = status_list_ary;
-
   }
 
+  createDCDropDown() {
 
+    // ----------------------------------DC
+    if (this.getStoreNum != undefined) {
+      if (this.getStoreNum.message == "OK") {
+        let dc_list_ary = [];
+        for (let l = 0; l < this.getStoreNum.result.length; l++) {
+          dc_list_ary[l] = this.getStoreNum.result[l].storage_name;
+        }
+        this.warehouseList = dc_list_ary;
+        this.createTypeDropDown();
+      }
+      else {
+        console.warn("SOTRE NUM DLL NOT SUCCESS");
+      }
+    }
+  }
+
+  createTypeDropDown() {
+    //---------------------------shipmentType
+    if (this.getShipT != undefined) {
+      if (this.getShipT.message == "OK") {
+        let shipType_list_ary = [];
+        for (let l = 0; l < this.getShipT.result.length; l++) {
+          shipType_list_ary[l] = this.getShipT.result[l].description;
+        }
+        this.shipmenttypeList = shipType_list_ary;
+        this.createStatusDropdown();
+      }
+      else {
+        console.warn("SHIPMENT TYPE DLL NOT SUCCESS");
+
+      }
+    }
+  }
+
+  createStatusDropdown() {
+    //-------------------------------status
+    if (this.getStat != undefined) {
+      if (this.getStat.message == "OK") {
+        let status_list_ary = [];
+        for (let l = 0; l < this.getStat.result.length; l++) {
+          status_list_ary[l] = this.getStat.result[l].name;
+        }
+        this.statusList = status_list_ary;
+      }
+    }
+  }
 
   datatoSearch() {
-
-
-
     // console.log("date:" + this.date_loading)
     console.warn(this.plantNum.value, this.warehouseNum.value, this.shipmentNo.value, this.statusNum.value);
+    console.log(this.SendOverAllbyuserid)
     // console.warn(this.invoiceNo.value,this.shipmentNo.value, this.deliveryNo.value);
     // let selcted_plantno_ary, sel_dcnum_ary, sel_shipt_ary, sel_status_ary = [];
     // console.log(this.getPlantNum);
@@ -355,18 +375,11 @@ export class Ldlt2Component implements OnInit {
     this.SendOverAllbyuserid.invoiceNo = this.invoiceNo.value;
     this.SendOverAllbyuserid.shipmentNo = this.shipmentNo.value;
     this.SendOverAllbyuserid.deliveryNo = this.deliveryNo.value;
-
-
-    console.log(this.SendOverAllbyuserid.invoiceNo)
-    console.log(this.SendOverAllbyuserid)
-
-
+    this.SendOverAllbyuserid.userId = 2;
+    this.ResponseTable()
   }
 
   packSelected1(b) {
-
-    console.log("pack " + b)
-
     let selcted_plantno_ary = [];
     // let sel_dcnum_ary = [];
     // , sel_shipt_ary, sel_status_ary = [];
@@ -386,19 +399,19 @@ export class Ldlt2Component implements OnInit {
     }
     // console.log("put" + selcted_plantno_ary)
     let sel_plant_num = selcted_plantno_ary.toString().replace(/,/g, '|');
-    console.log("selected plant id: " + sel_plant_num);
+    // console.log("selected plant id: " + sel_plant_num);
     this.SendOverAllbyuserid.plantList = sel_plant_num;
 
   }
+
   packSelected2(b) {
     let sel_dcnum_ary = [];
-
     for (let n = 0; n < this.warehouseNum.value.length; n++) {
       // console.log("length storage"+n +":"+ this.warehouseNum.value.length)
       for (let i = 0; i < this.getStoreNum.result.length; i++) {
         // console.log(this.warehouseNum.value[n], this.getStoreNum.result[i].storage_name);
         if (this.warehouseNum.value[n] == this.getStoreNum.result[i].storage_name) {
-          let a = this.getStoreNum.result[i].id;
+          let a = this.getStoreNum.result[i].storageid;
           // this.SendPlantNum.plantId = a;
 
           sel_dcnum_ary[n] = a;
@@ -408,7 +421,7 @@ export class Ldlt2Component implements OnInit {
     }
     // console.log("put DC:" + sel_dcnum_ary)
     let sel_dc_num = sel_dcnum_ary.toString().replace(/,/g, '|');
-    console.log("selected dc id: " + sel_dc_num);
+    // console.log("selected dc id: " + sel_dc_num);
     this.SendOverAllbyuserid.storageList = sel_dc_num;
   }
 
@@ -420,7 +433,7 @@ export class Ldlt2Component implements OnInit {
     for (let n = 0; n < this.shipmentType.value.length; n++) {
       for (let i = 0; i < this.getShipT.result.length; i++) {
         if (this.shipmentType.value[n] == this.getShipT.result[i].description) {
-          let a = this.getShipT.result[i].id;
+          let a = this.getShipT.result[i].shipmenttypeid;
 
           sel_shipt_ary[n] = a;
 
@@ -430,7 +443,7 @@ export class Ldlt2Component implements OnInit {
     }
 
     let sel_ship_num = sel_shipt_ary.toString().replace(/,/g, '|');
-    console.log("selected shipment id: " + sel_ship_num);
+    // console.log("selected shipment id: " + sel_ship_num);
     this.SendOverAllbyuserid.shipmentTypeId = sel_ship_num;
 
 
@@ -444,7 +457,7 @@ export class Ldlt2Component implements OnInit {
     for (let n = 0; n < this.statusNum.value.length; n++) {
       for (let i = 0; i < this.getStat.result.length; i++) {
         if (this.statusNum.value[n] == this.getStat.result[i].name) {
-          let a = this.getStat.result[i].id;
+          let a = this.getStat.result[i].currentstatusid;
 
           sel_status_ary[n] = a;
 
@@ -454,8 +467,73 @@ export class Ldlt2Component implements OnInit {
     }
 
     let sel_status = sel_status_ary.toString().replace(/,/g, '|');
-    console.log("selected status id: " + sel_status);
+    // console.log("selected status id: " + sel_status);
     this.SendOverAllbyuserid.currentStatusId = sel_status;
+  }
+
+  sim_getTable = new Array();
+
+  ResponseTable() {
+    console.log("Response")
+
+    let sim_getTable = {
+      "header": [
+        "shipment_No",
+        "current_status",
+        "Loading_Datetime",
+        "Shipment_Type",
+        "current_status_id",
+      ],
+      "result": [
+        {
+          "shipment_No": "ship-1111",
+          "current_status": "ZZZZ",
+          "loading_Datetime": "13/11/2562 0:00:00",
+          "shipment_Type": "Z101",
+          "current_status_id": "1",
+        },
+        {
+          "shipment_No": "ship-222222",
+          "current_status": "",
+          "loading_Datetime": "",
+          "shipment_Type": "Z222",
+          "current_status_id": null,
+        },
+        {
+          "shipment_No": "ship-33333",
+          "current_status": "ZZZZ",
+          "loading_Datetime": "11/11/2562 0:00:00",
+          "shipment_Type": "Z111",
+          "current_status_id": "2",
+        },
+        {
+          "shipment_No": "ship-44444",
+          "current_status": "bbbbbb",
+          "loading_Datetime": "11/11/2562 0:00:00",
+          "shipment_Type": "Z4444",
+          "current_status_id": "2",
+        },
+
+      ],
+      "message": "OK"
+    }
+
+    this.getTable = sim_getTable as Type.ResponseProcessSearchstatusOverAllbyuserid;
+
+    if (this.getTable != undefined) {
+      if (this.getTable.message == "OK") {
+        for (let i = 0; i < this.getTable.result.length; i++) {
+          this.tabdat[i] = new Array();
+          let data = Object.values(this.getTable.result[i]);
+          for (let j = 0; j < data.length; j++) {
+            this.tabdat[i][j] = data[j];
+          }
+        }
+        console.log("tabdat:", this.tabdat[0][1]);
+      }
+
+    }
+
   }
 
   clearSearch() {
