@@ -61,6 +61,7 @@ import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/mat
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { Ldlt11Component } from './components/ldlt11/ldlt11.component';
+import { Dropdown2Component } from './components/dropdown2/dropdown2.component';
 
 
 const appRoutes: Routes = [
@@ -131,7 +132,8 @@ export const MY_FORMATS = {
     Ldls3Component,
     Ldlt5Component,
     DropdownComponent,
-    Ldlt11Component
+    Ldlt11Component,
+    Dropdown2Component,
 
 
 
