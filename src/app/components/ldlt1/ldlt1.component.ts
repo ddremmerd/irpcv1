@@ -87,6 +87,8 @@ export class Ldlt1Component implements OnInit {
   public shipdiv1: boolean = true;
   search1;
 
+  selectedVehicle: Array<null>;
+
 
   //------------------------ sim data
   sim_shipType = {

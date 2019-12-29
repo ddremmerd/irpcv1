@@ -116,226 +116,233 @@
         </div>
 
         <!-- ------------------- table area -->
+        <ng-container *ngIf="sim_ResProcessSearch != undefined">
+            <ng-container *ngIf="sim_ResProcessSearch.message =='OK'">
+                <div class="card" style="font-size: 20px;">
+                    <div style="padding: 20px; width: 40%;">
+                        <form class="example-form">
+                            <mat-form-field class="example-full-width" style="width:70%">
+                                <input matInput placeholder="Shipment No., Booking No., ทะเบียนรถ" value=""
+                                    [(ngModel)]="search1" [formControl]="searchkeyword">
 
-        <div class="card" style="font-size: 20px;">
-            <div style="padding: 20px; width: 40%;">
-                <form class="example-form">
-                    <mat-form-field class="example-full-width" style="width:70%">
-                        <input matInput placeholder="Shipment No., Booking No., ทะเบียนรถ" value=""
-                            [(ngModel)]="search1" [formControl]="searchkeyword">
+                            </mat-form-field>
+                            <mat-icon matDatepickerToggleIcon>search</mat-icon>
 
-                    </mat-form-field>
-                    <mat-icon matDatepickerToggleIcon>search</mat-icon>
+                        </form>
+                    </div>
 
-                </form>
-            </div>
+                    <div class="card-body pad table-responsive">
+                        <table class="table table-valign-middle text-center table-bordered">
+                            <thead>
+                                <th class="light-gray-bg">No.</th>
+                                <th class="light-gray-bg">Shipment No.</th>
+                                <th class="light-gray-bg">Delivery No.</th>
+                                <th class="light-gray-bg">Invoice No.</th>
+                                <th class="light-gray-bg">Booking No.</th>
+                                <th class="light-gray-bg">Closing Time</th>
+                                <th class="light-gray-bg">Grade</th>
+                                <th class="light-gray-bg">Qty(kg)</th>
+                                <th class="light-gray-bg">Truck Load</th>
+                                <th class="yellow-bg">ประเภทรถ</th>
+                                <th class="yellow-bg">Shipment (หาง)</th>
+                                <th class="yellow-bg">รถตีด่วน</th>
+                                <th class="yellow-bg">ต้องการอุปกรณ์</th>
+                                <th class="yellow-bg">คนบรรจุสินค้า</th>
+                                <th class="light-gray-bg">Remarks</th>
+                                <th class="light-gray-bg">Pick Up At</th>
+                                <th class="light-gray-bg">Return To</th>
+                                <th class="yellow-bg">Route</th>
+                                <th class="yellow-bg">รับของข้างนอก</th>
+                                <th class="light-gray-bg">จำนวนกรรมกรลงสินค้า</th>
+                                <th class="yellow-bg">Planning Time</th>
+                                <th class="light-gray-bg"></th>
+                            </thead>
 
-            <div class="card-body pad table-responsive">
-                <table class="table table-valign-middle text-center table-bordered">
-                    <thead>
-                        <th class="light-gray-bg">No.</th>
-                        <th class="light-gray-bg">Shipment No.</th>
-                        <th class="light-gray-bg">Delivery No.</th>
-                        <th class="light-gray-bg">Invoice No.</th>
-                        <th class="light-gray-bg">Booking No.</th>
-                        <th class="light-gray-bg">Closing Time</th>
-                        <th class="light-gray-bg">Grade</th>
-                        <th class="light-gray-bg">Qty(kg)</th>
-                        <th class="light-gray-bg">Truck Load</th>
-                        <th class="yellow-bg">ประเภทรถ</th>
-                        <th class="yellow-bg">Shipment (หาง)</th>
-                        <th class="yellow-bg">รถตีด่วน</th>
-                        <th class="yellow-bg">ต้องการอุปกรณ์</th>
-                        <th class="yellow-bg">คนบรรจุสินค้า</th>
-                        <th class="light-gray-bg">Remarks</th>
-                        <th class="light-gray-bg">Pick Up At</th>
-                        <th class="light-gray-bg">Return To</th>
-                        <th class="yellow-bg">Route</th>
-                        <th class="yellow-bg">รับของข้างนอก</th>
-                        <th class="light-gray-bg">จำนวนกรรมกรลงสินค้า</th>
-                        <th class="yellow-bg">Planning Time</th>
-                        <th class="light-gray-bg"></th>
-                    </thead>
+                            <tbody>
 
-                    <tbody>
+                                <tr *ngFor="let data of sim_ResProcessSearch.result | filter:search1; let i =index;">
+                                    <td>{{i+1}}</td>
+                                    <td>{{data.shipment_No}}</td>
+                                    <td>{{data.deliver_No}}</td>
+                                    <td>{{data.invoice_No}}</td>
+                                    <td>{{data.booinkg_No}}</td>
+                                    <td>{{data.closing_time}}</td>
+                                    <td>{{data.qty}}</td>
+                                    <td>{{data.mat_no}}</td>
+                                    <td>{{data.truck_Load}}</td>
 
-                        <tr *ngFor="let data of sim_ResProcessSearch.result | filter:search1; let i =index;">
-                            <td>{{i+1}}</td>
-                            <td>{{data.shipment_No}}</td>
-                            <td>{{data.deliver_No}}</td>
-                            <td>{{data.invoice_No}}</td>
-                            <td>{{data.booinkg_No}}</td>
-                            <td>{{data.closing_time}}</td>
-                            <td>{{data.qty}}</td>
-                            <td>{{data.mat_no}}</td>
-                            <td>{{data.truck_Load}}</td>
+                                    <!-------- DONT FORGET TO SET CONDITION FOR DISPLAY -->
+                                    <td>
+                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                            <ng-container *ngIf="AllVehicleOption.length > 0">
+                                                <app-dropdown [options]="AllVehicleOption"
+                                                    [selectValue]="SelectedVehicleGroup[i]" [ddName]="'vehicleGroup'"
+                                                    [index_row]="i"
+                                                    (SelectedDdValue)="SelectedToSearch($event); SelectedVHC($event,i)">
+                                                </app-dropdown>
+                                            </ng-container>
+                                        </ng-container>
 
-                            <!-------- DONT FORGET TO SET CONDITION FOR DISPLAY -->
-                            <td>
-                                <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
-                                    <ng-container *ngIf="AllVehicleOption.length > 0">
-                                        <app-dropdown [options]="AllVehicleOption"
-                                            [selectValue]="SelectedVehicleGroup[i]" [ddName]="'vehicleGroup'"
-                                            [index_row]="i"
-                                            (SelectedDdValue)="SelectedToSearch($event); SelectedVHC($event,i)">
-                                        </app-dropdown>
-                                    </ng-container>
-                                </ng-container>
+                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                            {{data.vehicle_group_desc}}
+                                        </ng-container>
+                                    </td>
+                                    <td>
 
-                                <ng-container *ngIf="shipmentStatus.value == 'Planning'">
-                                    {{data.vehicle_group_desc}}
-                                </ng-container>
-                            </td>
-                            <td>
 
-                                <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
-                                    <!-- <ng-container *ngIf="AllShipmentLinkOption.length >0">
-                                        <app-dropdown [options]="AllShipmentLinkOption" 
+
+                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                            <!-- <ng-container *ngIf="AllShipmentLinkOption[i].length >0">
+                                        <app-dropdown [options]="AllShipmentLinkOption[i]" 
                                             [selectValue]="SelectedShipment[i]" [ddName]="'shipmentLink'"
                                             [index_row]="i" (SelectedDdValue)="SelectedToSearch($event);">
                                         </app-dropdown>
                                         DDL SHIPMENTLINK
                                     </ng-container> -->
 
-                                        <!-- <ng-container *ngIf="new_options.length >0">
-                                        <app-dropdown [options]="new_options" 
-                                            [selectValue]="SelectedShipment[i]" [ddName]="'shipmentLink'"
-                                            [index_row]="i" (SelectedDdValue)="SelectedToSearch($event);">
-                                        </app-dropdown>
-                                        DDL SHIPMENTLINK
-                                    </ng-container> -->
+                                            <mat-form-field>
+                                                <mat-select [formControl]="shipmentLink" [disabled]="bt_save[i]"
+                                                    (selectionChange)="selectedShipLink($event,i)">
+                                                    <ng-container *ngIf="sim_ResProcessSearch.result[i] != undefined">
+                                                        <ng-container *ngIf="shipLinkOption != undefined">
+                                                            <mat-option *ngFor="let shiplink of shipLinkOption"
+                                                                [value]="shiplink">
+                                                                {{shiplink.shipment_No}}
+                                                            </mat-option>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </ng-container>
 
-                                </ng-container>
+
+                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                            {{data.shipments_link_id}}
+                                        </ng-container>
 
 
-                                <ng-container *ngIf="shipmentStatus.value == 'Planning'">
-                                    {{data.shipments_link_id}}
-                                </ng-container>
+                                    </td>
+
+                                    <td>
+                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                            <ng-container *ngIf="AllIsStatOption.length > 0">
+                                                <app-dropdown [options]="AllIsStatOption"
+                                                    [selectValue]="SelectedYesNo[i]" [ddName]="'UrgentCar'"
+                                                    [index_row]="i" (SelectedDdValue)="SelectedToSearch($event)">
+                                                </app-dropdown>
+                                            </ng-container>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                            {{data.isStat}}</ng-container>
+                                    </td>
+                                    <td>
+
+                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                            <ng-container *ngIf="AllReqEquipOptions.length > 0">
+                                                <app-dropdown [options]="AllReqEquipOptions"
+                                                    [selectValue]="SelectedReqEquip[i]" [ddName]="'ReqEquip'"
+                                                    [index_row]="i" (SelectedDdValue)="SelectedToSearch($event)">
+                                                </app-dropdown>
+                                            </ng-container>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                            {{data.req_qequipments}}
+                                        </ng-container>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                            <ng-container *ngIf="AllTypePackingOPtions.length > 0">
+                                                <app-dropdown [options]="AllTypePackingOPtions"
+                                                    [selectValue]="SelectedTypePack[i]" [ddName]="'TypePacking'"
+                                                    [index_row]="i" (SelectedDdValue)="SelectedToSearch($event)">
+                                                </app-dropdown>
+                                            </ng-container>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                            {{data.type_packing_name}}
+                                        </ng-container>
+                                    </td>
+                                    <td>
+                                        <button class="square_bt_enable btn-danger" (click)="toggleRemark(i)"></button>
 
 
-                            </td>
-
-                            <td>
-                                <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
-                                    <ng-container *ngIf="AllIsStatOption.length > 0">
-                                        <app-dropdown [options]="AllIsStatOption" [selectValue]="SelectedYesNo[i]"
-                                            [ddName]="'UrgentCar'" [index_row]="i"
-                                            (SelectedDdValue)="SelectedToSearch($event)">
-                                        </app-dropdown>
-                                    </ng-container>
-                                </ng-container>
-
-                                <ng-container *ngIf="shipmentStatus.value == 'Planning'">
-                                    {{data.isStat}}</ng-container>
-                            </td>
-                            <td>
-
-                                <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
-                                    <ng-container *ngIf="AllReqEquipOptions.length > 0">
-                                        <app-dropdown [options]="AllReqEquipOptions" [selectValue]="SelectedReqEquip[i]"
-                                            [ddName]="'ReqEquip'" [index_row]="i"
-                                            (SelectedDdValue)="SelectedToSearch($event)">
-                                        </app-dropdown>
-                                    </ng-container>
-                                </ng-container>
-
-                                <ng-container *ngIf="shipmentStatus.value == 'Planning'">
-                                    {{data.req_qequipments}}
-                                </ng-container>
-                            </td>
-                            <td>
-                                <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
-                                    <ng-container *ngIf="AllTypePackingOPtions.length > 0">
-                                        <app-dropdown [options]="AllTypePackingOPtions"
-                                            [selectValue]="SelectedTypePack[i]" [ddName]="'TypePacking'" [index_row]="i"
-                                            (SelectedDdValue)="SelectedToSearch($event)">
-                                        </app-dropdown>
-                                    </ng-container>
-                                </ng-container>
-
-                                <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
-                                    {{data.type_packing_name}}
-                                </ng-container>
-                            </td>
-                            <td>
-
-                                <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
-                                    <app-dropdown2 [options]="AllTypePackingOPtions" [selectValue]="SelectedTypePack[i]"
-                                        [ddName]="'TypePacking'" [index_row]="i" [bt_save] = "bt_save11"
-                                        (SelectedDdValue)="SelectedToSearch($event)">
-                                    </app-dropdown2>
+                                        <!-- <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
                                 </ng-container>
 
                                 <ng-container *ngIf="shipmentStatus.value == 'Planning'">
                                     {{data.remark}}
-                                </ng-container>
+                                </ng-container> -->
 
-                            </td>
-                            <td>{{data.pick_up_at}}</td>
-                            <td>{{data.return_to}}</td>
-                            <td>
-                                <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
-                                    <ng-container *ngIf="AllRouteOption.length > 0">
-                                        <app-dropdown [options]="AllRouteOption" [selectValue]="SelectedRoute[i]"
-                                            [ddName]="'route'" [index_row]="i"
-                                            (SelectedDdValue)="SelectedToSearch($event)">
-                                        </app-dropdown>
-                                    </ng-container>
-                                </ng-container>
+                                    </td>
+                                    <td>{{data.pick_up_at}}</td>
+                                    <td>{{data.return_to}}</td>
+                                    <td>
+                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                            <ng-container *ngIf="AllRouteOption.length > 0">
+                                                <app-dropdown [options]="AllRouteOption"
+                                                    [selectValue]="SelectedRoute[i]" [ddName]="'route'" [index_row]="i"
+                                                    (SelectedDdValue)="SelectedToSearch($event)">
+                                                </app-dropdown>
+                                            </ng-container>
+                                        </ng-container>
 
-                                <ng-container *ngIf="shipmentStatus.value == 'Planning'">
-                                    {{data.route_name}}
-                                </ng-container>
-                            </td>
-                            <td>
-                                <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
-                                    <ng-container *ngIf="AllIsStatOption.length > 0">
-                                        <app-dropdown [options]="AllIsStatOption" [selectValue]="SelectedYesNo[i]"
-                                            [ddName]="'isOutside'" [index_row]="i"
-                                            (SelectedDdValue)="SelectedToSearch($event)">
-                                        </app-dropdown>
-                                    </ng-container>
-                                </ng-container>
+                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                            {{data.route_name}}
+                                        </ng-container>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                            <ng-container *ngIf="AllIsStatOption.length > 0">
+                                                <app-dropdown [options]="AllIsStatOption"
+                                                    [selectValue]="SelectedYesNo[i]" [ddName]="'isOutside'"
+                                                    [index_row]="i" (SelectedDdValue)="SelectedToSearch($event)">
+                                                </app-dropdown>
+                                            </ng-container>
+                                        </ng-container>
 
-                                <ng-container *ngIf="shipmentStatus.value == 'Planning'">
-                                    {{data.isOutside}}
-                                </ng-container>
-
-
-
-                            </td>
-                            <td>{{data.total_worker}}</td>
-                            <td>
-
-                                <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
-                                    <app-date-picker (FindDateSelected)="GetDatePlanning($event,i)"></app-date-picker>
-
-                                </ng-container>
-
-                                <ng-container *ngIf="shipmentStatus.value == 'Planning'">
-                                    {{data.plannig_Datetime}}
-                                </ng-container>
-
-                            </td>
-                            <td>
-                                <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
-                                    <button type="button" class="btn btn-block btn-success btn-sm"
-                                        (click)="AssignVendor(i)">ส่ง
-                                        Quota</button>
-                                </ng-container>
-
-                                <ng-container *ngIf="shipmentStatus.value == 'Planning'">
-                                    <app-delete-button (click)="returnQuota(i)"></app-delete-button>
-                                </ng-container>
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                            {{data.isOutside}}
+                                        </ng-container>
 
 
+
+                                    </td>
+                                    <td>{{data.total_worker}}</td>
+                                    <td>
+
+                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                            <app-date-picker (FindDateSelected)="GetDatePlanning($event,i)">
+                                            </app-date-picker>
+
+                                        </ng-container>
+
+                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                            {{data.plannig_Datetime}}
+                                        </ng-container>
+
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                            <button type="button" class="btn btn-block btn-success btn-sm"
+                                                (click)="AssignVendor(i)">ส่ง
+                                                Quota</button>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                            <app-delete-button (click)="returnQuota(i)"></app-delete-button>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
 
 
     </section>

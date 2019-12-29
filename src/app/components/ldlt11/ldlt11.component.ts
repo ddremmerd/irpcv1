@@ -9,6 +9,7 @@ import * as Type from 'src/models/VariablesType';
 import * as Comp from 'src/models/ComponentClass'
 import * as moment from 'moment';
 import { EventHandlerVars } from '@angular/compiler/src/compiler_util/expression_converter';
+import { arrayToHash } from '@fullcalendar/core/util/object';
 @Component({
   selector: 'app-ldlt11',
   templateUrl: './ldlt11.component.html',
@@ -160,6 +161,9 @@ export class Ldlt11Component implements OnInit {
 
   CarrierName = new FormControl();
   Carrier_Name: Array<string>;
+
+  shipmentLink = new FormControl();
+
 
 
   date_from: string;
@@ -494,9 +498,11 @@ export class Ldlt11Component implements OnInit {
 
   //-------------toggel disable
   bt_save11: Array<boolean> = [false];
+  bt_save: Array<boolean> = [true];
+  public remark: boolean = false;
 
   @Input() SelectedDdValue: Array<{}>
-  @Output() bt_save = new EventEmitter();
+  // @Output() bt_save = new EventEmitter();
 
   constructor() { }
 
@@ -517,10 +523,23 @@ export class Ldlt11Component implements OnInit {
 
     this.datatoSearch();
 
-    // ------------------------------ ddl in table
 
 
+    //--------------------------- initial sendProcessAssign
+    for (let a = 0; a < this.sim_ResProcessSearch.result.length; a++) {
+      this.sel_selectedVHD[a] = this.getVehicleGroup.result[0].vehiclegroupid;
+      this.sel_yesno_isStat_ary[a] = this.getYesNo.result[1].yesnoid;
+      this.sel_req_ary[a] = this.getReqEquip.result[0].reqqequipmentsid;
+      this.sel_typePack_ary[a] = this.getTypePacking.result[0].typepackingid;
+      this.sel_route_ary[a] = this.getRoute.result[0].routeid;
+      this.sel_isOutside_ary[a] = this.getYesNo.result[1].yesnoid;
+      this.sel_getDatePlanning[a] = this.date_planning;
+      this.bt_save[a] = true;
 
+
+    }
+
+    console.log(this.sel_selectedVHD);
   }
 
   datatoSearch() {
@@ -573,9 +592,10 @@ export class Ldlt11Component implements OnInit {
     this.getRoute = this.sim_route as Type.ResponseRoute;
     this.CreateRouteOption();
 
-    console.log("initial", this.SelectedVehicleGroup, this.SelectedYesNo)
 
   }
+
+
 
   GetDate(get_date, n) {
     if (n == "1") {
@@ -709,12 +729,18 @@ export class Ldlt11Component implements OnInit {
 
   }
 
+
+
   sel_selectedVHD = new Array(this.sim_ResProcessSearch.result.length);
   new_options: Array<{
     shipment_id: number;
     shipment_No: string
   }> = [];
+
+
   SelectedVHC(sel, i) {
+
+    // this.CreateShipmentLinkOption()
 
     console.log("selected VHC:", sel, i)
 
@@ -727,80 +753,90 @@ export class Ldlt11Component implements OnInit {
 
     if (sel1 == "Y") {
       console.log("yes tail")
+      this.bt_save[sel.rowIndex] = false;
+      this.CreateShipmentLinkOption(sel.rowIndex);
 
       // let new_options: Array<{
       //   shipment_id: number;
       //   shipment_No: string
       // }> = [];
 
-      let all_options = this.sim_ResProcessSearch.result;
-      console.log(this.sim_ResProcessSearch.result.length)
+      // let all_options = this.sim_ResProcessSearch.result;
+      // console.log(this.sim_ResProcessSearch.result.length)
 
-      let a = all_options.filter(e => e.shipment_id != this.sim_ResProcessSearch.result[sel.rowIndex].shipment_id)
+      // let a = all_options.filter(e => e.shipment_id != this.sim_ResProcessSearch.result[sel.rowIndex].shipment_id)
 
 
-      for (let j = 0; j < a.length; j++) {
-        let obj: any = {};
-        obj = {
-          shipment_id: a[j].shipment_id,
-          shipment_No: a[j].shipment_No
-        };
-        this.new_options.push(obj);
-      }
-      console.log("new option for row:", i, this.new_options)
-      // console.log(this.new_options.length, this.sim_ResProcessSearch.result.length)
+      // for (let j = 0; j < a.length; j++) {
+      //   let obj: any = {};
+      //   obj = {
+      //     shipment_id: a[j].shipment_id,
+      //     shipment_No: a[j].shipment_No
+      //   };
+      //   this.new_options.push(obj);
+      // }
+      // console.log("new option for row:", i, this.new_options)
+
+      // for (let b = 0; b < a.length; b++) {
+
+      //   console.log(this.new_options[b]);
+      //   this.AllShipmentLinkOption[b] = {
+      //     id: this.new_options[b].shipment_id,
+      //     name: this.new_options[b].shipment_No
+      //   }
+      // }
+
+      // console.log("create allshipmentlink", this.AllShipmentLinkOption)
+
     }
     else {
-      console.log("no tail")
+      this.bt_save[i] = true;
+      this.sel_shipLink_ary[sel.rowIndex] = "null";
+      console.log(this.sel_shipLink_ary)
 
+      // this.AllShipmentLinkOption[i] = {
+      //   id: 0,
+      //   name: ""
+      // }
 
+      // console.log("no tail", this.AllShipmentLinkOption)
     }
-    // let sel1;
-    // for (let j = 0; j < this.getVehicleGroup.result.length; j++) {
-    //   if (sel.selectedId == this.getVehicleGroup.result[j].vehiclegroupid) {
-    //     sel1 = this.getVehicleGroup.result[j].isTail;
-    //   }
-    // }
-
-    // if (sel1 == "Y") {
-    //   this.bt_save11[i] = false;
-    //   // this.bt_save.emit( this.bt_save11[i]);
-
-    //   console.log(this.bt_save11)
-    //   console.log("have shipment tail", this.bt_save11, i);
-    //   this.CreateShipmetnLinkOption(i);
-    // }
-    // else if (sel1 == "N") {
-    //   this.bt_save11[i] = true;
-    //   // console.log(this.bt_save11)
-
-    //   this.AllShipmentLinkOption[i] = {
-    //     id: 0,
-    //     name: ""
-    //   }
-    //   // console.log(this.AllShipmentLinkOption,"row",i)
-
-    // }
-
-
-    // console.log("create sel ary:", sel_selectedVHD)
-    this.sel_selectedVHD[sel.rowIndex] = sel.selectedId;
-    console.log("create sel ary:", this.sel_selectedVHD)
-
 
   }
 
-  CreateShipmetnLinkOption(i) {
+  shipLinkOption: Array<{
+    shipment_id: number;
+    shipment_No: string
+  }> = [];
+
+  CreateShipmentLinkOption(i) {
+
 
     for (let a = 0; a < this.sim_ResProcessSearch.result.length; a++) {
-      this.AllShipmentLinkOption[a] = {
-        id: this.sim_ResProcessSearch.result[a].shipment_id,
-        name: this.sim_ResProcessSearch.result[a].shipment_No
-      }
+      let alll_options = this.sim_ResProcessSearch.result;
+      let linkoption = alll_options.filter(e => e.shipment_id != this.sim_ResProcessSearch.result[a].shipment_id)
+
+      console.log("create optionss shipment link", linkoption)
+
     }
 
-    // this.AllShipmentLinkOption.splice(i, 1);
-    console.log("shipment link Option:", this.AllShipmentLinkOption[i], "row", i);
+    for (let j = 0; j < this.sim_ResProcessSearch.result.length; j++) {
+      this.shipLinkOption[j] = {
+        shipment_No: this.sim_ResProcessSearch.result[j].shipment_No,
+        shipment_id: this.sim_ResProcessSearch.result[j].shipment_id
+      }
+    }
+    this.shipLinkOption.splice(i, 1);
+    console.log(this.shipLinkOption)
+
+  }
+
+  sel_shipLink_ary = new Array(this.sim_ResProcessSearch.result.length);
+  selectedShipLink(evt, i) {
+
+    this.sel_shipLink_ary[i] = evt.value.shipment_id;
+    console.log("selected shiplink", evt, i, "assign form selected:", this.sel_shipLink_ary)
+
   }
 
   //----------------------- initial selected for vehicle group ddl
@@ -880,66 +916,76 @@ export class Ldlt11Component implements OnInit {
     }
   }
 
+
+  sel_yesno_isStat_ary = new Array(this.sim_ResProcessSearch.result.length);
+  sel_req_ary = new Array(this.sim_ResProcessSearch.result.length);
+  sel_typePack_ary = new Array(this.sim_ResProcessSearch.result.length);
+  sel_route_ary = new Array(this.sim_ResProcessSearch.result.length);
+  sel_isOutside_ary = new Array(this.sim_ResProcessSearch.result.length);
   SelectedToSearch(evt) {
     console.log(evt)
 
     if (evt.dropdownName == "vehicleGroup") {
       console.log("vehicle group id", evt.selectedId, "row:", evt.rowIndex);
+      this.sel_selectedVHD[evt.rowIndex] = evt.selectedId;
+      console.log("selected to serach", this.sel_selectedVHD)
     }
 
     else if (evt.dropdownName == "UrgentCar") {
 
-
-
+      this.sel_yesno_isStat_ary[evt.rowIndex] = evt.selectedId;
       console.log("UrgentCar yesno id", evt.selectedId, "row:", evt.rowIndex);
+      console.log("selected to serach", this.sel_yesno_isStat_ary)
+
     }
 
     else if (evt.dropdownName == "ReqEquip") {
-
+      this.sel_req_ary[evt.rowIndex] = evt.selectedId;
       console.log("ReqEquip id", evt.selectedId, "row:", evt.rowIndex);
+      console.log("selected to serach", this.sel_req_ary)
+
     }
 
     else if (evt.dropdownName == "TypePacking") {
-
+      this.sel_typePack_ary[evt.rowIndex] = evt.selectedId;
       console.log("TypePacking id", evt.selectedId, "row:", evt.rowIndex);
     }
 
     else if (evt.dropdownName == "route") {
-
+      this.sel_route_ary[evt.rowIndex] = evt.selectedId;
       console.log("route id", evt.selectedId, "row:", evt.rowIndex);
     }
 
     else if (evt.dropdownName == "isOutside") {
-
+      this.sel_isOutside_ary[evt.rowIndex] = evt.selectedId;
       console.log("isOutside id", evt.selectedId, "row:", evt.rowIndex);
     }
 
 
   }
 
+  toggleRemark(i) {
+    this.remark = !this.remark;
+    console.log("toggle Remark" + i);
+
+  }
+
   AssignVendor(i) {
     console.log("assi vendor", i)
-    // console.log("assign vendor loop:", this.SelectedVehicleGroup[i].id, "is stat:", this.SelectedYesNo[i].id)
 
     // console.log(this.SelectedVehicleGroup[i], this.SelectedYesNo)
+    this.sendProcessAssignQuota.carrierId = parseInt(this.sel_carrierID);
+    this.sendProcessAssignQuota.shipmentId = this.sim_ResProcessSearch.result[i].shipment_id;
     this.sendProcessAssignQuota.vehicleGroupId = this.sel_selectedVHD[i];
+    this.sendProcessAssignQuota.isStat = this.sel_yesno_isStat_ary[i];
+    this.sendProcessAssignQuota.ireqEQP = this.sel_req_ary[i];
+    this.sendProcessAssignQuota.typePackingId = this.sel_typePack_ary[i];
+    this.sendProcessAssignQuota.shipmentRouteId = this.sel_route_ary[i];
+    this.sendProcessAssignQuota.isOutside = this.sel_isOutside_ary[i];
     this.sendProcessAssignQuota.planingDatetime = this.sel_getDatePlanning[i];
-    // this.sendAssignQuota[i].carrierId = parseInt(this.sel_carrierID);
+    this.sendProcessAssignQuota.shipmentLink = this.sel_shipLink_ary[i];
     console.log("assign loop:", this.sendProcessAssignQuota)
     // this.sendProcessAssignQuota.vehicleGroupId = this.SelectedVehicleGroup[i].id;
-
-
-    // console.log("result", this.sim_ResProcessSearch.result[i].shipment_id)
-
-    // for(let j=0; j < this.sim_ResProcessSearch.result.length; j++){
-    //   if(i=j){
-    //     let shipmentID = this.sim_ResProcessSearch.result[i].shipment_id;
-    //     let shipmentNum = this.sim_ResProcessSearch.result[i].shipment_No;
-
-    //     console.log("shimentID",shipmentID, "shipmemt Num",shipmentNum,"row:",i)
-    //   }
-    // }
-
   }
 
   returnQuota(i) {
