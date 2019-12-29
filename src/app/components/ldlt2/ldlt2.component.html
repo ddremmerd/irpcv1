@@ -32,8 +32,13 @@
                             <td>
                                 <mat-form-field style="width:100%;">
                                     <mat-select [formControl]="plantNum" multiple>
-                                        <mat-option *ngFor="let plantno of plantList" [value]="plantno">{{plantno}}
-                                        </mat-option>
+                                        <ng-container *ngIf="getPlantNum != undefined">
+                                            <ng-container *ngIf="getPlantNum.message =='OK'">
+                                                <mat-option *ngFor="let plantno of plantList" [value]="plantno">
+                                                    {{plantno}}
+                                                </mat-option>
+                                            </ng-container>
+                                        </ng-container>
                                     </mat-select>
                                 </mat-form-field>
                             </td>
@@ -50,8 +55,13 @@
                             <td>
                                 <mat-form-field style="width:100%;">
                                     <mat-select [formControl]="warehouseNum" multiple>
-                                        <mat-option *ngFor="let wareno of warehouseList" [value]="wareno">{{wareno}}
-                                        </mat-option>
+                                        <ng-container *ngIf="getStoreNum != undefined">
+                                            <ng-container *ngIf="getStoreNum.message =='OK'">
+                                                <mat-option *ngFor="let wareno of warehouseList" [value]="wareno">
+                                                    {{wareno}}
+                                                </mat-option>
+                                            </ng-container>
+                                        </ng-container>
                                     </mat-select>
                                 </mat-form-field>
                             </td>
@@ -68,9 +78,15 @@
                             <td>
                                 <mat-form-field style="width:100%;">
                                     <mat-select [formControl]="shipmentType" multiple>
-                                        <mat-option *ngFor="let shipType of shipmenttypeList" [value]="shipType">
-                                            {{shipType}}
-                                        </mat-option>
+                                        <ng-container *ngIf="getShipT != undefined">
+                                            <ng-container *ngIf="getShipT.message =='OK'">
+                                                <mat-option *ngFor="let shipType of shipmenttypeList"
+                                                    [value]="shipType">
+                                                    {{shipType}}
+                                                </mat-option>
+                                            </ng-container>
+                                        </ng-container>
+
                                     </mat-select>
                                 </mat-form-field>
 
@@ -97,8 +113,12 @@
                             <td>
                                 <mat-form-field style="width:100%;">
                                     <mat-select [formControl]="statusNum" multiple>
-                                        <mat-option *ngFor="let stat of statusList" [value]="stat">{{stat}}
-                                        </mat-option>
+                                        <ng-container *ngIf="getStat != undefined">
+                                            <ng-container *ngIf="getStat.message =='OK'">
+                                                <mat-option *ngFor="let stat of statusList" [value]="stat">{{stat}}
+                                                </mat-option>
+                                            </ng-container>
+                                        </ng-container>
                                     </mat-select>
                                 </mat-form-field>
                             </td>
@@ -117,26 +137,26 @@
                 <!-- ----------------------------------create table -->
                 <ng-container *ngIf="getTable != undefined">
                     <ng-container *ngIf="getTable.message =='OK'">
-                    <div class="card-body pad table-responsive" style="font-size: 20px;">
-                        <div class="row">
-                            <table class="table table-valign-middle text-center " style="max-width: 100%;">
-                                <thead>
-                                    <th>Step No.</th>
-                                    <th *ngFor="let items of getTable.header">{{items}}</th>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of getTable.result; let nR = index;">
-                                        <td>{{nR+1}}</td>
-                                        <td *ngFor="let items of getTable.header; let nC = index;">
-                                            {{tabdat[nR][nC]}}
-                                        </td>
+                        <div class="card-body pad table-responsive" style="font-size: 20px;">
+                            <div class="row">
+                                <table class="table table-valign-middle text-center " style="max-width: 100%;">
+                                    <thead>
+                                        <th>Step No.</th>
+                                        <th *ngFor="let items of getTable.header">{{items}}</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of getTable.result; let nR = index;">
+                                            <td>{{nR+1}}</td>
+                                            <td *ngFor="let items of getTable.header; let nC = index;">
+                                                {{tabdat[nR][nC]}}
+                                            </td>
 
 
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
                     </ng-container>
                 </ng-container>
 

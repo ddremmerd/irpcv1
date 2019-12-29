@@ -8,6 +8,7 @@ import { FormControl, FormGroupDirective, FormGroup, NgForm, Validators, FormCon
 import * as Type from 'src/models/VariablesType';
 import * as Comp from 'src/models/ComponentClass'
 import * as moment from 'moment';
+import { EventHandlerVars } from '@angular/compiler/src/compiler_util/expression_converter';
 @Component({
   selector: 'app-ldlt11',
   templateUrl: './ldlt11.component.html',
@@ -65,10 +66,10 @@ export class Ldlt11Component implements OnInit {
     shipmentRouteId: null,
     typePackingId: null,
     userId: null,
-}
+  }
 
-sendAssignQuota: Array<{
-  shipmentId: number;
+  sendAssignQuota: Array<{
+    shipmentId: number;
     planingDatetime: string;
     carrierId: number;
     vehicleGroupId: number;
@@ -79,7 +80,7 @@ sendAssignQuota: Array<{
     shipmentRouteId: number;
     typePackingId: number;
     userId: number;
-}>
+  }> = [null]
 
 
   //-----------response to assignQuota
@@ -518,6 +519,49 @@ sendAssignQuota: Array<{
 
     // ------------------------------ ddl in table
 
+
+
+  }
+
+  datatoSearch() {
+
+
+    if (this.ShipType.value == null) {
+      // console.warn("null ship value")
+      this.sel_shiptype = "null";
+    }
+
+    if (this.CarrierName.value == null) {
+      // console.warn("null carrier value")
+      this.sel_carrierID = "null";
+    }
+
+    if (this.ShipType.value != null) {
+      this.shipTpyeSelected(this.ShipType.value);
+    }
+
+    if (this.CarrierName.value != null) {
+      this.carrierNameSelected(this.CarrierName.value);
+    }
+
+    //------------define id for status to send
+    let status_id;
+
+    if (this.shipmentStatus.value == "Planning") {
+      status_id = 2;
+      // console.log("status(P)", status_id)
+    }
+
+    else if (this.shipmentStatus.value == "Create Shipment") {
+      status_id = 1;
+      // console.log("status(C)", status_id)
+    }
+
+    //--------- api sendProcessSearchCarrierQuota
+    //api/v1/Process/ProcessSearchCarrierQuota?loadDateFrom=2019-11-07T00:00:00&loadDateTo=2019-12-30T00:00:00&shipmenttypeid=1&carrierId=1&currentstatusid=1
+
+    console.log("dateFrom:", this.date_from, "dateTo:", this.date_to, "shipmentID:", this.sel_shiptype, "carrierID:", this.sel_carrierID, "currentStatusID:", status_id);
+
     this.getVehicleGroup = this.sim_vehicleGroup as Type.ResponseVehicleGroup;
     this.CreateVehicleGroupOption();
     this.getYesNo = this.sim_yesno as Type.ResponseYesNo;
@@ -528,6 +572,8 @@ sendAssignQuota: Array<{
     this.CreateTypePackingOption();
     this.getRoute = this.sim_route as Type.ResponseRoute;
     this.CreateRouteOption();
+
+    console.log("initial", this.SelectedVehicleGroup, this.SelectedYesNo)
 
   }
 
@@ -599,9 +645,12 @@ sendAssignQuota: Array<{
 
   }
 
+  sel_getDatePlanning = new Array(this.sim_ResProcessSearch.result.length);
+
   GetDatePlanning(get_date, i) {
     this.date_planning = get_date;
     console.log("date planning:", get_date, "row:", i);
+    this.sel_getDatePlanning[i] = get_date;
 
   }
 
@@ -637,47 +686,6 @@ sendAssignQuota: Array<{
   }
 
 
-  datatoSearch() {
-
-
-    if (this.ShipType.value == null) {
-      // console.warn("null ship value")
-      this.sel_shiptype = "null";
-    }
-
-    if (this.CarrierName.value == null) {
-      // console.warn("null carrier value")
-      this.sel_carrierID = "null";
-    }
-
-    if (this.ShipType.value != null) {
-      this.shipTpyeSelected(this.ShipType.value);
-    }
-
-    if (this.CarrierName.value != null) {
-      this.carrierNameSelected(this.CarrierName.value);
-    }
-
-    //------------define id for status to send
-    let status_id;
-
-    if (this.shipmentStatus.value == "Planning") {
-      status_id = 2;
-      // console.log("status(P)", status_id)
-    }
-
-    else if (this.shipmentStatus.value == "Create Shipment") {
-      status_id = 1;
-      // console.log("status(C)", status_id)
-    }
-
-    //--------- api sendProcessSearchCarrierQuota
-    //api/v1/Process/ProcessSearchCarrierQuota?loadDateFrom=2019-11-07T00:00:00&loadDateTo=2019-12-30T00:00:00&shipmenttypeid=1&carrierId=1&currentstatusid=1
-
-    console.log("dateFrom:", this.date_from, "dateTo:", this.date_to, "shipmentID:", this.sel_shiptype, "carrierID:", this.sel_carrierID, "currentStatusID:", status_id);
-
-
-  }
 
   //----------------------- table DDL
   CreateVehicleGroupOption() {
@@ -687,12 +695,25 @@ sendAssignQuota: Array<{
         name: this.getVehicleGroup.result[a].description,
       }
 
-      this.SelectedVehicleGroupOption(a);
       // console.log("selcted", this.SelectedVehicleGroupOption)
 
     }
+
+
+    for (let a = 0; a < this.sim_ResProcessSearch.result.length; a++) {
+      this.SelectedVehicleGroupOption(a);
+
+    }
+
+
+
   }
 
+  sel_selectedVHD = new Array(this.sim_ResProcessSearch.result.length);
+  new_options: Array<{
+    shipment_id: number;
+    shipment_No: string
+  }> = [];
   SelectedVHC(sel, i) {
 
     console.log("selected VHC:", sel, i)
@@ -705,24 +726,66 @@ sendAssignQuota: Array<{
     }
 
     if (sel1 == "Y") {
-      this.bt_save11[i] = false;
-      // this.bt_save.emit( this.bt_save11[i]);
+      console.log("yes tail")
 
-      console.log(this.bt_save11)
-      console.log("have shipment tail", this.bt_save11, i);
-      this.CreateShipmetnLinkOption(i);
+      // let new_options: Array<{
+      //   shipment_id: number;
+      //   shipment_No: string
+      // }> = [];
+
+      let all_options = this.sim_ResProcessSearch.result;
+      console.log(this.sim_ResProcessSearch.result.length)
+
+      let a = all_options.filter(e => e.shipment_id != this.sim_ResProcessSearch.result[sel.rowIndex].shipment_id)
+
+
+      for (let j = 0; j < a.length; j++) {
+        let obj: any = {};
+        obj = {
+          shipment_id: a[j].shipment_id,
+          shipment_No: a[j].shipment_No
+        };
+        this.new_options.push(obj);
+      }
+      console.log("new option for row:", i, this.new_options)
+      // console.log(this.new_options.length, this.sim_ResProcessSearch.result.length)
     }
-    else if (sel1 == "N") {
-      this.bt_save11[i] = true;
-      console.log(this.bt_save11)
+    else {
+      console.log("no tail")
 
-        this.AllShipmentLinkOption[i] = {
-          id: 0,
-          name: ""
-        }
-      console.log(this.AllShipmentLinkOption,"row",i)
 
     }
+    // let sel1;
+    // for (let j = 0; j < this.getVehicleGroup.result.length; j++) {
+    //   if (sel.selectedId == this.getVehicleGroup.result[j].vehiclegroupid) {
+    //     sel1 = this.getVehicleGroup.result[j].isTail;
+    //   }
+    // }
+
+    // if (sel1 == "Y") {
+    //   this.bt_save11[i] = false;
+    //   // this.bt_save.emit( this.bt_save11[i]);
+
+    //   console.log(this.bt_save11)
+    //   console.log("have shipment tail", this.bt_save11, i);
+    //   this.CreateShipmetnLinkOption(i);
+    // }
+    // else if (sel1 == "N") {
+    //   this.bt_save11[i] = true;
+    //   // console.log(this.bt_save11)
+
+    //   this.AllShipmentLinkOption[i] = {
+    //     id: 0,
+    //     name: ""
+    //   }
+    //   // console.log(this.AllShipmentLinkOption,"row",i)
+
+    // }
+
+
+    // console.log("create sel ary:", sel_selectedVHD)
+    this.sel_selectedVHD[sel.rowIndex] = sel.selectedId;
+    console.log("create sel ary:", this.sel_selectedVHD)
 
 
   }
@@ -821,12 +884,12 @@ sendAssignQuota: Array<{
     console.log(evt)
 
     if (evt.dropdownName == "vehicleGroup") {
-
       console.log("vehicle group id", evt.selectedId, "row:", evt.rowIndex);
-
     }
 
     else if (evt.dropdownName == "UrgentCar") {
+
+
 
       console.log("UrgentCar yesno id", evt.selectedId, "row:", evt.rowIndex);
     }
@@ -856,8 +919,17 @@ sendAssignQuota: Array<{
 
   AssignVendor(i) {
     console.log("assi vendor", i)
+    // console.log("assign vendor loop:", this.SelectedVehicleGroup[i].id, "is stat:", this.SelectedYesNo[i].id)
 
-    console.log("result", this.sim_ResProcessSearch.result[i].shipment_id)
+    // console.log(this.SelectedVehicleGroup[i], this.SelectedYesNo)
+    this.sendProcessAssignQuota.vehicleGroupId = this.sel_selectedVHD[i];
+    this.sendProcessAssignQuota.planingDatetime = this.sel_getDatePlanning[i];
+    // this.sendAssignQuota[i].carrierId = parseInt(this.sel_carrierID);
+    console.log("assign loop:", this.sendProcessAssignQuota)
+    // this.sendProcessAssignQuota.vehicleGroupId = this.SelectedVehicleGroup[i].id;
+
+
+    // console.log("result", this.sim_ResProcessSearch.result[i].shipment_id)
 
     // for(let j=0; j < this.sim_ResProcessSearch.result.length; j++){
     //   if(i=j){
