@@ -8,8 +8,7 @@ import { FormControl, FormGroupDirective, FormGroup, NgForm, Validators, FormCon
 import * as Type from 'src/models/VariablesType';
 import * as Comp from 'src/models/ComponentClass'
 import * as moment from 'moment';
-import { EventHandlerVars } from '@angular/compiler/src/compiler_util/expression_converter';
-import { arrayToHash } from '@fullcalendar/core/util/object';
+
 @Component({
   selector: 'app-ldlt11',
   templateUrl: './ldlt11.component.html',
@@ -54,7 +53,8 @@ export class Ldlt11Component implements OnInit {
   getTypePacking: Type.ResponseTypePacking;
   getRoute: Type.ResponseRoute;
 
-  //-----------send to assignQuota
+  //-----------send to assignQuota  
+  //---------  api/v1/Process/ProcessSearchCarrierQuota
   sendProcessAssignQuota: Type.SendProcessAssignVendorQuota = {
     shipmentId: null,
     planingDatetime: null,
@@ -98,7 +98,7 @@ export class Ldlt11Component implements OnInit {
   getResponseClearandReturn: Type.ResponseProcessClearandReturnAssignVendorQuota;
 
 
-  //-------------------sim data
+  //-------------------sim data for dataToSearch
   sim_shipType = {
     "result": [
       {
@@ -170,7 +170,7 @@ export class Ldlt11Component implements OnInit {
   date_to: string;
   date_planning: string;
 
-  //---------  api/v1/Process/ProcessSearchCarrierQuota
+
 
   sim_ResProcessSearch = {
     "result": [
@@ -291,6 +291,12 @@ export class Ldlt11Component implements OnInit {
       }
     ],
     "message": "OK"
+  }
+
+
+  sim_ResProcessSearch2 = {
+    "result": [],
+    "message": "NOT OK"
   }
 
   //------------------api/v1/ProcessCb/VehicleGroup
@@ -492,6 +498,18 @@ export class Ldlt11Component implements OnInit {
     "message": "OK"
   }
 
+  //-----------------return ResponseProcessAssignVendorQuota
+  sim_ResProcessAssignQuota = {
+    "result": null,
+    "message": "OK"
+  }
+
+  //-----------------return ResponseProcessReturnandClearQuota
+  sim_ResProcessReturnQuota = {
+    "result": null,
+    "message": "OK"
+  }
+
   //----------------filter table
   searchkeyword = new FormControl();
   search1;
@@ -671,7 +689,6 @@ export class Ldlt11Component implements OnInit {
     this.date_planning = get_date;
     console.log("date planning:", get_date, "row:", i);
     this.sel_getDatePlanning[i] = get_date;
-
   }
 
   //--------define id of shipmenttype for data packing
@@ -685,7 +702,6 @@ export class Ldlt11Component implements OnInit {
         // sel_shiptype_ary[n] = a;
       }
     }
-    console.warn("shipment ID selected:", selected_shipmentID)
     this.sel_shiptype = selected_shipmentID;
     // console.log("selected shipType id: " + sel_shiptype);
   }
@@ -714,19 +730,11 @@ export class Ldlt11Component implements OnInit {
         id: this.getVehicleGroup.result[a].vehiclegroupid,
         name: this.getVehicleGroup.result[a].description,
       }
-
-      // console.log("selcted", this.SelectedVehicleGroupOption)
-
     }
-
-
     for (let a = 0; a < this.sim_ResProcessSearch.result.length; a++) {
       this.SelectedVehicleGroupOption(a);
 
     }
-
-
-
   }
 
 
@@ -793,13 +801,6 @@ export class Ldlt11Component implements OnInit {
       this.bt_save[i] = true;
       this.sel_shipLink_ary[sel.rowIndex] = "null";
       console.log(this.sel_shipLink_ary)
-
-      // this.AllShipmentLinkOption[i] = {
-      //   id: 0,
-      //   name: ""
-      // }
-
-      // console.log("no tail", this.AllShipmentLinkOption)
     }
 
   }
@@ -973,7 +974,6 @@ export class Ldlt11Component implements OnInit {
   AssignVendor(i) {
     console.log("assi vendor", i)
 
-    // console.log(this.SelectedVehicleGroup[i], this.SelectedYesNo)
     this.sendProcessAssignQuota.carrierId = parseInt(this.sel_carrierID);
     this.sendProcessAssignQuota.shipmentId = this.sim_ResProcessSearch.result[i].shipment_id;
     this.sendProcessAssignQuota.vehicleGroupId = this.sel_selectedVHD[i];
@@ -986,10 +986,28 @@ export class Ldlt11Component implements OnInit {
     this.sendProcessAssignQuota.shipmentLink = this.sel_shipLink_ary[i];
     console.log("assign loop:", this.sendProcessAssignQuota)
     // this.sendProcessAssignQuota.vehicleGroupId = this.SelectedVehicleGroup[i].id;
+
+    this.ResponseProcessAssignQuota();
+
+  }
+
+  ResponseProcessAssignQuota() {
+
+    this.getResponseAssignQuota = this.sim_ResProcessAssignQuota as Type.ResponseProcessAssignVendorQuota;
+
+    if (this.getResponseAssignQuota.message == "OK") {
+      alert("Assign Quota Success");
+      console.log("send DatatoSearch to server again")
+      this.datatoSearch();
+    }
+    else {
+      alert("Assign Quota Not Success");
+    }
+
   }
 
   returnQuota(i) {
-    console.log(this.sim_ResProcessSearch.result)
+    // console.log(this.sim_ResProcessSearch.result)
 
     this.sendClearandReturnQuota.carrierId = parseInt(this.sel_carrierID);
     this.sendClearandReturnQuota.shipmentId = this.sim_ResProcessSearch.result[i].shipment_id;
@@ -997,6 +1015,21 @@ export class Ldlt11Component implements OnInit {
     console.log(this.sendClearandReturnQuota)
     console.log("Carrier ID", parseInt(this.sel_carrierID), "Selected Shipment ID:", this.sim_ResProcessSearch.result[i].shipment_id)
 
+    this.ResponseProcessReturnAndClearQuota();
+
+  }
+
+  ResponseProcessReturnAndClearQuota() {
+
+    this.getResponseClearandReturn = this.sim_ResProcessReturnQuota as Type.ResponseProcessClearandReturnAssignVendorQuota;
+    if (this.getResponseClearandReturn.message == "OK") {
+      alert("Return Quota Success");
+      console.log("send DatatoSearch to server again")
+      this.datatoSearch();
+    }
+    else {
+      alert("Return Quota Not Success");
+    }
   }
 
 }
