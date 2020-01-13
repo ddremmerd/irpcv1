@@ -19,12 +19,29 @@
                             <td>
                                 <app-date-picker (FindDateSelected)="GetDate($event)"></app-date-picker>
                             </td>
+                            <td style="padding-left: 30px;"> Type:</td>
+                            <td>
+                                <mat-form-field style="width:100%;">
+                                    <mat-select [formControl]="shipmentType" multiple>
+                                        <ng-container *ngIf="getShipT != undefined">
+                                            <ng-container *ngIf="getShipT.message =='OK'">
+                                                <mat-option *ngFor="let shipType of shipmenttypeList"
+                                                    [value]="shipType">
+                                                    {{shipType}}
+                                                </mat-option>
+                                            </ng-container>
+                                        </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
                             <td style="padding-left: 30px;"> Invoice: </td>
                             <td>
                                 <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
                                     <input matInput placeholder="Invoice No." [formControl]="invoiceNo">
                                 </mat-form-field>
                             </td>
+
+
                         </tr>
 
                         <tr>
@@ -42,6 +59,21 @@
                                     </mat-select>
                                 </mat-form-field>
                             </td>
+
+                            <td style="padding-left: 30px;"> Status:</td>
+                            <td>
+                                <mat-form-field style="width:100%;">
+                                    <mat-select [formControl]="statusNum" multiple>
+                                        <ng-container *ngIf="getStat != undefined">
+                                            <ng-container *ngIf="getStat.message =='OK'">
+                                                <mat-option *ngFor="let stat of statusList" [value]="stat">{{stat}}
+                                                </mat-option>
+                                            </ng-container>
+                                        </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+
                             <td style="padding-left: 30px;"> Shipment: </td>
                             <td>
                                 <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
@@ -65,6 +97,8 @@
                                     </mat-select>
                                 </mat-form-field>
                             </td>
+                            <td></td>
+                            <td></td>
                             <td style="padding-left: 30px;"> Delivery: </td>
                             <td>
                                 <mat-form-field class="example-full-width" style="width:100%; display: inline-block;">
@@ -74,24 +108,12 @@
                         </tr>
 
                         <tr>
-                            <td style="padding-left: 30px;"> Type:</td>
-                            <td>
-                                <mat-form-field style="width:100%;">
-                                    <mat-select [formControl]="shipmentType" multiple>
-                                        <ng-container *ngIf="getShipT != undefined">
-                                            <ng-container *ngIf="getShipT.message =='OK'">
-                                                <mat-option *ngFor="let shipType of shipmenttypeList"
-                                                    [value]="shipType">
-                                                    {{shipType}}
-                                                </mat-option>
-                                            </ng-container>
-                                        </ng-container>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
 
-                                    </mat-select>
-                                </mat-form-field>
-
-                            </td>
-                            <td> </td>
                             <td style="text-align: right;">
                                 <p (click)="clearSearch()"><u>Click เพื่อล้างข้อมูลการค้นหา</u></p>
 
@@ -108,22 +130,6 @@
 
                         </tr>
 
-                        <tr>
-                            <td style="padding-left: 30px;"> Status:</td>
-                            <td>
-                                <mat-form-field style="width:100%;">
-                                    <mat-select [formControl]="statusNum" multiple>
-                                        <ng-container *ngIf="getStat != undefined">
-                                            <ng-container *ngIf="getStat.message =='OK'">
-                                                <mat-option *ngFor="let stat of statusList" [value]="stat">{{stat}}
-                                                </mat-option>
-                                            </ng-container>
-                                        </ng-container>
-                                    </mat-select>
-                                </mat-form-field>
-                            </td>
-
-                        </tr>
 
 
                     </table>
@@ -139,10 +145,11 @@
                     <ng-container *ngIf="getTable.message =='OK'">
                         <div class="card-body pad table-responsive" style="font-size: 20px;">
                             <div class="row">
-                                <table class="table table-valign-middle text-center " style="max-width: 100%;">
+                                <table class="table table-valign-middle text-center  table-bordered "
+                                    style="max-width: 100%; border: solid 1px;">
                                     <thead>
-                                        <th>Step No.</th>
-                                        <th *ngFor="let items of getTable.header">{{items}}</th>
+                                        <th class="light-gray-bg">Step No.</th>
+                                        <th class="light-gray-bg" *ngFor="let items of getTable.header">{{items}}</th>
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let item of getTable.result; let nR = index;">

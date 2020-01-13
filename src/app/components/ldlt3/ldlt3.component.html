@@ -3,76 +3,147 @@
 <div class="content-wrapper">
     <app-content-header [ContentHeader]="content_header_name"></app-content-header>
     <!-- Main content -->
-
-
     <section class="content">
         <div class="card">
-
-
-            <!-- <app-dropdown-list [ListHeader] = "ListHeader1" [DropdownHeader] = "DropdownHeader1"></app-dropdown-list> -->
-
-            <!-- <div>
-                <span>{{ListHeader1}}</span>
-                <select class="bottom-border" [(ngModel)]="Droplist1" (change)="selected(Droplist)">
-                    <option *ngFor="let Droplist of warehouseNum" [value]="Droplist" placeholder="WAREHOUSE">
-                        WH{{Droplist}}</option>
-                </select>
-            </div> -->
-
             <div style="padding: 20px">
-                <span>WH: </span>
+                <!-- <span>WH: </span>
                 <mat-form-field>
                     <mat-select (selectionChange)="getSelected($event.value)" [(value)]="search">
                         <mat-option *ngFor="let Droplist of warehouseNum" [value]="Droplist">
                             WH{{Droplist}}
                         </mat-option>
                     </mat-select>
-                </mat-form-field>
-            </div>
-            
-            <div class="card">
-                <div class="card-body">
+                </mat-form-field> -->
 
-                    <table matSort class="table table-valign-middle pad text-center table-bordered" (matSortChange)="sortData($event)"
-                        matSortActive="queue_no">
-                        <thead>
-                            <!-- <th *ngFor="let header of TableHeader">{{header}}</th> -->
-                            <th class="light-gray-bg" mat-sort-header="">No.</th>
-                            <th class="light-gray-bg" mat-sort-header="shipment_no">Shipment No.</th>
-                            <th class="light-gray-bg" mat-sort-header="booking_no">Booking No.</th>
-                            <th class="light-gray-bg" mat-sort-header="invoice_no">Invoice No.</th>
-                            <th class="light-gray-bg" mat-sort-header="planning_time">Planning Time</th>
-                            <th class="light-gray-bg" mat-sort-header="wareNum">WH</th>
-                            <th class="light-gray-bg" mat-sort-header="shipment_type">ประเภทรถ</th>
-                            <th class="light-gray-bg" mat-sort-header="ship_license">ทะเบียนรถ</th>
-                            <th class="light-gray-bg" mat-sort-header="driver_check_time">Driver Checking Time</th>
-                            <th class="light-gray-bg" mat-sort-header="queue_no">ลำดับคิว</th>
-                            <th class="light-gray-bg" mat-sort-header=""></th>
-                        </thead>
-
-                        <tbody>
-                            <tr *ngFor="let data of sortedData | tableFilter: search; let nRow = index">
-
-
-                                <td>{{nRow + 1}}</td>
-                                <td>{{data.shipment_no}}</td>
-                                <td>{{data.booking_no}}</td>
-                                <td>{{data.invoice_no}}</td>
-                                <td>{{data.planning_time}}</td>
-                                <td>{{data.wareNum}}</td>
-                                <td>{{data.shipment_type}}</td>
-                                <td>{{data.ship_license}}</td>
-                                <td>{{data.driver_check_time}}</td>
-                                <td>{{data.queue_no}}</td>
-                                <td>
-                                    <app-recall-button (click)="recall($event,nRow, data.booking_no)">
-                                    </app-recall-button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div style="border: none; margin-top: 1rem; padding: 10px;" class="card-header ui-sortable-handle">
+                    <p class="d-inline-block">WH: </p>
+                    <div class="d-inline-block" style="padding-left: 10px;">
+                        <mat-form-field>
+                            <mat-select [formControl]="wareHouse">
+                                <mat-option *ngFor="let ware_house of warehouse_list" [value]="ware_house">
+                                    {{ware_house}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div class="input-group-append d-inline-block" style="padding-left: 10px;">
+                            <app-find-button style="width: 6rem; margin-top: 1rem; font-size: 60px;"
+                                (click)="getQuelist()">
+                            </app-find-button>
+                        </div>
+                    </div>
                 </div>
+
+
+
+                <!-- <table>
+                    <tr>
+                        <td tyle="padding-left: 30px;">WH:</td>
+                        <td>
+                            <mat-form-field>
+                                <mat-select [formControl]="wareHouse">
+                                    <mat-option *ngFor="let ware_house of warehouse_list" [value]="ware_house">
+                                        {{ware_house}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td tyle="padding-left: 30px;">
+                            <div class="btn-group" style="text-align: right; width: 40%">
+                                <app-find-button style="width: 4rem; margin-top: 1rem; font-size: 50px;"
+                                    (click)="getQuelist()">
+                                </app-find-button>
+                            </div>
+                        </td>
+
+                    </tr>
+                </table> -->
+
             </div>
+
+
+
+
+
+            <div class="card-body">
+
+                <!-- <table matSort class="table table-valign-middle pad text-center table-bordered"
+                    (matSortChange)="sortData($event)" matSortActive="queue_no">
+                    <thead>
+                        <th class="light-gray-bg" mat-sort-header="">No.</th>
+                        <th class="light-gray-bg" mat-sort-header="shipment_no">Shipment No.</th>
+                        <th class="light-gray-bg" mat-sort-header="booking_no">Booking No.</th>
+                        <th class="light-gray-bg" mat-sort-header="invoice_no">Invoice No.</th>
+                        <th class="light-gray-bg" mat-sort-header="planning_time">Planning Time</th>
+                        <th class="light-gray-bg" mat-sort-header="wareNum">WH</th>
+                        <th class="light-gray-bg" mat-sort-header="shipment_type">ประเภทรถ</th>
+                        <th class="light-gray-bg" mat-sort-header="ship_license">ทะเบียนรถ</th>
+                        <th class="light-gray-bg" mat-sort-header="driver_check_time">Driver Checking Time</th>
+                        <th class="light-gray-bg" mat-sort-header="queue_no">ลำดับคิว</th>
+                        <th class="light-gray-bg" mat-sort-header=""></th>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let data of sortedData; let nRow = index">
+
+
+                            <td>{{nRow + 1}}</td>
+                            <td>{{data.shipment_no}}</td>
+                            <td>{{data.booking_no}}</td>
+                            <td>{{data.invoice_no}}</td>
+                            <td>{{data.planning_time}}</td>
+                            <td>{{data.wareNum}}</td>
+                            <td>{{data.shipment_type}}</td>
+                            <td>{{data.ship_license}}</td>
+                            <td>{{data.driver_check_time}}</td>
+                            <td>{{data.queue_no}}</td>
+                            <td>
+                                <app-recall-button (click)="recall($event,nRow, data.booking_no)">
+                                </app-recall-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> -->
+
+
+                <ng-container *ngIf="getTable != undefined">
+                    <ng-container *ngIf="getTable.message =='OK'">
+                        <div class="card-body pad table-responsive" style="font-size: 20px;">
+                            <div class="row">
+                                <table class="table table-valign-middle text-center table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="light-gray-bg" *ngFor="let head of TableHeader">{{head}}</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let rowData of getTable.result; let nRow=index">
+                                            <td>{{nRow+1}}</td>
+                                            <td>{{rowData.shipment_no}}</td>
+                                            <td>{{rowData.booinkg_No}}</td>
+                                            <td>{{rowData.invoice_No}}</td>
+                                            <td>{{rowData.plannig_Datetime}}</td>
+                                            <td>{{rowData.storage}}</td>
+                                            <td>{{rowData.vehicle_group_Desc}}</td>
+                                            <td>{{rowData.vehicle_plate}}</td>
+                                            <td>{{rowData.driver_Checkin_Datetime}}</td>
+                                            <td>{{rowData.queue_number}}</td>
+                                            <td>
+                                                <app-recall-button (click)="toRecall(nRow)"></app-recall-button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+
+
+            </div>
+
+
+
         </div>
     </section>
 

@@ -68,6 +68,7 @@
 
                             <tr>
                                 <td style="padding: 0px;"></td>
+
                                 <td style="text-align: right;">
                                     <div class="btn-group" style="text-align: right; width: 40%">
                                         <app-find-button style="width: 4rem; margin-top: 1rem; font-size: 50px;"
@@ -82,19 +83,51 @@
 
                     <!-- ------------------------info display -->
                     <div class="col-lg-6">
-
                         <app-content-header [ContentHeader]="content_header_name2"></app-content-header>
+
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="info-box mb-3"
-                                    style="background-color: rgb(173, 206, 158); padding-bottom: 30px; height: 200px;">
-                                    <b>{{transName}}</b>
+                                    style="background-color: rgb(173, 206, 158); max-height: 100%;">
+
+
+                                    <table>
+                                        <tr>
+                                            <ng-container *ngIf="getCarrierName.result != undefined"></ng-container>
+                                            <b>{{selcarrierName}}</b>
+
+                                        </tr>
+
+                                        <tr>
+                                            <ng-container *ngIf="getResQuotaStat.result != undefined">
+
+                                                <ul style="list-style-type:none; padding-inline-start:10px">
+                                                    <b>
+                                                        <li *ngFor="let vend of show_vendor">{{vend}}</li>
+                                                    </b>
+
+                                                </ul>
+                                            </ng-container>
+                                        </tr>
+                                    </table>
+
                                 </div>
                             </div>
 
                             <div class="col-lg-6" style="display: inline-block;">
-                                <div class="info-box mb-3" style="background-color: rgb(111, 166, 197); height: 200px;">
-                                    <b>ข้อมูลทั้งหมด</b>
+                                <div class="info-box mb-3" style="background-color: rgb(111, 166, 197); padding-right: 20px; max-height: 100%;">
+
+                                    <ng-container *ngIf="getResQuotaStat.result != undefined">
+                                        <div>
+                                            <ul style="list-style-type:none; padding-inline-start:10px;">
+                                                <b>
+                                                    <li *ngFor="let showAll of show_textAll">{{showAll}}</li>
+                                                </b>
+
+                                            </ul>
+                                        </div>
+                                    </ng-container>
+
                                 </div>
 
 
@@ -116,21 +149,22 @@
         </div>
 
         <!-- ------------------- table area -->
-        <ng-container *ngIf="sim_ResProcessSearch != undefined">
-            <ng-container *ngIf="sim_ResProcessSearch.message =='OK'">
-                <div class="card" style="font-size: 20px;">
-                    <div style="padding: 20px; width: 40%;">
-                        <form class="example-form">
-                            <mat-form-field class="example-full-width" style="width:70%">
-                                <input matInput placeholder="Shipment No., Booking No., ทะเบียนรถ" value=""
-                                    [(ngModel)]="search1" [formControl]="searchkeyword">
 
-                            </mat-form-field>
-                            <mat-icon matDatepickerToggleIcon>search</mat-icon>
+        <div class="card" style="font-size: 20px;">
+            <div style="padding: 20px; width: 40%;">
+                <form class="example-form">
+                    <mat-form-field class="example-full-width" style="width:70%">
+                        <input matInput placeholder="Shipment No., Booking No., ทะเบียนรถ" value=""
+                            [(ngModel)]="search1" [formControl]="searchkeyword">
 
-                        </form>
-                    </div>
+                    </mat-form-field>
+                    <mat-icon matDatepickerToggleIcon>search</mat-icon>
 
+                </form>
+            </div>
+
+            <ng-container *ngIf="getResProSearchCarQuota != undefined">
+                <ng-container *ngIf="getResProSearchCarQuota.message =='OK'">
                     <div class="card-body pad table-responsive">
                         <table class="table table-valign-middle text-center table-bordered">
                             <thead>
@@ -154,18 +188,27 @@
                                 <th class="yellow-bg">Route</th>
                                 <th class="yellow-bg">รับของข้างนอก</th>
                                 <th class="light-gray-bg">จำนวนกรรมกรลงสินค้า</th>
-                                <th class="yellow-bg">Planning Time</th>
+                                <ng-container *ngIf="statuToShow == 'Create Shipment'">
+                                    <th class="yellow-bg">Planning Date</th>
+                                    <th class="yellow-bg">Planning Time</th>
+                                </ng-container>
+
+                                <ng-container *ngIf="statuToShow == 'Planning'">
+                                    <th class="yellow-bg">Planning Time</th>
+                                </ng-container>
+
+
                                 <th class="light-gray-bg"></th>
                             </thead>
 
                             <tbody>
 
-                                <tr *ngFor="let data of sim_ResProcessSearch.result | filter:search1; let i =index;">
+                                <tr *ngFor="let data of getResProSearchCarQuota.result | filter:search1; let i =index;">
                                     <td>{{i+1}}</td>
                                     <td>{{data.shipment_No}}</td>
                                     <td>{{data.deliver_No}}</td>
                                     <td>{{data.invoice_No}}</td>
-                                    <td>{{data.booinkg_No}}</td>
+                                    <td>{{data.booking_No}}</td>
                                     <td>{{data.closing_time}}</td>
                                     <td>{{data.qty}}</td>
                                     <td>{{data.mat_no}}</td>
@@ -173,7 +216,7 @@
 
                                     <!-------- DONT FORGET TO SET CONDITION FOR DISPLAY -->
                                     <td>
-                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                        <ng-container *ngIf="statuToShow == 'Create Shipment'">
                                             <ng-container *ngIf="AllVehicleOption.length > 0">
                                                 <app-dropdown [options]="AllVehicleOption"
                                                     [selectValue]="SelectedVehicleGroup[i]" [ddName]="'vehicleGroup'"
@@ -183,7 +226,7 @@
                                             </ng-container>
                                         </ng-container>
 
-                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                        <ng-container *ngIf="statuToShow == 'Planning'">
                                             {{data.vehicle_group_desc}}
                                         </ng-container>
                                     </td>
@@ -191,7 +234,7 @@
 
 
 
-                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                        <ng-container *ngIf="statuToShow == 'Create Shipment'">
                                             <!-- <ng-container *ngIf="AllShipmentLinkOption[i].length >0">
                                         <app-dropdown [options]="AllShipmentLinkOption[i]" 
                                             [selectValue]="SelectedShipment[i]" [ddName]="'shipmentLink'"
@@ -203,7 +246,8 @@
                                             <mat-form-field>
                                                 <mat-select [formControl]="shipmentLink" [disabled]="bt_save[i]"
                                                     (selectionChange)="selectedShipLink($event,i)">
-                                                    <ng-container *ngIf="sim_ResProcessSearch.result[i] != undefined">
+                                                    <ng-container
+                                                        *ngIf="getResProSearchCarQuota.result[i] != undefined">
                                                         <ng-container *ngIf="shipLinkOption != undefined">
                                                             <mat-option *ngFor="let shiplink of shipLinkOption"
                                                                 [value]="shiplink">
@@ -216,7 +260,7 @@
                                         </ng-container>
 
 
-                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                        <ng-container *ngIf="statuToShow == 'Planning'">
                                             {{data.shipments_link_id}}
                                         </ng-container>
 
@@ -224,7 +268,7 @@
                                     </td>
 
                                     <td>
-                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                        <ng-container *ngIf="statuToShow == 'Create Shipment'">
                                             <ng-container *ngIf="AllIsStatOption.length > 0">
                                                 <app-dropdown [options]="AllIsStatOption"
                                                     [selectValue]="SelectedYesNo[i]" [ddName]="'UrgentCar'"
@@ -233,12 +277,12 @@
                                             </ng-container>
                                         </ng-container>
 
-                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                        <ng-container *ngIf="statuToShow == 'Planning'">
                                             {{data.isStat}}</ng-container>
                                     </td>
                                     <td>
 
-                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                        <ng-container *ngIf="statuToShow == 'Create Shipment'">
                                             <ng-container *ngIf="AllReqEquipOptions.length > 0">
                                                 <app-dropdown [options]="AllReqEquipOptions"
                                                     [selectValue]="SelectedReqEquip[i]" [ddName]="'ReqEquip'"
@@ -247,12 +291,12 @@
                                             </ng-container>
                                         </ng-container>
 
-                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                        <ng-container *ngIf="statuToShow == 'Planning'">
                                             {{data.req_qequipments}}
                                         </ng-container>
                                     </td>
                                     <td>
-                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                        <ng-container *ngIf="statuToShow == 'Create Shipment'">
                                             <ng-container *ngIf="AllTypePackingOPtions.length > 0">
                                                 <app-dropdown [options]="AllTypePackingOPtions"
                                                     [selectValue]="SelectedTypePack[i]" [ddName]="'TypePacking'"
@@ -261,7 +305,7 @@
                                             </ng-container>
                                         </ng-container>
 
-                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                        <ng-container *ngIf="statuToShow == 'Create Shipment'">
                                             {{data.type_packing_name}}
                                         </ng-container>
                                     </td>
@@ -269,10 +313,10 @@
                                         <button class="square_bt_enable btn-danger" (click)="toggleRemark(i)"></button>
 
 
-                                        <!-- <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                        <!-- <ng-container *ngIf="statuToShow == 'Create Shipment'">
                                 </ng-container>
 
-                                <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                <ng-container *ngIf="statuToShow == 'Planning'">
                                     {{data.remark}}
                                 </ng-container> -->
 
@@ -280,7 +324,7 @@
                                     <td>{{data.pick_up_at}}</td>
                                     <td>{{data.return_to}}</td>
                                     <td>
-                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                        <ng-container *ngIf="statuToShow == 'Create Shipment'">
                                             <ng-container *ngIf="AllRouteOption.length > 0">
                                                 <app-dropdown [options]="AllRouteOption"
                                                     [selectValue]="SelectedRoute[i]" [ddName]="'route'" [index_row]="i"
@@ -289,12 +333,12 @@
                                             </ng-container>
                                         </ng-container>
 
-                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                        <ng-container *ngIf="statuToShow == 'Planning'">
                                             {{data.route_name}}
                                         </ng-container>
                                     </td>
                                     <td>
-                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                        <ng-container *ngIf="statuToShow == 'Create Shipment'">
                                             <ng-container *ngIf="AllIsStatOption.length > 0">
                                                 <app-dropdown [options]="AllIsStatOption"
                                                     [selectValue]="SelectedYesNo[i]" [ddName]="'isOutside'"
@@ -303,7 +347,7 @@
                                             </ng-container>
                                         </ng-container>
 
-                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                        <ng-container *ngIf="statuToShow == 'Planning'">
                                             {{data.isOutside}}
                                         </ng-container>
 
@@ -311,27 +355,50 @@
 
                                     </td>
                                     <td>{{data.total_worker}}</td>
-                                    <td>
 
-                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+
+                                    <ng-container *ngIf="statuToShow == 'Create Shipment'">
+                                        <td>
+
+
                                             <app-date-picker (FindDateSelected)="GetDatePlanning($event,i)">
                                             </app-date-picker>
+                                        </td>
+                                    </ng-container>
 
-                                        </ng-container>
+                                    <ng-container *ngIf="statuToShow == 'Planning'">
+                                        <td>
+                                            <!-- {{data.planning_Datetime}} -->
+                                            <ng-container *ngIf="date_toShow && time_toShow != undefined">
 
-                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
-                                            {{data.plannig_Datetime}}
-                                        </ng-container>
+                                                {{date_toShow[i]}} <br> {{time_toShow[i]}}
 
-                                    </td>
+
+                                            </ng-container>
+                                        </td>
+                                    </ng-container>
+
+
+
+                                    <ng-container *ngIf="statuToShow == 'Create Shipment'">
+
+                                        <td style="padding-bottom: 10px;">
+                                            <app-time-picker (SelectedTime)="GetTimeSelected($event)" [setDate]=""
+                                                [index_row]="i" [datepickName]="'planningTime'">
+                                            </app-time-picker>
+                                        </td>
+                                    </ng-container>
+
+
+
                                     <td>
-                                        <ng-container *ngIf="shipmentStatus.value == 'Create Shipment'">
+                                        <ng-container *ngIf="statuToShow == 'Create Shipment'">
                                             <button type="button" class="btn btn-block btn-success btn-sm"
                                                 (click)="AssignVendor(i)">ส่ง
                                                 Quota</button>
                                         </ng-container>
 
-                                        <ng-container *ngIf="shipmentStatus.value == 'Planning'">
+                                        <ng-container *ngIf="statuToShow == 'Planning'">
                                             <app-delete-button (click)="returnQuota(i)"></app-delete-button>
                                         </ng-container>
                                     </td>
@@ -340,10 +407,10 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </ng-container>
-        </ng-container>
 
+                </ng-container>
+            </ng-container>
+        </div>
 
     </section>
 </div>

@@ -40,7 +40,8 @@ export class DatePickerComponent implements OnInit {
 
   GetDate(event, date) {
     // console.log(date);
-    this.selected_date = date.format("YYYY-MM-DDTHH:mm:ss");
+    // this.selected_date = date.format("YYYY-MM-DDTHH:mm:ss");
+    this.selected_date = date.format("YYYY-MM-DDT");
     this.FindDateSelected.emit(this.selected_date);
   }
 

@@ -56,12 +56,17 @@ import { Ldls3Component } from './components/ldls3/ldls3.component';
 import { Ldlt5Component } from './components/ldlt5/ldlt5.component';
 
 
+//time picker
+import { NgxMaterialTimepickerModule } from './material-timepicker/ngx-material-timepicker.module';
+
+
 //-----date picker
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { Ldlt11Component } from './components/ldlt11/ldlt11.component';
 import { Dropdown2Component } from './components/dropdown2/dropdown2.component';
+import { TimePickerComponent } from './components/time-picker/time-picker.component';
 
 
 const appRoutes: Routes = [
@@ -134,6 +139,7 @@ export const MY_FORMATS = {
     DropdownComponent,
     Ldlt11Component,
     Dropdown2Component,
+    TimePickerComponent,
 
 
 
@@ -157,7 +163,8 @@ export const MY_FORMATS = {
     ReactiveFormsModule,
     Ng2SearchPipeModule,
     MatCheckboxModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    NgxMaterialTimepickerModule
 
   ],
   providers: [

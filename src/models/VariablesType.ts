@@ -124,7 +124,9 @@ export class ProcessGetTruckAmountNoti {
     last_datetime: string
 }
 
-export class ProcessSerachContainerReg {
+
+//--------แก้คำผิด ProcessSearch
+export class ProcessSearchContainerReg {
     containner_regis_id: number;
     carrier_id: number;
     carrier_code: string;
@@ -142,11 +144,50 @@ export class ProcessSerachContainerReg {
     agent_container_id: number;
     agent_container_code: string;
     agent_container_name: string;
+    pickup_at_id: number;
+    pickup_at_code: string;
+    pickup_at_name: string;
     pickup_return_id: number;
     pickup_return_code: string;
     pickup_return_name: string;
     is_Shipment_No_assigned: string;
+    last_update_datetime: string;
+    loading_date: string;
+    
 }
+
+
+//-----------แก้ ProcessSearchContainerRegNotAssign
+export class ProcessSearchContainerRegNotAssign{
+    loading_date: string;
+    containner_regis_id: number;
+    carrier_id: number;
+    carrier_code: string;
+    carrier_name: string;
+    recieve_date: string;
+    invoice_no_text: string;
+    booinkg_No_text: string;
+    container_No: string;
+    seal_No: string;
+    size_container: number;
+    return_date: string;
+    vgM_Tare: number;
+    closing_datetime: string;
+    etd_lcb: string;
+    agent_container_id: number;
+    agent_container_code: string;
+    agent_container_name: string;
+    pickup_at_id: number;
+    pickup_at_code: string;
+    pickup_at_name: string;
+    pickup_return_id: number;
+    pickup_return_code: string;
+    pickup_return_name: string;
+    last_update_datetime: string;
+    is_Shipment_No_assigned: string;
+    
+}
+
 
 export class ProcessSearchstatusOverAllbyuserid {
     loading_Datetime: string;
@@ -197,66 +238,34 @@ export class ProcessSearchstatusOverAllbyuserid {
     shipment_storage_name: string;
 }
 
+//---------------------- แก้  ProcessSearchCarrierQuota
+
 export class ProcessSearchCarrierQuota {
-    loading_Datetime: string
-    shipment_Type: string
-    current_status: string
-    shipment_No: string
-    deliver_No: string
-    invoice_No: any
-    booinkg_No: any
-    container_No: any
-    seal_No: any
-    queue_Number: any
-    item_no: string
-    mat_no: string
-    mat_desc: string
-    do_qty: number
-    do_saleunit: string
-    lot_no: any
-    qty: any
-    uom: any
-    truck_Load: number
-    customer_name: any
-    regis_confirm_datetime: any
-    queue_Call_DateTime: any
-    queue_End_DateTime: any
-    plannig_Datetime: string
-    product_preparing_Datetime: any
-    truck_Checkin_Datetime: any
-    driver_Checkin_Datetime: any
-    driver_text: any
-    vehicle_text: any
-    firstname_driver: any
-    lastname_driver: any
-    dO_Loading_Confirm_Datetime: any
-    dO_Loading_Start_Datetime: any
-    dO_Loading_End_Datetime: any
-    storage_name: any
-    dock_name: any
-    packing_rem: any
-    fumigation_rem: any
-    surveyor_rem: any
-    marking_rem: any
-    shipping_ins: any
-    shipment_storage_name: string
-    route_name: any
-    type_packing_name: any
-    shipment_id: number
-    shipments_link_id: any
-    is_Trailer: any
-    carrier_id: any
-    customer_id: any
-    vehicle_id: any
-    current_status_id: number
-    shipment_storage_id: number
-    dO_id: number
-    grade_id: number
-    lot_id: any
+    shipment_id: number;
+    shipment_No: string;    
+    deliver_No: string;
+    invoice_No: any;
+    booking_No: any;
+    closing_time: any;
+    mat_no: string;
+    qty: any;
+    truck_Load: number;
+    vehicle_group_desc: any;
+    shipments_link_id: any;
+    isStat: any;
+    req_qequipments: any;
+    type_packing_name: any;
+    remark: any;
+    pick_up_at: any;
+    return_to: any;
+    route_name: any;
+    isOutside: any;
+    total_worker: any;
+    planning_Datetime: any;
+
 }
 
-export class ProcessSearchWarehouseConfirmByItem
-{
+export class ProcessSearchWarehouseConfirmByItem {
     loading_date: Date;
     dc: any;
     planning_time: Date;
@@ -284,8 +293,7 @@ export class ProcessSearchWarehouseConfirmByItem
     province: string;
 }
 
-export class ProcessSearchWarehouseConfirmByGroup
-{
+export class ProcessSearchWarehouseConfirmByGroup {
     loading_date: Date;
     dc: any;
     planning_time: Date;
@@ -313,6 +321,29 @@ export class ProcessSearchWarehouseConfirmByGroup
     province: string;
 }
 
+//----เพิ่ม ProcessGetQueList: api/v1/Process/ProcessGetQueueList
+export class ProcessGetQueueList {
+
+    shipment_no: string;
+    booinkg_No: string;
+    invoice_No: string;
+    plannig_Datetime: string;
+    storage: string;
+    vehicle_group_Desc: string;
+    driver_Checkin_Datetime: string;
+    driver_text: string;
+    vehicle_plate: string;
+    queue_number: string;
+}
+
+
+//--------- เพิ่ม api/v1/Process/ProcessSearchCarrierQuotaStat
+export class ProcessSearchCarrierQuotaStat{
+    text_vendor: string;
+    text_all: string;
+    text_information: string;
+
+}
 /*------- End Process --------*/
 
 /*-------  ProcessCb  --------*/
@@ -378,6 +409,11 @@ export class Status {
     name: string;
 }
 
+//---------- เพิ่ม responseCbStorage
+export class ResponseCbStorage {
+    result: CbStorage[];
+    message: string
+}
 export class Response {
     storageid: number;
     storage_code: string;
@@ -412,7 +448,7 @@ export class VehicleGroup {
     vehiclegroupid: number;
     code: string;
     description: string;
-    isTail:string;
+    isTail: string;
 }
 
 export class VehicleType {
@@ -604,10 +640,24 @@ export interface ResponseProcessGetTruckAmountNoti {
     message: string;
 }
 
-export interface ResponseProcessSerachContainerReg {
-    result: ProcessSerachContainerReg[];
+export interface ResponseProcessSearchContainerReg {
+    result: ProcessSearchContainerReg[];
     message: string;
 }
+
+
+//==========เพิ่ม ResponseProcessSearchContainerRegNotAssign
+export interface ResponseProcessSearchContainerRegNotAssign {
+    result: ProcessSearchContainerRegNotAssign[];
+    message: string;
+}
+
+//=============เพิ่ม ResponseProcessSearchCarrierQuotaStat
+export interface ResponseProcessSearchCarrierQuotaStat{
+    result: ProcessSearchCarrierQuotaStat[];
+    message: string;
+}
+
 
 export interface ResponseProcessSearchstatusOverAllbyuserid {
     header: [];
@@ -629,24 +679,28 @@ export interface SendProcessSearchstatusOverAllbyuserid {
     currentStatusId: string
 }
 
-export interface ResponseProcessSearchCarrierQuota
-{
+export interface ResponseProcessSearchCarrierQuota {
     result: ProcessSearchCarrierQuota[];
     message: string;
 }
 
-export interface ResponseProcessSearchWarehouseConfirmByItem
-{
+export interface ResponseProcessSearchWarehouseConfirmByItem {
     result: ProcessSearchWarehouseConfirmByItem[];
     message: string;
 }
 
 
-export interface ResponseProcessSearchWarehouseConfirmByGroup
-{
+export interface ResponseProcessSearchWarehouseConfirmByGroup {
     result: ProcessSearchWarehouseConfirmByGroup[];
     message: string;
 }
+
+//เพิ่ม ------ responseProcessGetQueueList
+export interface ResponseProcessGetQueueList {
+    result: ProcessGetQueueList[];
+    message: string;
+}
+
 //*******End Process*********
 
 //******* ProcessCb*********

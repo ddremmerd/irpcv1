@@ -3,8 +3,6 @@ import { MatSelectChange, MatDatepickerInputEvent } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import { FormControl, FormGroupDirective, FormGroup, NgForm, Validators, FormControlName } from '@angular/forms';
-
-
 import * as Type from 'src/models/VariablesType';
 import * as Comp from 'src/models/ComponentClass'
 import * as moment from 'moment';
@@ -83,6 +81,9 @@ export class Ldlt11Component implements OnInit {
     userId: number;
   }> = [null]
 
+  //------------response to ProcessSearchQuota
+  getResProSearchCarQuota: Type.ResponseProcessSearchCarrierQuota;
+
 
   //-----------response to assignQuota
   getResponseAssignQuota: Type.ResponseProcessAssignVendorQuota;
@@ -97,6 +98,10 @@ export class Ldlt11Component implements OnInit {
   //-----------response to return quota
   getResponseClearandReturn: Type.ResponseProcessClearandReturnAssignVendorQuota;
 
+
+
+  //-------- api/v1/Process/ProcessSearchCarrierQuotaStat
+  getResQuotaStat: Type.ResponseProcessSearchCarrierQuotaStat;
 
   //-------------------sim data for dataToSearch
   sim_shipType = {
@@ -170,16 +175,14 @@ export class Ldlt11Component implements OnInit {
   date_to: string;
   date_planning: string;
 
-
-
-  sim_ResProcessSearch = {
+  sim_ResPorcessSearchCarQuota = {
     "result": [
       {
         "shipment_id": 2,
         "shipment_No": "6101244088",
         "deliver_No": "3030378985",
         "invoice_No": null,
-        "booinkg_No": null,
+        "booking_No": null,
         "closing_time": null,
         "mat_no": "GG3245",
         "qty": null,
@@ -195,14 +198,14 @@ export class Ldlt11Component implements OnInit {
         "route_name": null,
         "isOutside": null,
         "total_worker": null,
-        "plannig_Datetime": "2019-12-24T23:49:43.337"
+        "planning_Datetime": "2020-01-03T22:32:03.617"
       },
       {
-        "shipment_id": 3,
-        "shipment_No": "6101244099",
+        "shipment_id": 7,
+        "shipment_No": "6101244089",
         "deliver_No": "3030378986",
         "invoice_No": null,
-        "booinkg_No": null,
+        "booking_No": null,
         "closing_time": null,
         "mat_no": "GG3245",
         "qty": null,
@@ -218,14 +221,14 @@ export class Ldlt11Component implements OnInit {
         "route_name": null,
         "isOutside": null,
         "total_worker": null,
-        "plannig_Datetime": "2019-12-24T23:44:43.337"
+        "planning_Datetime": "2019-12-24T23:44:43.337"
       },
       {
         "shipment_id": 7,
         "shipment_No": "6101244089",
         "deliver_No": "3030378988",
         "invoice_No": null,
-        "booinkg_No": null,
+        "booking_No": null,
         "closing_time": null,
         "mat_no": "2346SXTA2 8D51",
         "qty": null,
@@ -241,14 +244,14 @@ export class Ldlt11Component implements OnInit {
         "route_name": null,
         "isOutside": null,
         "total_worker": null,
-        "plannig_Datetime": "2019-12-24T23:44:43.337"
+        "planning_Datetime": "2019-12-24T23:44:43.337"
       },
       {
         "shipment_id": 7,
         "shipment_No": "6101244089",
         "deliver_No": "3030378989",
         "invoice_No": null,
-        "booinkg_No": null,
+        "booking_No": null,
         "closing_time": null,
         "mat_no": "2386LC 8C66",
         "qty": null,
@@ -264,14 +267,14 @@ export class Ldlt11Component implements OnInit {
         "route_name": null,
         "isOutside": null,
         "total_worker": null,
-        "plannig_Datetime": "2019-12-24T23:44:43.337"
+        "planning_Datetime": "2019-12-24T23:44:43.337"
       },
       {
         "shipment_id": 7,
         "shipment_No": "6101244089",
         "deliver_No": "3030378990",
         "invoice_No": null,
-        "booinkg_No": null,
+        "booking_No": null,
         "closing_time": null,
         "mat_no": "1163RXTA8 F005",
         "qty": null,
@@ -287,16 +290,10 @@ export class Ldlt11Component implements OnInit {
         "route_name": null,
         "isOutside": null,
         "total_worker": null,
-        "plannig_Datetime": "2019-12-24T23:44:43.337"
+        "planning_Datetime": "2019-12-24T23:44:43.337"
       }
     ],
     "message": "OK"
-  }
-
-
-  sim_ResProcessSearch2 = {
-    "result": [],
-    "message": "NOT OK"
   }
 
   //------------------api/v1/ProcessCb/VehicleGroup
@@ -519,6 +516,45 @@ export class Ldlt11Component implements OnInit {
   bt_save: Array<boolean> = [true];
   public remark: boolean = false;
 
+
+  //----------------- stat sim
+
+  sim_stat = {
+    "result": [
+      {
+        "text_vendor": "asdfsafsdasf|vvvvvvvvvvvvvvvvvv|wwwwwwwwwwwwwwwww|xxxxxxxxxxxxxxxxx|yyyyyyyyyyyyy",
+        "text_all": "ข้อมูลทั้งหมด|จำนวน Shipment ทั้งหมด  : 0|จำนวน Shipment ที่รอผู้ขนส่งตอบรับ : 0|จำนวน Shipment ที่ Confirm แล้ว : 0|จำนวน Shipment ที่รอกำหนดผู้ขนส่ง  : 0",
+        "text_information": "Information (Sum ของยอดรถรวมที่ผู้ขนส่งแจ้ง – Quota ที่ขนส่งให้) :"
+      }
+    ],
+    "message": "OK"
+  }
+
+  statToShow: any;
+
+  //--------------- array for selected option
+
+  sel_getDatePlanning = [];
+  sel_getTimePlanning = [];
+  sel_getDateTimePlanning = [];
+
+  sel_selectedVHD = [];
+  sel_shipLink_ary = [];
+  sel_yesno_isStat_ary = [];
+  sel_req_ary = [];
+  sel_typePack_ary = [];
+  sel_route_ary = [];
+  sel_isOutside_ary = [];
+
+  //--------------- date time to show in planning
+  date_toShow = [];
+  time_toShow = [];
+
+  //--------------- status to show
+  statuToShow;
+
+
+
   @Input() SelectedDdValue: Array<{}>
   // @Output() bt_save = new EventEmitter();
 
@@ -528,7 +564,10 @@ export class Ldlt11Component implements OnInit {
 
     this.date_from = moment().format("YYYY-MM-DDTHH:mm:ss");
     this.date_to = moment().format("YYYY-MM-DDTHH:mm:ss");
-    this.date_planning = moment().format("YYYY-MM-DDTHH:mm:ss");
+    this.date_planning = moment().format("YYYY-MM-DDT");
+
+    // let nowTime = moment().format("HH:mm:ss");
+    // console.log("time now", nowTime);
 
     this.getShipType = this.sim_shipType as Type.ResponseShipmentType;
     this.getStatus = this.sim_status as Type.ResponseStatus;
@@ -539,12 +578,14 @@ export class Ldlt11Component implements OnInit {
     this.CarrierName.setValue(this.getCarrierName.result[0].name);
     this.shipmentStatus.setValue(this.getStatus.result[0].name);
 
+    //init content card header
+    this.content_header_name2 = "Information (Sum ของยอดรถรวมที่ผู้ขนส่งแจ้ง - Quota ที่ขนส่งให้):";
+
+
     this.datatoSearch();
 
-
-
     //--------------------------- initial sendProcessAssign
-    for (let a = 0; a < this.sim_ResProcessSearch.result.length; a++) {
+    for (let a = 0; a < this.getResProSearchCarQuota.result.length; a++) {
       this.sel_selectedVHD[a] = this.getVehicleGroup.result[0].vehiclegroupid;
       this.sel_yesno_isStat_ary[a] = this.getYesNo.result[1].yesnoid;
       this.sel_req_ary[a] = this.getReqEquip.result[0].reqqequipmentsid;
@@ -552,12 +593,10 @@ export class Ldlt11Component implements OnInit {
       this.sel_route_ary[a] = this.getRoute.result[0].routeid;
       this.sel_isOutside_ary[a] = this.getYesNo.result[1].yesnoid;
       this.sel_getDatePlanning[a] = this.date_planning;
+      this.sel_getTimePlanning[a] = moment().format("HH:mm:ss") + '.000';
       this.bt_save[a] = true;
-
-
     }
 
-    console.log(this.sel_selectedVHD);
   }
 
   datatoSearch() {
@@ -587,10 +626,12 @@ export class Ldlt11Component implements OnInit {
     if (this.shipmentStatus.value == "Planning") {
       status_id = 2;
       // console.log("status(P)", status_id)
+
     }
 
     else if (this.shipmentStatus.value == "Create Shipment") {
       status_id = 1;
+      this.statuToShow = "Create Shipment";
       // console.log("status(C)", status_id)
     }
 
@@ -599,17 +640,84 @@ export class Ldlt11Component implements OnInit {
 
     console.log("dateFrom:", this.date_from, "dateTo:", this.date_to, "shipmentID:", this.sel_shiptype, "carrierID:", this.sel_carrierID, "currentStatusID:", status_id);
 
-    this.getVehicleGroup = this.sim_vehicleGroup as Type.ResponseVehicleGroup;
-    this.CreateVehicleGroupOption();
-    this.getYesNo = this.sim_yesno as Type.ResponseYesNo;
-    this.CreateYesNoOption();
-    this.getReqEquip = this.sim_ReqEquip as Type.ResponseReqQequipments;
-    this.CreateReqEquipOption();
-    this.getTypePacking = this.sim_typePack as Type.ResponseTypePacking;
-    this.CreateTypePackingOption();
-    this.getRoute = this.sim_route as Type.ResponseRoute;
-    this.CreateRouteOption();
+    this.getResProSearchCarQuota = this.sim_ResPorcessSearchCarQuota as Type.ResponseProcessSearchCarrierQuota;
 
+    // console.log("get data from api", this.getResProSearchCarQuota);
+
+
+    if (this.getResProSearchCarQuota != undefined) {
+      if (this.getResProSearchCarQuota.message == "OK") {
+
+        let sel_getDatePlanning, sel_selectedVHD, sel_shipLink_ary, sel_yesno_isStat_ary, sel_req_ary, sel_typePack_ary, sel_route_ary, sel_isOutside_ary, sel_getDateTimePlanning = new Array(this.getResProSearchCarQuota.result.length);
+
+        this.getVehicleGroup = this.sim_vehicleGroup as Type.ResponseVehicleGroup;
+        this.CreateVehicleGroupOption();
+        this.getYesNo = this.sim_yesno as Type.ResponseYesNo;
+        this.CreateYesNoOption();
+        this.getReqEquip = this.sim_ReqEquip as Type.ResponseReqQequipments;
+        this.CreateReqEquipOption();
+        this.getTypePacking = this.sim_typePack as Type.ResponseTypePacking;
+        this.CreateTypePackingOption();
+        this.getRoute = this.sim_route as Type.ResponseRoute;
+        this.CreateRouteOption();
+
+        if (this.shipmentStatus.value == "Planning") {
+          this.statuToShow = "Planning";
+          for (let i = 0; i < this.getResProSearchCarQuota.result.length; i++) {
+            let dateTime = this.getResProSearchCarQuota.result[i].planning_Datetime;
+            let dateTime1 = dateTime.toString().split("T");
+            this.date_toShow[i] = dateTime1[0];
+            this.time_toShow[i] = dateTime1[1];
+          }
+        }
+
+        this.getResQuotaStat = this.sim_stat as Type.ResponseProcessSearchCarrierQuotaStat;
+
+        this.ResponseToCarrierQuotaStat();
+      }
+    }
+
+
+
+  }
+
+  show_vendor;
+  show_textAll;
+  show_info;
+  ResponseToCarrierQuotaStat() {
+
+    if (this.getResQuotaStat.message == "OK") {
+
+      if (this.getResQuotaStat.result[0].text_vendor != null) {
+
+        let vendorToShow = this.getResQuotaStat.result[0].text_vendor;
+        this.show_vendor = vendorToShow.split('|');
+      }
+      else {
+        this.show_vendor = "";
+      }
+
+      if (this.getResQuotaStat.result[0].text_all != null) {
+
+        let allToShow = this.getResQuotaStat.result[0].text_all;
+        this.show_textAll = allToShow.split('|');
+      }
+      else {
+        this.show_textAll = "";
+      }
+
+
+      if (this.getResQuotaStat.result[0].text_all != null) {
+
+        this.show_info = this.getResQuotaStat.result[0].text_information;
+        this.content_header_name2 = this.show_info;
+      }
+      else {
+        this.content_header_name2 = "Information (Sum ของยอดรถรวมที่ผู้ขนส่งแจ้ง - Quota ที่ขนส่งให้):"
+      }
+
+    }
+    console.log("stat to show", this.content_header_name2);
 
   }
 
@@ -617,12 +725,12 @@ export class Ldlt11Component implements OnInit {
 
   GetDate(get_date, n) {
     if (n == "1") {
-      this.date_from = get_date;
+      this.date_from = get_date + "00:00:00.000";
       console.log("date from:", get_date);
     }
 
     if (n == "2") {
-      this.date_to = get_date;
+      this.date_to = get_date + "00:00:00.000";
       console.log("date to:", get_date);
     }
 
@@ -683,7 +791,6 @@ export class Ldlt11Component implements OnInit {
 
   }
 
-  sel_getDatePlanning = new Array(this.sim_ResProcessSearch.result.length);
 
   GetDatePlanning(get_date, i) {
     this.date_planning = get_date;
@@ -708,6 +815,7 @@ export class Ldlt11Component implements OnInit {
 
   //--------define id of carrierName for data packing
   sel_carrierID: string;
+  selcarrierName: string;
   carrierNameSelected(sel) {
     let selected_carrierName;
     for (let i = 0; i < this.getCarrierName.result.length; i++) {
@@ -716,7 +824,9 @@ export class Ldlt11Component implements OnInit {
 
       }
     }
+    // selected_carrierName = this.CarrierName.value;
     this.sel_carrierID = selected_carrierName;
+    this.selcarrierName = this.CarrierName.value;
     console.log("selected carrierName id: " + this.sel_carrierID);
 
   }
@@ -731,7 +841,7 @@ export class Ldlt11Component implements OnInit {
         name: this.getVehicleGroup.result[a].description,
       }
     }
-    for (let a = 0; a < this.sim_ResProcessSearch.result.length; a++) {
+    for (let a = 0; a < this.getResProSearchCarQuota.result.length; a++) {
       this.SelectedVehicleGroupOption(a);
 
     }
@@ -739,7 +849,6 @@ export class Ldlt11Component implements OnInit {
 
 
 
-  sel_selectedVHD = new Array(this.sim_ResProcessSearch.result.length);
   new_options: Array<{
     shipment_id: number;
     shipment_No: string
@@ -769,7 +878,7 @@ export class Ldlt11Component implements OnInit {
       //   shipment_No: string
       // }> = [];
 
-      // let all_options = this.sim_ResProcessSearch.result;
+      // let all_options = this.getResProSearchCarQuota.result;
       // console.log(this.sim_ResProcessSearch.result.length)
 
       // let a = all_options.filter(e => e.shipment_id != this.sim_ResProcessSearch.result[sel.rowIndex].shipment_id)
@@ -799,7 +908,7 @@ export class Ldlt11Component implements OnInit {
     }
     else {
       this.bt_save[i] = true;
-      this.sel_shipLink_ary[sel.rowIndex] = "null";
+      this.sel_shipLink_ary[sel.rowIndex] = "";
       console.log(this.sel_shipLink_ary)
     }
 
@@ -813,18 +922,18 @@ export class Ldlt11Component implements OnInit {
   CreateShipmentLinkOption(i) {
 
 
-    for (let a = 0; a < this.sim_ResProcessSearch.result.length; a++) {
-      let alll_options = this.sim_ResProcessSearch.result;
-      let linkoption = alll_options.filter(e => e.shipment_id != this.sim_ResProcessSearch.result[a].shipment_id)
+    for (let a = 0; a < this.getResProSearchCarQuota.result.length; a++) {
+      let alll_options = this.getResProSearchCarQuota.result;
+      let linkoption = alll_options.filter(e => e.shipment_id != this.getResProSearchCarQuota.result[a].shipment_id)
 
       console.log("create optionss shipment link", linkoption)
 
     }
 
-    for (let j = 0; j < this.sim_ResProcessSearch.result.length; j++) {
+    for (let j = 0; j < this.getResProSearchCarQuota.result.length; j++) {
       this.shipLinkOption[j] = {
-        shipment_No: this.sim_ResProcessSearch.result[j].shipment_No,
-        shipment_id: this.sim_ResProcessSearch.result[j].shipment_id
+        shipment_No: this.getResProSearchCarQuota.result[j].shipment_No,
+        shipment_id: this.getResProSearchCarQuota.result[j].shipment_id
       }
     }
     this.shipLinkOption.splice(i, 1);
@@ -832,7 +941,6 @@ export class Ldlt11Component implements OnInit {
 
   }
 
-  sel_shipLink_ary = new Array(this.sim_ResProcessSearch.result.length);
   selectedShipLink(evt, i) {
 
     this.sel_shipLink_ary[i] = evt.value.shipment_id;
@@ -857,7 +965,7 @@ export class Ldlt11Component implements OnInit {
 
     }
 
-    for (let i = 0; i < this.sim_ResProcessSearch.result.length; i++) {
+    for (let i = 0; i < this.getResProSearchCarQuota.result.length; i++) {
       this.SelectedYesNo[i] = {
         id: this.getYesNo.result[1].yesnoid,
         name: this.getYesNo.result[1].name
@@ -874,7 +982,7 @@ export class Ldlt11Component implements OnInit {
       }
     }
 
-    for (let i = 0; i < this.sim_ResProcessSearch.result.length; i++) {
+    for (let i = 0; i < this.getResProSearchCarQuota.result.length; i++) {
       this.SelectedReqEquip[i] = {
         id: this.getReqEquip.result[0].reqqequipmentsid,
         name: this.getReqEquip.result[0].name,
@@ -892,7 +1000,7 @@ export class Ldlt11Component implements OnInit {
       }
     }
 
-    for (let i = 0; i < this.sim_ResProcessSearch.result.length; i++) {
+    for (let i = 0; i < this.getResProSearchCarQuota.result.length; i++) {
       this.SelectedTypePack[i] = {
         id: this.getTypePacking.result[0].typepackingid,
         name: this.getTypePacking.result[0].name,
@@ -909,7 +1017,7 @@ export class Ldlt11Component implements OnInit {
       }
     }
 
-    for (let i = 0; i < this.sim_ResProcessSearch.result.length; i++) {
+    for (let i = 0; i < this.getResProSearchCarQuota.result.length; i++) {
       this.SelectedRoute[i] = {
         id: this.getRoute.result[0].routeid,
         name: this.getRoute.result[0].description,
@@ -918,48 +1026,44 @@ export class Ldlt11Component implements OnInit {
   }
 
 
-  sel_yesno_isStat_ary = new Array(this.sim_ResProcessSearch.result.length);
-  sel_req_ary = new Array(this.sim_ResProcessSearch.result.length);
-  sel_typePack_ary = new Array(this.sim_ResProcessSearch.result.length);
-  sel_route_ary = new Array(this.sim_ResProcessSearch.result.length);
-  sel_isOutside_ary = new Array(this.sim_ResProcessSearch.result.length);
+
   SelectedToSearch(evt) {
     console.log(evt)
 
     if (evt.dropdownName == "vehicleGroup") {
-      console.log("vehicle group id", evt.selectedId, "row:", evt.rowIndex);
+      // console.log("vehicle group id", evt.selectedId, "row:", evt.rowIndex);
       this.sel_selectedVHD[evt.rowIndex] = evt.selectedId;
-      console.log("selected to serach", this.sel_selectedVHD)
+      // console.log("selected to serach", this.sel_selectedVHD)
     }
 
     else if (evt.dropdownName == "UrgentCar") {
 
       this.sel_yesno_isStat_ary[evt.rowIndex] = evt.selectedId;
-      console.log("UrgentCar yesno id", evt.selectedId, "row:", evt.rowIndex);
-      console.log("selected to serach", this.sel_yesno_isStat_ary)
+      // console.log("UrgentCar yesno id", evt.selectedId, "row:", evt.rowIndex);
+      // console.log("selected to serach", this.sel_yesno_isStat_ary)
 
     }
 
     else if (evt.dropdownName == "ReqEquip") {
       this.sel_req_ary[evt.rowIndex] = evt.selectedId;
-      console.log("ReqEquip id", evt.selectedId, "row:", evt.rowIndex);
-      console.log("selected to serach", this.sel_req_ary)
+      // console.log("ReqEquip id", evt.selectedId, "row:", evt.rowIndex);
+      // console.log("selected to serach", this.sel_req_ary)
 
     }
 
     else if (evt.dropdownName == "TypePacking") {
       this.sel_typePack_ary[evt.rowIndex] = evt.selectedId;
-      console.log("TypePacking id", evt.selectedId, "row:", evt.rowIndex);
+      // console.log("TypePacking id", evt.selectedId, "row:", evt.rowIndex);
     }
 
     else if (evt.dropdownName == "route") {
       this.sel_route_ary[evt.rowIndex] = evt.selectedId;
-      console.log("route id", evt.selectedId, "row:", evt.rowIndex);
+      // console.log("route id", evt.selectedId, "row:", evt.rowIndex);
     }
 
     else if (evt.dropdownName == "isOutside") {
       this.sel_isOutside_ary[evt.rowIndex] = evt.selectedId;
-      console.log("isOutside id", evt.selectedId, "row:", evt.rowIndex);
+      // console.log("isOutside id", evt.selectedId, "row:", evt.rowIndex);
     }
 
 
@@ -974,16 +1078,22 @@ export class Ldlt11Component implements OnInit {
   AssignVendor(i) {
     console.log("assi vendor", i)
 
+    if (this.sel_shipLink_ary[i] == undefined || this.sel_shipLink_ary[i] == null) {
+      this.sendProcessAssignQuota.shipmentLink = "";
+    }
+    else {
+      this.sendProcessAssignQuota.shipmentLink = this.sel_shipLink_ary[i];
+    }
+
     this.sendProcessAssignQuota.carrierId = parseInt(this.sel_carrierID);
-    this.sendProcessAssignQuota.shipmentId = this.sim_ResProcessSearch.result[i].shipment_id;
+    this.sendProcessAssignQuota.shipmentId = this.getResProSearchCarQuota.result[i].shipment_id;
     this.sendProcessAssignQuota.vehicleGroupId = this.sel_selectedVHD[i];
     this.sendProcessAssignQuota.isStat = this.sel_yesno_isStat_ary[i];
     this.sendProcessAssignQuota.ireqEQP = this.sel_req_ary[i];
     this.sendProcessAssignQuota.typePackingId = this.sel_typePack_ary[i];
     this.sendProcessAssignQuota.shipmentRouteId = this.sel_route_ary[i];
     this.sendProcessAssignQuota.isOutside = this.sel_isOutside_ary[i];
-    this.sendProcessAssignQuota.planingDatetime = this.sel_getDatePlanning[i];
-    this.sendProcessAssignQuota.shipmentLink = this.sel_shipLink_ary[i];
+    this.sendProcessAssignQuota.planingDatetime = this.sel_getDatePlanning[i] + this.sel_getTimePlanning[i];
     console.log("assign loop:", this.sendProcessAssignQuota)
     // this.sendProcessAssignQuota.vehicleGroupId = this.SelectedVehicleGroup[i].id;
 
@@ -1007,13 +1117,13 @@ export class Ldlt11Component implements OnInit {
   }
 
   returnQuota(i) {
-    // console.log(this.sim_ResProcessSearch.result)
+    // console.log(this.getResProSearchCarQuota.result)
 
     this.sendClearandReturnQuota.carrierId = parseInt(this.sel_carrierID);
-    this.sendClearandReturnQuota.shipmentId = this.sim_ResProcessSearch.result[i].shipment_id;
+    this.sendClearandReturnQuota.shipmentId = this.getResProSearchCarQuota.result[i].shipment_id;
 
     console.log(this.sendClearandReturnQuota)
-    console.log("Carrier ID", parseInt(this.sel_carrierID), "Selected Shipment ID:", this.sim_ResProcessSearch.result[i].shipment_id)
+    console.log("Carrier ID", parseInt(this.sel_carrierID), "Selected Shipment ID:", this.getResProSearchCarQuota.result[i].shipment_id)
 
     this.ResponseProcessReturnAndClearQuota();
 
@@ -1030,6 +1140,16 @@ export class Ldlt11Component implements OnInit {
     else {
       alert("Return Quota Not Success");
     }
+  }
+
+
+  GetTimeSelected(get_time) {
+
+    // console.log(this.sel_getDatePlanning[get_time.rowIndex]);
+
+    this.sel_getTimePlanning[get_time.rowIndex] = get_time.selected_time + ".000";
+    // console.log("time Picker:",  this.sel_getDateTimePlanning);
+
   }
 
 }

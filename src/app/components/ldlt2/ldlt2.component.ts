@@ -340,6 +340,10 @@ export class Ldlt2Component implements OnInit {
       this.SendOverAllbyuserid.currentStatusId = "null";
     }
 
+    let null1 = "";
+    null1 = null1.toString();
+    console.log("null as", null1)
+
     if (this.invoiceNo.value == null) {
       this.SendOverAllbyuserid.invoiceNo = "null";
     }

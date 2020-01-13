@@ -24,8 +24,15 @@
                             <tr>
                                 <td style="padding: 5px;">
                                     <mat-form-field style="width:100%;">
-                                        <mat-select [formControl]="ShipType">
+                                        <mat-select [formControl]="ShipType" multiple>
                                             <mat-option *ngFor="let ship of shipTypeList" [value]="ship">{{ship}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field style="width:80%;">
+                                        <mat-select [formControl]="ShipType2" multiple>
+                                            <mat-option *ngFor="let ship of getShipmentType.result" [value]="ship.shipmenttypeid">{{ship.description}}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
@@ -33,7 +40,7 @@
 
                                 <td style="padding: 5px;">
                                     <mat-form-field style="width:100%;">
-                                        <mat-select [formControl]="transportName">
+                                        <mat-select [formControl]="transportName" multiple>
                                             <mat-option *ngFor="let transName of transNameList" [value]="transName">
                                                 {{transName}}
                                             </mat-option>
@@ -43,9 +50,9 @@
 
                                 <td style="padding: 5px;">
                                     <mat-form-field style="width:100%;">
-                                        <mat-select [formControl]="tranStatus">
-                                            <mat-option *ngFor="let transtat of tranStatusList" [value]="transtat">
-                                                {{transtat}}
+                                        <mat-select [formControl]="tranStatus" multiple>
+                                            <mat-option *ngFor="let transtat of tranStatusList" [value]="transtat.value">
+                                                {{transtat.show}}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
@@ -73,23 +80,7 @@
 
 
                             </tr>
-                            <tr>
-                                <td>
-                                    <form class="example-form">
-                                        <mat-form-field class="example-full-width">
-                                            <input type="text" placeholder="Pick one" aria-label="Number" matInput
-                                                [formControl]="myControl" [matAutocomplete]="auto">
-                                            <mat-autocomplete #auto="matAutocomplete">
-                                                <mat-option *ngFor="let option of filteredOptions | async"
-                                                    [value]="option">
-                                                    {{option}}
-                                                </mat-option>
-                                            </mat-autocomplete>
-                                        </mat-form-field>
-                                    </form>
 
-                                </td>
-                            </tr>
                         </table>
                     </div>
 
