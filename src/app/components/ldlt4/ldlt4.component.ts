@@ -318,6 +318,7 @@ export class Ldlt4Component implements OnInit {
 
   //---------------array to display for AssignCon
   closing_time = [];
+  RegCon_load_date_toShow = [];
   RegCon_close_date_toShow = [];
   RegCon_close_time_toShow = [];
   RegCon_receieveDate_toShow = [];
@@ -327,6 +328,7 @@ export class Ldlt4Component implements OnInit {
   RegCon_etd_date_toShow = [];
 
   //---------------array to display for NotAssignCon
+  loading_date_NotAssign_toShow = [];
   closing_time_notAssign = [];
   closing_date_notAssign_toShow = [];
   closing_time_notAssign_toShow = [];
@@ -342,7 +344,7 @@ export class Ldlt4Component implements OnInit {
 
   ngOnInit() {
 
-   
+
   }
 
 
@@ -384,7 +386,7 @@ export class Ldlt4Component implements OnInit {
 
   }
 
-  
+
   getResponseTable() {
 
     //------------------------- table of assignCon
@@ -393,6 +395,16 @@ export class Ldlt4Component implements OnInit {
         for (let i = 0; i < this.GetResProcessSearchConReg.result.length; i++) {
           this.closing_time[i] = this.GetResProcessSearchConReg.result[i].closing_datetime;
 
+          let loading = this.GetResProcessSearchConReg.result[i].loading_date;
+          if (loading != null) {
+            let loading1 = loading.toString().split("T");
+            this.RegCon_load_date_toShow[i] = loading1[0];
+
+          }
+          else {
+            this.RegCon_load_date_toShow[i] = null;
+
+          }
           let closing = this.GetResProcessSearchConReg.result[i].closing_datetime;
           if (closing != null) {
             let closing1 = closing.toString().split("T");
@@ -455,6 +467,14 @@ export class Ldlt4Component implements OnInit {
         for (let i = 0; i < this.GetResProcessSearchConNotAssign.result.length; i++) {
           this.closing_time_notAssign[i] = this.GetResProcessSearchConNotAssign.result[i].closing_datetime;
 
+          let loadDate = this.GetResProcessSearchConNotAssign.result[i].loading_date;
+          if (loadDate != null) {
+            let loadDate1 = loadDate.toString().split("T");
+            this.loading_date_NotAssign_toShow[i] = loadDate1[0];
+          }
+          else {
+            this.loading_date_NotAssign_toShow[i] = null;
+          }
           let receiveDate = this.GetResProcessSearchConNotAssign.result[i].recieve_date;
           if (receiveDate != null) {
             let receiveDate1 = receiveDate.toString().split("T");

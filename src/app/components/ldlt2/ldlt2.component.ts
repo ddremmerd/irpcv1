@@ -246,8 +246,6 @@ export class Ldlt2Component implements OnInit {
   //------------------- create dropdown
   createPlantDropDown() {
 
-    console.log("FUCKKKKKKKK")
-
     ////---------------------------plant
     if (this.getPlantNum != undefined) {
       if (this.getPlantNum.message == "OK") {

@@ -99,6 +99,12 @@ export class Ldlt3Component implements OnInit {
   sortedData: TableDat[];
   dataSource: MatTableDataSource<TableDat>;
 
+  //---------------------- arrayto display 
+  planningTime_toShow = [];
+  planningDate_toShow = [];
+  DriverTime_toShow = [];
+  DriverDate_toShow = [];
+
 
   constructor() {
     this.sortedData = this.TableData.slice();
@@ -173,7 +179,7 @@ export class Ldlt3Component implements OnInit {
 
   sim_resGetQueList = new Array();
 
-  getResponseQueListTable(){
+  getResponseQueListTable() {
 
     let sim_resGetQueList = {
       "result": [
@@ -206,7 +212,35 @@ export class Ldlt3Component implements OnInit {
     }
 
     this.getTable = sim_resGetQueList as Type.ResponseProcessGetQueueList;
-    
+    if (this.getTable.message == 'OK') {
+      if (this.getTable.result.length > 0) {
+        for (let j = 0; j < this.getTable.result.length; j++) {
+          let planning = this.getTable.result[j].plannig_Datetime;
+          if (planning != null) {
+            let planning1 = planning.toString().split("T");
+            this.planningDate_toShow[j] = planning1[0];
+            this.planningTime_toShow[j] = planning1[1];
+
+          }
+          else {
+            this.planningDate_toShow[j] = null;
+            this.planningTime_toShow[j] = null;
+
+          }
+          let driverCheck = this.getTable.result[j].driver_Checkin_Datetime;
+          if (driverCheck != null) {
+            let driverCheck1 = driverCheck.toString().split("T");
+            this.DriverDate_toShow[j] = driverCheck1[0];
+            this.DriverTime_toShow[j] = driverCheck1[1];
+          }
+          else {
+            this.DriverDate_toShow[j] = null;
+            this.DriverTime_toShow[j] = null;
+          }
+
+        }
+      }
+    }
   }
 
   // applyFilter(filterValue: string) {
@@ -240,8 +274,8 @@ export class Ldlt3Component implements OnInit {
     console.log("from recall button" + i + booknum)
   }
 
-  toRecall(i){
-    console.log("recall",i)
+  toRecall(i) {
+    console.log("recall", i)
   }
 
 

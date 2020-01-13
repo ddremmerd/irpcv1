@@ -74,7 +74,7 @@
                             <tbody>
                                 <tr *ngFor="let rowData of GetResProcessSearchConReg.result; let nRow = index">
                                     <td>{{nRow + 1}}</td>
-                                    <td>{{rowData.loading_date}}</td>
+                                    <td>{{RegCon_load_date_toShow[nRow]}}</td>
                                     <td>{{rowData.invoice_no_text}}</td>
                                     <td>{{rowData.agent_container_code}}</td>
                                     <td>{{rowData.booinkg_No_text}}</td>
@@ -90,7 +90,7 @@
                                     <td>{{rowData.size_container}}</td>
                                     <td>{{RegCon_returnDate_toShow[nRow]}}</td>
                                     <td>-</td>
-                                    <td>{{RegCon_lastUpdate_date_toShow}} <br>{{RegCon_lastUpdate_time_toShow}}</td>
+                                    <td>{{RegCon_lastUpdate_date_toShow[nRow]}} <br>{{RegCon_lastUpdate_time_toShow[nRow]}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -121,7 +121,7 @@
                                 <tbody>
                                     <tr *ngFor="let rowData of sim_ResProSeaCarConRegNotAss.result; let nRow = index">
                                         <td>{{nRow + 1}}</td>
-                                        <td>{{rowData.loading_date}}</td>
+                                        <td>{{loading_date_NotAssign_toShow[nRow]}}</td>
                                         <td>{{rowData.invoice_no_text}}</td>
                                         <td>{{rowData.agent_container_code}}</td>
                                         <td>{{rowData.booinkg_No_text}}</td>

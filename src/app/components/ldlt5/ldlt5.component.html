@@ -23,17 +23,22 @@
 
                             <tr>
                                 <td style="padding: 5px;">
-                                    <mat-form-field style="width:100%;">
+                                    <!-- <mat-form-field style="width:100%;">
                                         <mat-select [formControl]="ShipType" multiple>
                                             <mat-option *ngFor="let ship of shipTypeList" [value]="ship">{{ship}}
                                             </mat-option>
                                         </mat-select>
-                                    </mat-form-field>
+                                    </mat-form-field> -->
 
-                                    <mat-form-field style="width:80%;">
+                                    <mat-form-field style="widows: 100%;">
                                         <mat-select [formControl]="ShipType2" multiple>
-                                            <mat-option *ngFor="let ship of getShipmentType.result" [value]="ship.shipmenttypeid">{{ship.description}}
-                                            </mat-option>
+                                            <ng-container *ngIf="getShipmentType != undefined">
+                                                <ng-container *ngIf="getShipmentType.message =='OK'">
+                                                    <mat-option *ngFor="let ship of getShipmentType.result"
+                                                        [value]="ship.shipmenttypeid">{{ship.description}}
+                                                    </mat-option>
+                                                </ng-container>
+                                            </ng-container>
                                         </mat-select>
                                     </mat-form-field>
                                 </td>
@@ -41,9 +46,14 @@
                                 <td style="padding: 5px;">
                                     <mat-form-field style="width:100%;">
                                         <mat-select [formControl]="transportName" multiple>
-                                            <mat-option *ngFor="let transName of transNameList" [value]="transName">
-                                                {{transName}}
-                                            </mat-option>
+                                            <ng-container *ngIf="getCarrier != undefined">
+                                                <ng-container *ngIf="getCarrier.message =='OK'">
+                                                    <mat-option *ngFor="let transName of getCarrier.result"
+                                                        [value]="transName.carrierid">
+                                                        {{transName.name}}
+                                                    </mat-option>
+                                                </ng-container>
+                                            </ng-container>
                                         </mat-select>
                                     </mat-form-field>
                                 </td>
@@ -51,7 +61,8 @@
                                 <td style="padding: 5px;">
                                     <mat-form-field style="width:100%;">
                                         <mat-select [formControl]="tranStatus" multiple>
-                                            <mat-option *ngFor="let transtat of tranStatusList" [value]="transtat.value">
+                                            <mat-option *ngFor="let transtat of tranStatusList"
+                                                [value]="transtat.value">
                                                 {{transtat.show}}
                                             </mat-option>
                                         </mat-select>
@@ -95,26 +106,32 @@
 
                         <div class="card-body pad table-responsive p-0" style="height: 500px;">
 
-                            <table class="table table-head-fixed table-valign-middle text-center table-bordered">
-                                <thead>
-                                    <th class="light-gray-bg">ลำดับ</th>
-                                    <th class="light-gray-bg" *ngFor="let head of TableHeader">{{head}}</th>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of TableData; let i = index;">
-                                        <td>{{i+1}}</td>
-                                        <td>{{data.shipNum}}</td>
-                                        <td>{{data.carStatus}}</td>
-                                        <td>{{data.transName}}</td>
-                                        <td>{{data.carLicense}}</td>
-                                        <td>{{data.workName}}</td>
-                                        <td>{{data.departTime}}</td>
-                                        <td>{{data.feedTime}}</td>
-                                        <td>{{data.arriveCus}}</td>
-                                        <td>{{data.estTime}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <ng-container *ngIf="getResProTruckTrack != undefined">
+                                <ng-container *ngIf="getResProTruckTrack.message == 'OK'">
+                                    <table
+                                        class="table table-head-fixed table-valign-middle text-center table-bordered">
+                                        <thead>
+                                            <th class="light-gray-bg">ลำดับ</th>
+                                            <th class="light-gray-bg" *ngFor="let head of TableHeader">{{head}}</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of getResProTruckTrack.result; let i = index;"
+                                                (click)="showLocation(i, data.no)">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.shipment_no}}</td>
+                                                <td>{{data.vehicle_status_name}}</td>
+                                                <td>{{data.carrier_name}}</td>
+                                                <td>{{data.vehicle}}</td>
+                                                <td>{{data.driver}}</td>
+                                                <td>{{data.travel_in_time}}</td>
+                                                <td>{{data.truck_arrived_feed}}</td>
+                                                <td>{{data.truck_register_time}}</td>
+                                                <td>{{data.speed}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </ng-container>
+                            </ng-container>
                         </div>
                     </div>
 

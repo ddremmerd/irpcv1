@@ -122,11 +122,12 @@
                                             <td>{{rowData.shipment_no}}</td>
                                             <td>{{rowData.booinkg_No}}</td>
                                             <td>{{rowData.invoice_No}}</td>
-                                            <td>{{rowData.plannig_Datetime}}</td>
+                                            <td>{{planningDate_toShow[nRow]}} <br>{{planningTime_toShow[nRow]}}
+                                            </td>
                                             <td>{{rowData.storage}}</td>
                                             <td>{{rowData.vehicle_group_Desc}}</td>
                                             <td>{{rowData.vehicle_plate}}</td>
-                                            <td>{{rowData.driver_Checkin_Datetime}}</td>
+                                            <td>{{DriverDate_toShow[nRow]}} <br>{{DriverTime_toShow[nRow]}}</td>
                                             <td>{{rowData.queue_number}}</td>
                                             <td>
                                                 <app-recall-button (click)="toRecall(nRow)"></app-recall-button>

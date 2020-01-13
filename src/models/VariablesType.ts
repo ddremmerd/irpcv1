@@ -1,3 +1,4 @@
+
 //---------- Class Variable---------------------
 
 /*------- Mastr --------*/
@@ -344,6 +345,32 @@ export class ProcessSearchCarrierQuotaStat{
     text_information: string;
 
 }
+
+//---------------เพิ่ม api/v1/Process/ProcessTruckTracking
+export class ProcessTruckTracking{
+    no: number;
+    shipment_no: string;
+    driver: string;
+    vehicle: string;
+    carrier_name: string;
+    vehicle_status_id: number;
+    vehicle_status_name: string;
+    travel_in_time: string;
+    truck_in_area: any;
+    truck_register_time: string;
+    truck_out_area: any;
+    truck_arrived_feed: any;
+    truck_to_customer: any;
+    truck_in_late: string;
+    truck_out_late: any;
+    cur_lat: string;
+    cur_long: string;
+    speed: string;
+    engine_status: string;
+    gmap_link: any;
+
+}
+
 /*------- End Process --------*/
 
 /*-------  ProcessCb  --------*/
@@ -698,6 +725,12 @@ export interface ResponseProcessSearchWarehouseConfirmByGroup {
 //เพิ่ม ------ responseProcessGetQueueList
 export interface ResponseProcessGetQueueList {
     result: ProcessGetQueueList[];
+    message: string;
+}
+
+//เพิ่ม ============ responseProcessTruckTracking
+export interface ResponseProcessTruckTracking{
+    result: ProcessTruckTracking[];
     message: string;
 }
 
