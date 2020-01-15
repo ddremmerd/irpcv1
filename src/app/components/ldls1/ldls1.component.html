@@ -12,11 +12,7 @@
                         <tr>
                             <td style="padding-left: 30px;">Loading Date:</td>
                             <td>
-                                <mat-form-field>
-                                    <input matInput [matDatepicker]="picker1">
-                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker1></mat-datepicker>
-                                </mat-form-field>
+                                <app-date-picker (FindDateSelected)="GetDate($event)"></app-date-picker>
                             </td>
 
                         </tr>
@@ -24,10 +20,15 @@
                         <tr>
                             <td style="padding-left: 30px;">WH:</td>
                             <td>
-                                <mat-form-field style="width:100%;">
+                                <mat-form-field>
                                     <mat-select [formControl]="warehouseNum" multiple>
-                                        <mat-option *ngFor="let wareno of warehouseList" [value]="wareno">{{wareno}}
-                                        </mat-option>
+                                        <ng-container *ngIf="getWarehouse != undefined">
+                                            <ng-container *ngIf="getWarehouse.message == 'OK'">
+                                                <mat-option *ngFor="let wareno of getWarehouse.result"
+                                                    [value]="wareno.storageid">{{wareno.storage_name}}
+                                                </mat-option>
+                                            </ng-container>
+                                        </ng-container>
                                     </mat-select>
                                 </mat-form-field>
                             </td>
@@ -37,9 +38,10 @@
                         <tr>
                             <td style="padding-left: 30px;">สถานะ:</td>
                             <td>
-                                <mat-form-field style="width:100%;">
-                                    <mat-select [formControl]="statusNum" (selectionChange)="selected($event.value)">
-                                        <mat-option *ngFor="let stat of statusList" [value]="stat">{{stat}}
+                                <mat-form-field>
+                                    <mat-select [formControl]="statusNum">
+                                        <mat-option *ngFor="let stat of statusList" [value]="stat.statusid">
+                                            {{stat.statusName}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -69,97 +71,117 @@
                     <table class="table table-valign-middle text-center " style="max-width: 100%;">
                         <!-- header of table -->
                         <thead>
-                            <th class="light-gray-bg">ลำดับ</th>
-                            <th class="light-gray-bg">Shipment Type</th>
-                            <th class="light-gray-bg">ทะเบียน</th>
-                            <th class="light-gray-bg">หน้าท่า</th>
-                            <th class="light-gray-bg">ช่องบรรจุสินค้า</th>
-                            <th class="light-gray-bg">Shipment No.</th>
-                            <th class="light-gray-bg">Deliver No.</th>
-                            <th class="light-gray-bg">Grade</th>
-                            <th class="light-gray-bg">Qty</th>
-                            <th class="light-gray-bg">ประเภท</th>
-                            <th class="light-gray-bg">คนงานที่ 1</th>
-                            <th class="light-gray-bg">คนงานที่ 2</th>
-                            <th class="light-gray-bg"></th>
+                            <th class="light-gray-bg" *ngFor="let item of TableHeader">{{item}}</th>
+
                         </thead>
 
                         <tbody>
-                            <tr *ngFor="let data of TableData; let i =index;" [attr.id]="i">
-                                <td>{{i+1}}</td>
-                                <td>{{data.shipmentType}}</td>
-                                <td>{{data.carLicense}}</td>
-                                <td>{{data.wareNum}}</td>
-                                <td>{{data.containNum}}</td>
-                                <td>{{data.shipmentNum}}</td>
-                                <td>{{data.deliverNo}}</td>
-                                <td>{{data.grade}}</td>
-                                <td>{{data.qty}}</td>
-                                <td>
-                                    <ng-container *ngIf="show">
-                                        <mat-form-field style="width:100%;">
-                                            <mat-select [formControl]="prodPack">
-                                                <mat-option *ngFor="let prod of prodPackList" [value]="prod">
-                                                    {{prod}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </ng-container>
+                            <ng-container *ngIf="getResProSearchLab != undefined">
+                                <ng-container *ngIf="getResProSearchLab.message == 'OK'">
+                                    <tr *ngFor="let data of getResProSearchLab.result; let i =index;" [attr.id]="i">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data.shipemnt_type}}</td>
+                                        <td>{{data.vehicle_text}}</td>
+                                        <td>{{data.storage}}</td>
+                                        <td>{{data.dock}}</td>
+                                        <td>{{data.shipment_no}}</td>
+                                        <td>{{data.delivery_no}}</td>
+                                        <td>{{data.grade}}</td>
+                                        <td>{{data.qty}}</td>
+                                        <td>
+                                            <ng-container *ngIf="sel_status == 'รอเริ่มงาน'">
+                                                <mat-form-field style="width:100%;">
+                                                    <mat-select [formControl]="typeUD"
+                                                        (selectionChange)="selectedToSave($event.value,i, 'updown')">
+                                                        <mat-option *ngFor="let prod of typeUDList"
+                                                            [value]="prod.up_downID">
+                                                            {{prod.up_downName}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </ng-container>
 
-                                    <ng-container *ngIf="show1">
-                                        {{data.prodType}}
-                                    </ng-container>
-                                </td>
+                                            <ng-container *ngIf="sel_status == 'รอจบงาน'">
+                                                ประเภทขา
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="sel_status == 'รอเริ่มงาน'">
+                                                <mat-form-field style="width:100%;">
+                                                    <mat-select [formControl]="prodPack"
+                                                        (selectionChange)="selectedToSave($event.value, i, 'forklift')">
+                                                        <mat-option *ngFor="let prod of prodPackList"
+                                                            [value]="prod.isFolkLiftID">
+                                                            {{prod.isFolkLiftName}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </ng-container>
 
-                                <td>
-                                    <ng-container *ngIf="show">
-                                        <mat-form-field style="width:100%;">
-                                            <mat-select [formControl]="worker1">
-                                                <mat-option *ngFor="let work1 of worker1List" [value]="work1">
-                                                    {{work1}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </ng-container>
+                                            <ng-container *ngIf="sel_status == 'รอจบงาน'">
+                                                {{data.isforklift}}
+                                            </ng-container>
+                                        </td>
 
-                                    <ng-container *ngIf="show1">
-                                        {{data.workern1}}
-                                    </ng-container>
+                                        <td>
+                                            <ng-container *ngIf="sel_status == 'รอเริ่มงาน'">
+                                                <mat-form-field style="width:100%;">
+                                                    <mat-select [formControl]="worker1" [disabled]="bt_save[i]"  (selectionChange)="selectedToSave($event.value,i, 'workerID1')">
+                                                        <ng-container
+                                                            *ngIf="getLabour != undefined && getLabour.message == 'OK'">
+                                                            <mat-option *ngFor="let work1 of getLabour.result"
+                                                                [value]="work1.lobour_id">
+                                                                {{work1.lobour_name}}
+                                                            </mat-option>
+                                                        </ng-container>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </ng-container>
 
-                                </td>
-                                <td>
-                                    <ng-container *ngIf="show">
-                                        <mat-form-field style="width:100%;">
-                                            <mat-select [formControl]="worker2">
-                                                <mat-option *ngFor="let work2 of worker2List" [value]="work2">
-                                                    {{work2}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </ng-container>
+                                            <ng-container *ngIf="sel_status == 'รอจบงาน'">
+                                                {{data.labor_id1}}
+                                            </ng-container>
 
-                                    <ng-container *ngIf="show1">
-                                        {{data.workern2}}
-                                    </ng-container>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="sel_status == 'รอเริ่มงาน'">
+                                                <mat-form-field style="width:100%;">
+                                                    <mat-select [formControl]="worker2" [disabled]="bt_save[i]" (selectionChange)="selectedToSave($event.value,i, 'workerID2')">
+                                                        <ng-container
+                                                            *ngIf="getLabour != undefined && getLabour.message == 'OK'">
+                                                            <mat-option *ngFor="let work2 of getLabour.result"
+                                                                [value]="work2.lobour_id">
+                                                                {{work2.lobour_name}}
+                                                            </mat-option>
+                                                        </ng-container>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </ng-container>
 
-                                </td>
+                                            <ng-container *ngIf="sel_status == 'รอจบงาน'">
+                                                {{data.labor_id2}}
+                                            </ng-container>
 
-                                <td>
-                                    <ng-container *ngIf="show">
-                                        <button type="button" class="btn btn-block btn-success btn-sm"
-                                            (click)="sendStart(i)">เริ่ม</button>
-                                    </ng-container>
+                                        </td>
 
-                                    <ng-container *ngIf="show1">
-                                        <button type="button" class="btn btn-block btn-warning btn-sm"
-                                            (click)="sendEnd(i)">จบงาน</button>
-                                    </ng-container>
-                                </td>
+                                        <td>
+                                            <ng-container *ngIf="sel_status == 'รอเริ่มงาน'">
+                                                <button type="button" class="btn btn-block btn-success btn-sm"
+                                                    (click)="sendStart(i)">เริ่ม</button>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="sel_status == 'รอจบงาน'">
+                                                <button type="button" class="btn btn-block btn-warning btn-sm"
+                                                    (click)="sendEnd(i)">จบงาน</button>
+                                            </ng-container>
+                                        </td>
 
 
 
 
-                            </tr>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
                         </tbody>
 
 

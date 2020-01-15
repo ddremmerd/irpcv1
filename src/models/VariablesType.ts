@@ -490,6 +490,13 @@ export class YesNo {
     name: string;
 }
 
+//-----เพิ่ม processCB/Labour
+export class Labour{
+    lobour_id: number;
+    lobour_name: string;
+
+}
+
 /*------- End ProcessCb  --------*/
 
 //----------End Class Variable------------------
@@ -693,6 +700,30 @@ export interface ResponseProcessSearchstatusOverAllbyuserid {
     message: string;
 }
 
+//--------------เพิ่ม ResponseProcessSearchLabour
+export interface ResponseProcessSearchLabour {
+    result: ProcessSearchLabour[];
+    message: string;
+}
+
+//------------เพิ่ม processSearchLabour
+export interface ProcessSearchLabour {
+    shipemnt_type: string;
+    vehicle_text: string;
+    storage: any;
+    storage_id: any;
+    dock: any;
+    shipment_no: number;
+    shipment_id: number;
+    delivery_no: string;
+    delivery_id: number;
+    grade: string;
+    qty: number;
+    isforklift: any;
+    labor_id1: any;
+    labor_id2: any;
+}
+
 export interface SendProcessSearchstatusOverAllbyuserid {
     userId: number,
     invoiceNo: string,
@@ -819,6 +850,12 @@ export interface ResponseVehicleType {
 
 export interface ResponseYesNo {
     result: YesNo[];
+    message: string;
+}
+
+//-----------เพิ่ม ResponseLabour
+export interface ResponseLabour{
+    result: Labour[];
     message: string;
 }
 
