@@ -125,47 +125,70 @@ export class Ldlt2Component implements OnInit {
     "message": "OK"
   }
 
-  // sim_getTable = {
-  //   "header": [
-  //     "shipment_No",
-  //     "current_status",
-  //     "Loading_Datetime",
-  //     "Shipment_Type",
-  //     "current_status_id",
-  //   ],
-  //   "result": [
-  //     {
-  //       "shipment_No": "ship-1111",
-  //       "current_status": "ZZZZ",
-  //       "loading_Datetime": "13/11/2562 0:00:00",
-  //       "shipment_Type": "Z101",
-  //       "current_status_id": "1",
-  //     },
-  //     {
-  //       "shipment_No": "ship-222222",
-  //       "current_status": "",
-  //       "loading_Datetime": "",
-  //       "shipment_Type": "Z222",
-  //       "current_status_id": null,
-  //     },
-  //     {
-  //       "shipment_No": "ship-33333",
-  //       "current_status": "ZZZZ",
-  //       "loading_Datetime": "11/11/2562 0:00:00",
-  //       "shipment_Type": "Z111",
-  //       "current_status_id": "2",
-  //     },
-  //     {
-  //       "shipment_No": "ship-44444",
-  //       "current_status": "bbbbbb",
-  //       "loading_Datetime": "11/11/2562 0:00:00",
-  //       "shipment_Type": "Z4444",
-  //       "current_status_id": "2",
-  //     },
+  sim_getTable = {
+    "header": [
+      "shipment_No",
+      "current_status",
+      "Loading_Datetime",
+      "Shipment_Type",
+      "current_status_id",
+    ],
+    "result": [
+      {
+        "shipment_No": "ship-1111",
+        "current_status": "ZZZZ",
+        "loading_Datetime": "13/11/2562 0:00:00",
+        "shipment_Type": "Z101",
+        "current_status_id": "1",
+      },
+      {
+        "shipment_No": "ship-2222",
+        "current_status": "",
+        "loading_Datetime": "",
+        "shipment_Type": "Z222",
+        "current_status_id": null,
+      },
+      {
+        "shipment_No": "ship-2222",
+        "current_status": "ZZZZ",
+        "loading_Datetime": "11/11/2562 0:00:00",
+        "shipment_Type": "Z111",
+        "current_status_id": "2",
+      },
+      {
+        "shipment_No": "ship-44444",
+        "current_status": "bbbbbb",
+        "loading_Datetime": "11/11/2562 0:00:00",
+        "shipment_Type": "Z4444",
+        "current_status_id": "2",
+      },
+      {
+        "shipment_No": "ship-5555",
+        "current_status": "bbbbbb",
+        "loading_Datetime": "11/11/2562 0:00:00",
+        "shipment_Type": "Z4444",
+        "current_status_id": "2",
+      },
+      {
+        "shipment_No": "ship-5555",
+        "current_status": "bbbbbb",
+        "loading_Datetime": "11/11/2562 0:00:00",
+        "shipment_Type": "Z4444",
+        "current_status_id": "2",
+      }
 
-  //   ],
-  //   "message": "OK"
-  // }
+    ],
+    "rowColor": [
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+     
+    ],
+    "message": "OK"
+  }
 
   //------------------------------------------------ content
 
@@ -473,65 +496,102 @@ export class Ldlt2Component implements OnInit {
     this.SendOverAllbyuserid.currentStatusId = sel_status;
   }
 
-  sim_getTable = new Array();
-
+  // sim_getTable = new Array();
+  sameShipment: Array<boolean> = [false];
   ResponseTable() {
     console.log("Response")
 
-    let sim_getTable = {
-      "header": [
-        "shipment_No",
-        "current_status",
-        "Loading_Datetime",
-        "Shipment_Type",
-        "current_status_id",
-      ],
-      "result": [
-        {
-          "shipment_No": "ship-1111",
-          "current_status": "ZZZZ",
-          "loading_Datetime": "13/11/2562 0:00:00",
-          "shipment_Type": "Z101",
-          "current_status_id": "1",
-        },
-        {
-          "shipment_No": "ship-222222",
-          "current_status": "",
-          "loading_Datetime": "",
-          "shipment_Type": "Z222",
-          "current_status_id": null,
-        },
-        {
-          "shipment_No": "ship-33333",
-          "current_status": "ZZZZ",
-          "loading_Datetime": "11/11/2562 0:00:00",
-          "shipment_Type": "Z111",
-          "current_status_id": "2",
-        },
-        {
-          "shipment_No": "ship-44444",
-          "current_status": "bbbbbb",
-          "loading_Datetime": "11/11/2562 0:00:00",
-          "shipment_Type": "Z4444",
-          "current_status_id": "2",
-        },
+    // let sim_getTable = {
+    //   "header": [
+    //     "shipment_No",
+    //     "current_status",
+    //     "Loading_Datetime",
+    //     "Shipment_Type",
+    //     "current_status_id",
+    //   ],
+    //   "result": [
+    //     {
+    //       "shipment_No": "ship-1111",
+    //       "current_status": "ZZZZ",
+    //       "loading_Datetime": "13/11/2562 0:00:00",
+    //       "shipment_Type": "Z101",
+    //       "current_status_id": "1",
+    //     },
+    //     {
+    //       "shipment_No": "ship-2222",
+    //       "current_status": "",
+    //       "loading_Datetime": "",
+    //       "shipment_Type": "Z222",
+    //       "current_status_id": null,
+    //     },
+    //     {
+    //       "shipment_No": "ship-2222",
+    //       "current_status": "ZZZZ",
+    //       "loading_Datetime": "11/11/2562 0:00:00",
+    //       "shipment_Type": "Z111",
+    //       "current_status_id": "2",
+    //     },
+    //     {
+    //       "shipment_No": "ship-44444",
+    //       "current_status": "bbbbbb",
+    //       "loading_Datetime": "11/11/2562 0:00:00",
+    //       "shipment_Type": "Z4444",
+    //       "current_status_id": "2",
+    //     },
+    //     {
+    //       "shipment_No": "ship-5555",
+    //       "current_status": "bbbbbb",
+    //       "loading_Datetime": "11/11/2562 0:00:00",
+    //       "shipment_Type": "Z4444",
+    //       "current_status_id": "2",
+    //     },
+    //     {
+    //       "shipment_No": "ship-5555",
+    //       "current_status": "bbbbbb",
+    //       "loading_Datetime": "11/11/2562 0:00:00",
+    //       "shipment_Type": "Z4444",
+    //       "current_status_id": "2",
+    //     }
 
-      ],
-      "message": "OK"
-    }
+    //   ],
+    //   "message": "OK"
+    // }
 
-    this.getTable = sim_getTable as Type.ResponseProcessSearchstatusOverAllbyuserid;
+    this.getTable = this.sim_getTable as Type.ResponseProcessSearchstatusOverAllbyuserid;
 
     if (this.getTable != undefined) {
       if (this.getTable.message == "OK") {
         for (let i = 0; i < this.getTable.result.length; i++) {
           this.tabdat[i] = new Array();
+
           let data = Object.values(this.getTable.result[i]);
+
+          // let obg = this.getTable.result[i];
+          // let obg1 = JSON.stringify(obg);
+
+          console.log("get data from table", data);
+          // console.log(this.getTable.result[i].shipment_No)
+
+          // console.log("result",this.getTable.result[i].shipment_No);
           for (let j = 0; j < data.length; j++) {
             this.tabdat[i][j] = data[j];
           }
+
+
+
+          if (this.getTable.rowColor[i] == "1") {
+            this.sameShipment[i] = true;
+            // this.sameShipment[i - 1] = true;
+          }
+
+          // if (this.tabdat[i][0] === this.tabdat[i - 1][0]) {
+          //   this.sameShipment[i] = true;
+          //   this.sameShipment[i - 1] = true;
+
+          // }
+
         }
-        console.log("tabdat:", this.tabdat[0][1]);
+
       }
 
     }

@@ -10,13 +10,13 @@
                         <app-content-header [ContentHeader]="content_header_name"></app-content-header>
                         <table>
                             <tr>
-                                <td style="padding-left: 20px;">ประเภทงาน:</td>
-                                <td style="padding-left: 20px;">
+                                <td style="padding-left: 20px; padding-bottom: 0%;">ประเภทงาน:</td>
+                                <td style="padding-left: 20px; padding-bottom: 0%;">
                                     <!-- <app-dropdown [options]="AllAgentOptions" [selectValue]="SelectedAgent"
                                         [ddName]="'agent'" (SelectedDdValue)="SelectedToSearch($event)">
                                     </app-dropdown> -->
 
-                                    <mat-form-field>
+                                    <mat-form-field style="padding-bottom: 0%;">
                                         <mat-select [formControl]="ShipType">
                                             <ng-container *ngIf="getShipType != undefined">
                                                 <ng-container *ngIf="getShipType.message =='OK'">
@@ -206,6 +206,9 @@
 
                                 <ng-container *ngIf="statuToShow == 'Planning'">
                                     <th class="yellow-bg">Planning Time</th>
+                                </ng-container>
+                                <ng-container *ngIf="statuToShow == 'Create Shipment'">
+                                    <th class="yellow-bg">ผู้ขนส่ง</th>
                                 </ng-container>
 
 
@@ -399,7 +402,26 @@
                                             </app-time-picker>
                                         </td>
                                     </ng-container>
+                                    <ng-container *ngIf="statuToShow == 'Create Shipment'">
+                                        <td>
 
+                                            <mat-form-field>
+                                                <mat-select [formControl]="CarrierName1"
+                                                    (selectionChange)="carrierQuota($event.value,i);">
+                                                    <ng-container *ngIf="getCarrierName != undefined">
+                                                        <ng-container *ngIf="getCarrierName.message == 'OK'">
+                                                            <mat-option *ngFor="let transName of Carrier_Name"
+                                                                [value]="transName">
+                                                                {{transName}}
+                                                            </mat-option>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                        </td>
+
+                                    </ng-container>
 
 
                                     <td>

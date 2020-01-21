@@ -237,6 +237,7 @@ export class ProcessSearchstatusOverAllbyuserid {
     storage_name: string;
     dock_name: string;
     shipment_storage_name: string;
+   
 }
 
 //---------------------- แก้  ProcessSearchCarrierQuota
@@ -263,6 +264,7 @@ export class ProcessSearchCarrierQuota {
     isOutside: any;
     total_worker: any;
     planning_Datetime: any;
+    carrier_id: any;
 
 }
 
@@ -693,10 +695,12 @@ export interface ResponseProcessSearchCarrierQuotaStat{
 }
 
 
+
 export interface ResponseProcessSearchstatusOverAllbyuserid {
     header: [];
-    result: [];
-    // result: ProcessSearchstatusOverAllbyuserid[];
+    // result: [];
+    result: ProcessSearchstatusOverAllbyuserid[];
+    rowColor: [];
     message: string;
 }
 

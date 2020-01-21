@@ -231,7 +231,6 @@ export class Ldls1Component implements OnInit {
       }
       else {
         this.Isforklift_ary[i] = evt;
-        this.worker1.disable[i] = false;
         this.bt_save[i] = false;
       }
     }

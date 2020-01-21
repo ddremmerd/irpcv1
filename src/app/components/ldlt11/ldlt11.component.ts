@@ -167,6 +167,11 @@ export class Ldlt11Component implements OnInit {
   CarrierName = new FormControl();
   Carrier_Name: Array<string>;
 
+  CarrierName1 = new FormControl();
+
+
+  SelCarrierName = new FormControl();
+
   shipmentLink = new FormControl();
 
 
@@ -198,7 +203,8 @@ export class Ldlt11Component implements OnInit {
         "route_name": null,
         "isOutside": null,
         "total_worker": null,
-        "planning_Datetime": "2020-01-03T22:32:03.617"
+        "planning_Datetime": "2020-01-03T22:32:03.617",
+        "carrier_id": null
       },
       {
         "shipment_id": 7,
@@ -221,7 +227,8 @@ export class Ldlt11Component implements OnInit {
         "route_name": null,
         "isOutside": null,
         "total_worker": null,
-        "planning_Datetime": "2019-12-24T23:44:43.337"
+        "planning_Datetime": "2019-12-24T23:44:43.337",
+        "carrier_id": null
       },
       {
         "shipment_id": 7,
@@ -244,7 +251,8 @@ export class Ldlt11Component implements OnInit {
         "route_name": null,
         "isOutside": null,
         "total_worker": null,
-        "planning_Datetime": "2019-12-24T23:44:43.337"
+        "planning_Datetime": "2019-12-24T23:44:43.337",
+        "carrier_id": null
       },
       {
         "shipment_id": 7,
@@ -267,7 +275,8 @@ export class Ldlt11Component implements OnInit {
         "route_name": null,
         "isOutside": null,
         "total_worker": null,
-        "planning_Datetime": "2019-12-24T23:44:43.337"
+        "planning_Datetime": "2019-12-24T23:44:43.337",
+        "carrier_id": null
       },
       {
         "shipment_id": 7,
@@ -290,7 +299,8 @@ export class Ldlt11Component implements OnInit {
         "route_name": null,
         "isOutside": null,
         "total_worker": null,
-        "planning_Datetime": "2019-12-24T23:44:43.337"
+        "planning_Datetime": "2019-12-24T23:44:43.337",
+        "carrier_id": null
       }
     ],
     "message": "OK"
@@ -545,6 +555,7 @@ export class Ldlt11Component implements OnInit {
   sel_typePack_ary = [];
   sel_route_ary = [];
   sel_isOutside_ary = [];
+  sel_carrierId_ary = [];
 
   //--------------- date time to show in planning
   date_toShow = [];
@@ -594,6 +605,7 @@ export class Ldlt11Component implements OnInit {
       this.sel_isOutside_ary[a] = this.getYesNo.result[1].yesnoid;
       this.sel_getDatePlanning[a] = this.date_planning;
       this.sel_getTimePlanning[a] = moment().format("HH:mm:ss") + '.000';
+      this.sel_carrierId_ary[a] = this.getCarrierName.result[0].carrierid;
       this.bt_save[a] = true;
     }
 
@@ -617,6 +629,7 @@ export class Ldlt11Component implements OnInit {
     }
 
     if (this.CarrierName.value != null) {
+      console.log("carrierName", this.CarrierName.value)
       this.carrierNameSelected(this.CarrierName.value);
     }
 
@@ -660,6 +673,10 @@ export class Ldlt11Component implements OnInit {
         this.CreateTypePackingOption();
         this.getRoute = this.sim_route as Type.ResponseRoute;
         this.CreateRouteOption();
+
+        this.CarrierName1.setValue(this.getCarrierName.result[0].name);
+
+        
 
         if (this.shipmentStatus.value == "Planning") {
           this.statuToShow = "Planning";
@@ -816,6 +833,7 @@ export class Ldlt11Component implements OnInit {
   //--------define id of carrierName for data packing
   sel_carrierID: string;
   selcarrierName: string;
+
   carrierNameSelected(sel) {
     let selected_carrierName;
     for (let i = 0; i < this.getCarrierName.result.length; i++) {
@@ -827,10 +845,10 @@ export class Ldlt11Component implements OnInit {
     // selected_carrierName = this.CarrierName.value;
     this.sel_carrierID = selected_carrierName;
     this.selcarrierName = this.CarrierName.value;
-    console.log("selected carrierName id: " + this.sel_carrierID);
+    // console.log(i,"selected carrierName id: " + this.sel_carrierID);
+    console.log("selected carrierName id: " + this.sel_carrierId_ary);
 
   }
-
 
 
   //----------------------- table DDL
@@ -1071,8 +1089,23 @@ export class Ldlt11Component implements OnInit {
 
   toggleRemark(i) {
     this.remark = !this.remark;
-    console.log("toggle Remark" + i);
+    // console.log("toggle Remark" + i);
 
+  }
+
+  carrierQuota(car_val, i) {
+    console.log(car_val, i)
+    let selected_carrierName;
+    for (let i = 0; i < this.getCarrierName.result.length; i++) {
+      if (car_val == this.getCarrierName.result[i].name) {
+        selected_carrierName = this.getCarrierName.result[i].carrierid;
+
+      }
+      // console.log(selected_carrierName);
+    }
+    this.sel_carrierId_ary[i] = selected_carrierName;
+    // console.log(i,"selected carrierName id: " + this.sel_carrierID);
+    console.log("selected carrierName id: " + this.sel_carrierId_ary);
   }
 
   AssignVendor(i) {
@@ -1085,7 +1118,8 @@ export class Ldlt11Component implements OnInit {
       this.sendProcessAssignQuota.shipmentLink = this.sel_shipLink_ary[i];
     }
 
-    this.sendProcessAssignQuota.carrierId = parseInt(this.sel_carrierID);
+    // this.sendProcessAssignQuota.carrierId = parseInt(this.sel_carrierID);
+    this.sendProcessAssignQuota.carrierId = this.sel_carrierId_ary[i];
     this.sendProcessAssignQuota.shipmentId = this.getResProSearchCarQuota.result[i].shipment_id;
     this.sendProcessAssignQuota.vehicleGroupId = this.sel_selectedVHD[i];
     this.sendProcessAssignQuota.isStat = this.sel_yesno_isStat_ary[i];
