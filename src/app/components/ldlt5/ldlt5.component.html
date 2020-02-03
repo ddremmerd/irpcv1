@@ -103,13 +103,12 @@
                 <div class="row">
 
                     <div class="col-lg-4">
-
-                        <div class="card-body pad table-responsive p-0" style="height: 800px;">
+                        <div class="card-body pad table-responsive p-0" style="height: 600px;">
 
                             <ng-container *ngIf="getResProTruckTrack != undefined">
                                 <ng-container *ngIf="getResProTruckTrack.message == 'OK'">
                                     <table
-                                        class="table table-head-fixed table-valign-middle text-center table-bordered">
+                                        class="table table-head-fixed thead table-valign-middle text-center table-bordered">
                                         <thead>
                                             <th class="light-gray-bg">ลำดับ</th>
                                             <th class="light-gray-bg" *ngFor="let head of TableHeader">{{head}}</th>
@@ -135,11 +134,12 @@
                                     </table>
                                 </ng-container>
                             </ng-container>
+
                         </div>
                     </div>
 
 
-                    <div class="col-lg-8" style="background-color: rgb(61, 146, 101);">
+                    <div class="col-lg-8" style="background-color: rgb(61, 146, 101); height: 600px;">
                         LIOOOONNN KINGGGF
                     </div>
 

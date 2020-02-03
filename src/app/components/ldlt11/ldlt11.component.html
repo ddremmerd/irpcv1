@@ -16,7 +16,7 @@
                                         [ddName]="'agent'" (SelectedDdValue)="SelectedToSearch($event)">
                                     </app-dropdown> -->
 
-                                    <mat-form-field style="padding-bottom: 0%;">
+                                    <mat-form-field style="padding-bottom: 0%; width: 10rem;">
                                         <mat-select [formControl]="ShipType">
                                             <ng-container *ngIf="getShipType != undefined">
                                                 <ng-container *ngIf="getShipType.message =='OK'">
@@ -48,7 +48,7 @@
                             <tr>
                                 <td style="padding-left: 20px;">ผู้ขนส่ง:</td>
                                 <td style="padding-left: 20px;">
-                                    <mat-form-field>
+                                    <mat-form-field style = "width: 10rem;">
                                         <mat-select [formControl]="CarrierName">
                                             <ng-container *ngIf="getCarrierName != undefined">
                                                 <ng-container *ngIf="getCarrierName.message == 'OK'">
@@ -66,7 +66,7 @@
                             <tr>
                                 <td style="padding-left: 20px;">สถานะ:</td>
                                 <td style="padding-left: 20px;">
-                                    <mat-form-field>
+                                    <mat-form-field style = "width: 10rem;">
                                         <mat-select [formControl]="shipmentStatus">
                                             <mat-option *ngFor="let shipStatus of shipment_Status" [value]="shipStatus">
                                                 {{shipStatus}}
@@ -140,7 +140,6 @@
                                     </ng-container>
 
                                 </div>
-
 
                                 <ng-container *ngIf="remark">
                                     <div class="info-box mb-3"
@@ -324,7 +323,21 @@
                                         </ng-container>
                                     </td>
                                     <td>
-                                        <button class="square_bt_enable btn-danger" (click)="toggleRemark(i)"></button>
+
+
+
+                                        <ng-container *ngIf=" getResProSearchCarQuota.result[i] != undefined">
+                                            <ng-container *ngIf="getResProSearchCarQuota.result[i].remark != null">
+                                                <button class="square_bt_enable btn-danger"
+                                                    (click)="toggleRemark(i); toggleModal(i)"></button>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="getResProSearchCarQuota.result[i].remark == null">
+                                             <b>-</b>
+                                            </ng-container>
+
+                                        </ng-container>
+
 
 
                                         <!-- <ng-container *ngIf="statuToShow == 'Create Shipment'">

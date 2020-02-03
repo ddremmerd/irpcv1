@@ -67,6 +67,7 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { Ldlt11Component } from './components/ldlt11/ldlt11.component';
 import { Dropdown2Component } from './components/dropdown2/dropdown2.component';
 import { TimePickerComponent } from './components/time-picker/time-picker.component';
+import { DialogBoxComponent } from './components/dialog-box/dialog-box.component';
 
 
 const appRoutes: Routes = [
@@ -140,6 +141,7 @@ export const MY_FORMATS = {
     Ldlt11Component,
     Dropdown2Component,
     TimePickerComponent,
+    DialogBoxComponent,
 
 
 
@@ -166,6 +168,9 @@ export const MY_FORMATS = {
     MatAutocompleteModule,
     NgxMaterialTimepickerModule
 
+  ],
+  entryComponents:[
+    DialogBoxComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },

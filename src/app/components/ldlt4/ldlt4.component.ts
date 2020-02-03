@@ -17,6 +17,8 @@ export interface searchwith {
 export class Ldlt4Component implements OnInit {
 
 
+  //---------------------get carrier
+  GetCarrierName: Type.ResponseCarrier;
   //--------------------- get data api/v1/Process/ProcessSerachContainerReg
   GetResProcessSearchConReg: Type.ResponseProcessSearchContainerReg;
 
@@ -27,6 +29,7 @@ export class Ldlt4Component implements OnInit {
   searchkeyword = new FormControl();
   searchwithkey = new FormControl();
 
+  carrierID = new FormControl();
 
   content_header_name = "ทะเบียนตู้คอนเทนเนอร์ (Container Register) ฝั่งแผนกขนส่ง";
   content_header_name2 = "ตู้คอนเทนเนอร์ที่ไม่ถูกใช้งานใน .... วัน";
@@ -47,6 +50,33 @@ export class Ldlt4Component implements OnInit {
 
 
 
+
+  //-------------api get carrier
+  sim_carrier = {
+    "result": [
+      {
+        "carrierid": 1,
+        "code": "900069",
+        "name": "บริษัท จีซี โลจิสติกส์  โซลูชั่นส์ จำกัด"
+      },
+      {
+        "carrierid": 2,
+        "code": "112345",
+        "name": "บริษัท เจ เอ ทรานสปอร์ต จำกัด"
+      },
+      {
+        "carrierid": 3,
+        "code": "1222222",
+        "name": "บริษัท เคพีเอส จำกัด"
+      },
+      {
+        "carrierid": 3,
+        "code": "1222222",
+        "name": "บริษัท เคพีเอส จำกัด"
+      }
+    ],
+    "message": "OK"
+  }
 
   // ---------api/v1/Process/ProcessSerachContainerReg
   sim_ResProSeaCarConReg = {
@@ -344,6 +374,8 @@ export class Ldlt4Component implements OnInit {
 
   ngOnInit() {
 
+    this.GetCarrierName = this.sim_carrier as Type.ResponseCarrier;
+
 
   }
 
@@ -351,38 +383,60 @@ export class Ldlt4Component implements OnInit {
   SearchWithkeyword(search_key) {
     // var key = this.searchkeyword.value;
     var search_with = this.searchwithkey.value;
-    // console.log(search_with, key);
+    let carID = this.carrierID.value; ///---------ใช้ carrierID ตรงนี้
+    console.log(search_with);
 
-    this.GetResProcessSearchConReg = this.sim_ResProSeaCarConReg as Type.ResponseProcessSearchContainerReg;
-    this.GetResProcessSearchConNotAssign = this.sim_ResProSeaCarConRegNotAss as Type.ResponseProcessSearchContainerRegNotAssign;
+   
+    if (this.carrierID.value == null || search_with == null) {
+      if (this.carrierID == null) {
+        alert("กรุณาเลือกผู้ขนส่ง")
+      }
 
-    if (search_with == "All") {
-
-      let parameterforSearch = "";
-      console.log("search with all")
-      //-----api/v1/Process/ProcessSerachContainerReg?carrierId=1&parameter=
-
-    }
-    else {
-      let parameterforSearch = this.searchkeyword.value;
-      console.log("search with key", parameterforSearch);
-      //------api/v1/Process/ProcessSerachContainerReg?carrierId=1&parameter=BKKVE0261800
-    }
-
-
-    if (this.GetResProcessSearchConReg.message == "OK" && this.GetResProcessSearchConNotAssign.message == 'OK') {
-      if (this.GetResProcessSearchConReg.result.length > 0 && this.GetResProcessSearchConNotAssign.result.length > 0) {
-        let closing_time, RegCon_close_date_toShow, RegCon_close_time_toShow, RegCon_receieveDate_toShow,
-          RegCon_returnDate_toShow, RegCon_lastUpdate_date_toShow, RegCon_lastUpdate_time_toShow, RegCon_etd_date_toShow = new Array(this.GetResProcessSearchConReg.result.length);
-
-        let closing_time_notAssign, closing_date_notAssign_toShow, closing_time_notAssign_toShow, notAss_receiveDate_toShow,
-          notAss_returnDate_toShow, notAss_lastUpdate_date_toShow, notAss_etd_date_toShow = new Array(this.GetResProcessSearchConNotAssign.result.length);
-
-        // console.log(this.closing_time)
-        this.getResponseTable()
+      if (search_with == null) {
+        alert("กรุณาเลือกการค้นหา")
       }
 
     }
+
+    else {
+      console.log("some not NULL")
+    }
+
+    if (this.carrierID.value != null && search_with != null) {
+      if (search_with == "All") {
+        let parameterforSearch = "";
+        console.log("search with all")
+        //-----api/v1/Process/ProcessSerachContainerReg?carrierId=1&parameter=
+
+      }
+      else {
+        let parameterforSearch = this.searchkeyword.value;
+        console.log("search with key", parameterforSearch);
+        //------api/v1/Process/ProcessSerachContainerReg?carrierId=1&parameter=BKKVE0261800
+      }
+
+      this.GetResProcessSearchConReg = this.sim_ResProSeaCarConReg as Type.ResponseProcessSearchContainerReg;
+      this.GetResProcessSearchConNotAssign = this.sim_ResProSeaCarConRegNotAss as Type.ResponseProcessSearchContainerRegNotAssign;
+  
+
+      if (this.GetResProcessSearchConReg.message == "OK" && this.GetResProcessSearchConNotAssign.message == 'OK') {
+        if (this.GetResProcessSearchConReg.result.length > 0 && this.GetResProcessSearchConNotAssign.result.length > 0) {
+          let closing_time, RegCon_close_date_toShow, RegCon_close_time_toShow, RegCon_receieveDate_toShow,
+            RegCon_returnDate_toShow, RegCon_lastUpdate_date_toShow, RegCon_lastUpdate_time_toShow, RegCon_etd_date_toShow = new Array(this.GetResProcessSearchConReg.result.length);
+
+          let closing_time_notAssign, closing_date_notAssign_toShow, closing_time_notAssign_toShow, notAss_receiveDate_toShow,
+            notAss_returnDate_toShow, notAss_lastUpdate_date_toShow, notAss_etd_date_toShow = new Array(this.GetResProcessSearchConNotAssign.result.length);
+
+          // console.log(this.closing_time)
+          this.getResponseTable()
+        }
+      }
+    }
+
+
+
+
+
 
   }
 

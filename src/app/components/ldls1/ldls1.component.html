@@ -68,10 +68,10 @@
 
             <div class="card-body pad table-responsive" style="font-size: 20px;">
                 <div class="row">
-                    <table class="table table-valign-middle text-center " style="max-width: 100%;">
+                    <table class="table table-responsive table-valign-middle text-center table-bordered" style="max-width: 100%;">
                         <!-- header of table -->
-                        <thead>
-                            <th class="light-gray-bg" *ngFor="let item of TableHeader">{{item}}</th>
+                        <thead style="position:sticky">
+                            <th class="light-gray-bg"  *ngFor="let item of TableHeader">{{item}}</th>
 
                         </thead>
 
@@ -84,10 +84,33 @@
                                         <td>{{data.vehicle_text}}</td>
                                         <td>{{data.storage}}</td>
                                         <td>{{data.dock}}</td>
-                                        <td>{{data.shipment_no}}</td>
+                                        <td>
+                                            <ng-container *ngIf="sameShipNo[i] == 'same'"></ng-container>
+
+                                            <ng-container *ngIf="sameShipNo[i] == 'none'"> {{data.shipment_no}}
+                                            </ng-container>
+
+
+                                        </td>
                                         <td>{{data.delivery_no}}</td>
-                                        <td>{{data.grade}}</td>
-                                        <td>{{data.qty}}</td>
+                                        <td>
+                                            <!-- {{data.grade}} -->
+                                            <ul style="list-style-type:none; padding-inline-start:10px">
+                                                <li *ngFor="let grade of grade_qty[i].grade">{{grade}}</li>
+                                            </ul>
+
+                                        </td>
+                                        <td style="padding-top: 0.62rem;">
+
+                                            <ng-container *ngFor="let qty of grade_qty[i].quantity; let y = index;">
+                                                <mat-form-field class="example-full-width" style="width: 5rem;text-align: center;">
+                                                    <input matInput type="number" [(ngModel)]="qty" (change)="OnchangeQty(i,y,qty)">
+                                                </mat-form-field>
+                                            </ng-container>
+
+                                            <!-- [(ngModel)]="this.grade_qty[i].quantity[y]" -->
+
+                                        </td>
                                         <td>
                                             <ng-container *ngIf="sel_status == 'รอเริ่มงาน'">
                                                 <mat-form-field style="width:100%;">
@@ -126,7 +149,8 @@
                                         <td>
                                             <ng-container *ngIf="sel_status == 'รอเริ่มงาน'">
                                                 <mat-form-field style="width:100%;">
-                                                    <mat-select [formControl]="worker1" [disabled]="bt_save[i]"  (selectionChange)="selectedToSave($event.value,i, 'workerID1')">
+                                                    <mat-select [formControl]="worker1" [disabled]="bt_save[i]"
+                                                        (selectionChange)="selectedToSave($event.value,i, 'workerID1')" >
                                                         <ng-container
                                                             *ngIf="getLabour != undefined && getLabour.message == 'OK'">
                                                             <mat-option *ngFor="let work1 of getLabour.result"
@@ -146,7 +170,8 @@
                                         <td>
                                             <ng-container *ngIf="sel_status == 'รอเริ่มงาน'">
                                                 <mat-form-field style="width:100%;">
-                                                    <mat-select [formControl]="worker2" [disabled]="bt_save[i]" (selectionChange)="selectedToSave($event.value,i, 'workerID2')">
+                                                    <mat-select [formControl]="worker2" [disabled]="bt_save[i]"
+                                                        (selectionChange)="selectedToSave($event.value,i, 'workerID2')">
                                                         <ng-container
                                                             *ngIf="getLabour != undefined && getLabour.message == 'OK'">
                                                             <mat-option *ngFor="let work2 of getLabour.result"

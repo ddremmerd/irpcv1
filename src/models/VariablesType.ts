@@ -721,11 +721,28 @@ export interface ProcessSearchLabour {
     shipment_id: number;
     delivery_no: string;
     delivery_id: number;
-    grade: string;
-    qty: number;
+    matno_Qty: string;
+    //-------แก้ type
+
+    // grade: string;
+    // qty: string;
     isforklift: any;
     labor_id1: any;
     labor_id2: any;
+}
+
+//-------------เพิ่มเพื่อทำ quantity
+export interface gradeAndQuantity {
+    rowIndex:number,
+    grade: gradeVal[],
+    quantity: quantityVal[],
+}
+
+export class gradeVal{
+    value: string
+}
+export class quantityVal{
+    value: string
 }
 
 export interface SendProcessSearchstatusOverAllbyuserid {

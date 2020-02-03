@@ -3,9 +3,11 @@ import { MatSelectChange, MatDatepickerInputEvent } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import { FormControl, FormGroupDirective, FormGroup, NgForm, Validators, FormControlName } from '@angular/forms';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import * as Type from 'src/models/VariablesType';
 import * as Comp from 'src/models/ComponentClass'
 import * as moment from 'moment';
+import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 
 @Component({
   selector: 'app-ldlt11',
@@ -136,6 +138,11 @@ export class Ldlt11Component implements OnInit {
         "carrierid": 2,
         "code": "112345",
         "name": "บริษัท เจ เอ ทรานสปอร์ต จำกัด"
+      },
+      {
+        "carrierid": 3,
+        "code": "1222222",
+        "name": "บริษัท เคพีเอส จำกัด"
       }
     ],
     "message": "OK"
@@ -197,7 +204,7 @@ export class Ldlt11Component implements OnInit {
         "isStat": null,
         "req_qequipments": null,
         "type_packing_name": null,
-        "remark": null,
+        "remark": "XXXXXXXXXXXX|YYYYYYYYYYYYYYYYYYY|ZZZZZZZZZZZZZZZZZZZZZZZ",
         "pick_up_at": null,
         "return_to": null,
         "route_name": null,
@@ -221,7 +228,7 @@ export class Ldlt11Component implements OnInit {
         "isStat": null,
         "req_qequipments": null,
         "type_packing_name": null,
-        "remark": null,
+        "remark": "CCCCCCCCCCCCCCCCCCC|WWWWWWWWWWWWWWWWWWW|QQQQQQQQQQQQQQQQQQQ",
         "pick_up_at": null,
         "return_to": null,
         "route_name": null,
@@ -269,7 +276,7 @@ export class Ldlt11Component implements OnInit {
         "isStat": null,
         "req_qequipments": null,
         "type_packing_name": null,
-        "remark": null,
+        "remark": "IIIIIIIIIII|OPOOOOOOIOI|QWWEWEQE",
         "pick_up_at": null,
         "return_to": null,
         "route_name": null,
@@ -569,7 +576,7 @@ export class Ldlt11Component implements OnInit {
   @Input() SelectedDdValue: Array<{}>
   // @Output() bt_save = new EventEmitter();
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -605,7 +612,7 @@ export class Ldlt11Component implements OnInit {
       this.sel_isOutside_ary[a] = this.getYesNo.result[1].yesnoid;
       this.sel_getDatePlanning[a] = this.date_planning;
       this.sel_getTimePlanning[a] = moment().format("HH:mm:ss") + '.000';
-      this.sel_carrierId_ary[a] = this.getCarrierName.result[0].carrierid;
+      this.sel_carrierId_ary[a] = this.sel_carrierID;
       this.bt_save[a] = true;
     }
 
@@ -629,7 +636,7 @@ export class Ldlt11Component implements OnInit {
     }
 
     if (this.CarrierName.value != null) {
-      console.log("carrierName", this.CarrierName.value)
+      // console.log("carrierName", this.CarrierName.value)
       this.carrierNameSelected(this.CarrierName.value);
     }
 
@@ -674,9 +681,9 @@ export class Ldlt11Component implements OnInit {
         this.getRoute = this.sim_route as Type.ResponseRoute;
         this.CreateRouteOption();
 
-        this.CarrierName1.setValue(this.getCarrierName.result[0].name);
+        // this.CarrierName1.setValue(this.getCarrierName.result[0].name);
 
-        
+
 
         if (this.shipmentStatus.value == "Planning") {
           this.statuToShow = "Planning";
@@ -845,9 +852,6 @@ export class Ldlt11Component implements OnInit {
     // selected_carrierName = this.CarrierName.value;
     this.sel_carrierID = selected_carrierName;
     this.selcarrierName = this.CarrierName.value;
-    // console.log(i,"selected carrierName id: " + this.sel_carrierID);
-    console.log("selected carrierName id: " + this.sel_carrierId_ary);
-
   }
 
 
@@ -1088,13 +1092,29 @@ export class Ldlt11Component implements OnInit {
   }
 
   toggleRemark(i) {
-    this.remark = !this.remark;
+    // this.remark = !this.remark;
     // console.log("toggle Remark" + i);
 
   }
 
+  toggleModal(i) {
+    let datatModal = this.getResProSearchCarQuota.result[i].remark;
+    let dat1 = this.getResProSearchCarQuota.result[i].shipment_No;
+    if (datatModal != null) {
+      let dataModal1 = datatModal.split('|');
+      console.log("Toggle Modal", i, dataModal1)
+      this.dialog.open(DialogBoxComponent, {
+        data: {
+          list: dataModal1,
+          topic: dat1
+        }
+      });
+    }
+
+  }
+
   carrierQuota(car_val, i) {
-    console.log(car_val, i)
+    // console.log(car_val, i)
     let selected_carrierName;
     for (let i = 0; i < this.getCarrierName.result.length; i++) {
       if (car_val == this.getCarrierName.result[i].name) {
@@ -1102,10 +1122,17 @@ export class Ldlt11Component implements OnInit {
 
       }
       // console.log(selected_carrierName);
-    }
+    } 
+    
+    // for(let y=0; y < this.getResProSearchCarQuota.result.length; y++){
+    //   if(y!=i){
+    //     this.CarrierName1.setValue(car_val);
+    //     this.sel_carrierId_ary[y] = selected_carrierName;
+    //   }
+    // }
     this.sel_carrierId_ary[i] = selected_carrierName;
     // console.log(i,"selected carrierName id: " + this.sel_carrierID);
-    console.log("selected carrierName id: " + this.sel_carrierId_ary);
+    // console.log("selected carrierName id: " + this.sel_carrierId_ary);
   }
 
   AssignVendor(i) {
@@ -1116,6 +1143,20 @@ export class Ldlt11Component implements OnInit {
     }
     else {
       this.sendProcessAssignQuota.shipmentLink = this.sel_shipLink_ary[i];
+    }
+
+    for(let y=0; y < this.getResProSearchCarQuota.result.length; y++){
+      if(y!=i){
+        for(let k=0; k<this.getCarrierName.result.length;k++){
+          if(this.sel_carrierId_ary[i] == this.getCarrierName.result[k].carrierid){
+            this.CarrierName1.setValue(this.getCarrierName.result[k].name)
+          }
+        }
+        // this.CarrierName1.setValue();
+        // console.log("set another carrirtID")
+        this.sel_carrierId_ary[y] = this.sel_carrierId_ary[i];
+        console.log("after assign", this.sel_carrierId_ary)
+      }
     }
 
     // this.sendProcessAssignQuota.carrierId = parseInt(this.sel_carrierID);
@@ -1132,6 +1173,10 @@ export class Ldlt11Component implements OnInit {
     // this.sendProcessAssignQuota.vehicleGroupId = this.SelectedVehicleGroup[i].id;
 
     this.ResponseProcessAssignQuota();
+
+   
+
+   
 
   }
 

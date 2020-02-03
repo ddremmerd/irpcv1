@@ -1,0 +1,24 @@
+<!-- <p>dialog-box works!</p>
+<p>REMARKS</p> -->
+<b style = "font-size: 30px;">Remarks: {{data.topic}}</b>
+<div mat-dialog-content>
+    <!-- {{data}}
+    <br> -->
+
+
+    <ul style="list-style-type:none; padding-inline-start:10px;">
+        <b>
+            <li *ngFor="let showAll of data.list">{{showAll}}</li>
+        </b>
+
+    </ul>
+</div>
+
+<button type="button" class="btn btn-block btn-danger btn-sm" (click)="closeDialog()">Close</button>
+
+<!-- <div mat-dialog-actions>
+    <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+
+</div> -->
+
+<!-- <button mat-button " mat-flat-button color="warn">Cancel</button> -->

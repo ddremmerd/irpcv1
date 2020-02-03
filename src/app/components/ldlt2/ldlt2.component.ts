@@ -180,7 +180,7 @@ export class Ldlt2Component implements OnInit {
     ],
     "rowColor": [
       0,
-      1,
+      0,
       0,
       1,
       0,
