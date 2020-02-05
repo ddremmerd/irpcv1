@@ -1,8 +1,8 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Input,Component, OnInit, ElementRef, Directive } from '@angular/core';
 import { MatSelectChange, MatDatepickerInputEvent } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
-import { FormControl, FormGroupDirective, FormGroup, NgForm, Validators, FormArray, FormBuilder } from '@angular/forms';
+import { NgControl, FormControl, FormGroupDirective, FormGroup, NgForm, Validators, FormArray, FormBuilder,FormsModule } from '@angular/forms';
 import * as Type from 'src/models/VariablesType';
 import * as Comp from 'src/models/ComponentClass';
 import * as moment from 'moment';
@@ -333,6 +333,7 @@ export class Ldls1Component implements OnInit {
 
 
   grade_qty = [];
+  save_grade_qty = [];
 
   grade_quant = [];
 
@@ -357,7 +358,15 @@ export class Ldls1Component implements OnInit {
         grade: gradee,
         quantity: quantityyy
       }
+
+      let now_obj2 = {
+        rowIndex: r,
+        grade: gradee,
+        quantity: []
+      }
       this.grade_qty.push(now_obj);
+      this.save_grade_qty.push(now_obj2);
+
       // console.log(this.grade_qty[r].quantity)
 
       // this.addQuantityFormGroup(this.grade_qty[r].grade);
@@ -375,9 +384,11 @@ export class Ldls1Component implements OnInit {
         this.labor_id1_ary[i] = 0;
         this.labor_id2_ary[i] = 0;
         this.bt_save[i] = true;
+        // this.worker1.disable();
       }
       else {
         this.Isforklift_ary[i] = evt;
+        // this.worker1.enable();
         this.bt_save[i] = false;
       }
     }
@@ -399,7 +410,7 @@ export class Ldls1Component implements OnInit {
 
   sendStart(i) {
 
-    // console.log("-------grade and qty", this.grade_qty[i].quantity);
+    console.log("-------grade and qty", this.save_grade_qty[i].quantity);
 
 
     // console.log(i, "updwon:", this.up_down_ary, "forklift:", this.Isforklift_ary, "worker1:", this.labor_id1_ary, "worker2:", this.labor_id2_ary)
@@ -412,9 +423,9 @@ export class Ldls1Component implements OnInit {
     let userId = 999;
 
     let gr_qt = [];
-    if (this.grade_qty[i].grade.length > 1) {
-      for (let j = 0; j < this.grade_qty[i].quantity.length; j++) {
-        gr_qt[j] = this.grade_qty[i].grade[j] + '^' + this.grade_qty[i].quantity[j];
+    if (this.save_grade_qty[i].grade.length > 1) {
+      for (let j = 0; j < this.save_grade_qty[i].quantity.length; j++) {
+        gr_qt[j] = this.save_grade_qty[i].grade[j] + '^' + this.save_grade_qty[i].quantity[j];
 
       }
       let mat_qty = gr_qt.toString().replace(/,/g,'|');
@@ -422,9 +433,11 @@ export class Ldls1Component implements OnInit {
 
     }
     else {
-      let mat_qty = this.grade_qty[i].grade + '^' + this.grade_qty[i].quantity;
+      let mat_qty = this.save_grade_qty[i].grade + '^' + this.save_grade_qty[i].quantity;
       console.log("======= 1 GRADE", mat_qty)
     }
+
+    console.log("00000000000000CEHCK",this.Isforklift_ary,"worker1", this.labor_id1_ary,"worker2",this.labor_id2_ary)
 
     //----------api/v1/Process/ProcessManualStartLabourForklift?deliverid=111&wh_do=11&up_down=U&Isforklift=N&labor_id1=2&labor_id2=3&userId=999
 
@@ -442,9 +455,25 @@ export class Ldls1Component implements OnInit {
     console.log("sendtoEnd", i, "deliverId:", deliverid, "wh_do:", wh_do);
   }
 
-  OnchangeQty(r, y, a) {
-    // console.log(">>>>>",a,this.grade_qty[r].quantity[y])
-    this.grade_qty[r].quantity[y] = a;
-    console.log(">>>>", a, this.grade_qty[r].quantity[y]);
+
+
+  OnchangeQty(quant, row, y) {
+
+    
+
+    this.save_grade_qty[row].quantity[y] = quant;
+
+    // let save_grade_qty = new Array(this.getResProSearchLab.result.length)
+    // let now_obj = {
+    //   rowIndex: row,
+    //   grade: this.grade_qty[row],
+    //   quantity: quant
+    // }
+    // this.save_grade_qty[row].push(now_obj);
+
+   
+    console.log(">>>>", quant, this.save_grade_qty[row]);
+    // console.log(">>>>", quant, this.save_grade_qty);
+ 
   }
 }
