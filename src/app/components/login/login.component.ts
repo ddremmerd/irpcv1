@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   onClickSubmit(){
     if (this.mUsername == "admin" && this.mPassword == "1234"){
       // window.alert("log in success");
-      this.router.navigate(["vendor1"]);
+      this.router.navigate(["ldlt11"]);
     }
     
 

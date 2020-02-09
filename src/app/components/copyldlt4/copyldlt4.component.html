@@ -1,0 +1,176 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<app-footer></app-footer>
+<div class="content-wrapper">
+
+    <app-content-header [ContentHeader]="content_header_name"></app-content-header>
+
+    <div class="card">
+        <div class="card-body">
+            <!-- Main content -->
+
+
+            <table>
+                <tr>
+                    <td>
+                        <mat-form-field>
+                            <mat-label>ผู้ขนส่ง: </mat-label>
+                            <mat-select matNativeControl required [formControl]="carrierID">
+                                <ng-container *ngIf="GetCarrierName.result != undefined">
+                                    <mat-option *ngFor="let carName of GetCarrierName.result"
+                                        [value]="carName.carrierid">
+                                        {{carName.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                    <td style="padding: 10px;">
+                        <mat-form-field>
+                            <mat-label>ค้นหาด้วย: </mat-label>
+
+                            <mat-select matNativeControl required [formControl]="searchwithkey">
+
+                                <mat-option *ngFor="let kw of searchkey" [value]="kw.value">
+                                    {{kw.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </td>
+
+                    <td style="padding: 5px;">
+
+                        <form class="example-form">
+                            <mat-form-field class="example-full-width" style="width:80%; display: inline-block;">
+                                <!-- <mat-label>ค้นหา: </mat-label> -->
+                                <input matInput placeholder="" [formControl]="searchkeyword">
+                            </mat-form-field>
+
+                        </form>
+                    </td>
+                    <td>
+                        <mat-icon matDatepickerToggleIcon (click)="SearchWithkeyword()">search</mat-icon>
+
+                    </td>
+                </tr>
+            </table>
+            <!-- 
+            <div class="card-body pad table-responsive">
+                <table class="table table-valign-middle text-center table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="light-gray-bg" *ngFor="let head of TableHeader">{{head}}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let rowData of TableData; let nRow = index">
+                            <td>{{nRow + 1}}</td>
+                            <td *ngFor="let objKey of _object.keys(rowData);">{{rowData[objKey]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+
+
+            <!-- try table form sim API -->
+            <div class="card-body pad table-responsive">
+
+                <ng-container *ngIf="GetResProcessSearchConReg != undefined">
+                    <ng-container *ngIf="GetResProcessSearchConReg.message == 'OK'">
+                        <table class="table table-valign-middle text-center table-bordered">
+
+                            <thead>
+                                <tr>
+                                    <th class="light-gray-bg" *ngFor="let head of TableHeader">{{head}}</th>
+                                </tr>
+                            </thead>
+                            <ng-container *ngIf="carrierID.value != null">
+                                <tbody>
+                                    <tr *ngFor="let rowData of GetResProcessSearchConReg.result; let nRow = index;">
+                                        <td>{{nRow + 1}}</td>
+                                        <td>{{RegCon_load_date_toShow[nRow]}}</td>
+                                        <td>{{rowData.invoice_no_text}}</td>
+                                        <td>{{rowData.agent_container_code}}</td>
+                                        <td>{{rowData.booinkg_No_text}}</td>
+                                        <td>{{rowData.pickup_at_code}}</td>
+                                        <td>{{rowData.pickup_return_code}}</td>
+                                        <td>{{RegCon_close_date_toShow[nRow]}}</td>
+                                        <td>{{RegCon_close_time_toShow[nRow]}}</td>
+                                        <td>{{RegCon_etd_date_toShow[nRow]}}</td>
+                                        <td>{{RegCon_receieveDate_toShow[nRow]}}</td>
+                                        <td>{{rowData.container_No}}</td>
+                                        <td>{{rowData.seal_No}}</td>
+                                        <td>{{rowData.vgM_Tare}}</td>
+                                        <td>{{rowData.size_container}}</td>
+                                        <td>{{RegCon_returnDate_toShow[nRow]}}</td>
+                                        <td>-</td>
+                                        <td>{{RegCon_lastUpdate_date_toShow[nRow]}}
+                                            <br>{{RegCon_lastUpdate_time_toShow[nRow]}}</td>
+                                    </tr>
+                                </tbody>
+                            </ng-container>
+                        </table>
+                    </ng-container>
+                </ng-container>
+            </div>
+
+        </div>
+    </div>
+    <!---------------------------------- unused container section -->
+
+    <app-content-header [ContentHeader]="content_header_name2"></app-content-header>
+    <section class="content">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-body pad table-responsive">
+
+                    <ng-container *ngIf="GetResProcessSearchConNotAssign != undefined">
+                        <ng-container *ngIf="GetResProcessSearchConNotAssign.message == 'OK'">
+                            <table class="table table-valign-middle text-center table-bordered">
+
+                                <thead>
+                                    <tr>
+                                        <th class="light-gray-bg" *ngFor="let head of TableHeader">{{head}}</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr
+                                        *ngFor="let rowData of GetResProcessSearchConNotAssign.result; let nRow = index;">
+                                        <td>{{nRow + 1}}</td>
+                                        <td>{{loading_date_NotAssign_toShow[nRow]}}</td>
+                                        <td>{{rowData.invoice_no_text}}</td>
+                                        <td>{{rowData.agent_container_code}}</td>
+                                        <td>{{rowData.booinkg_No_text}}</td>
+                                        <td>{{rowData.pickup_at_code}}</td>
+                                        <td>{{rowData.pickup_return_code}}</td>
+                                        <td>{{closing_date_notAssign_toShow[nRow]}}</td>
+                                        <td>{{closing_time_notAssign_toShow[nRow]}}</td>
+                                        <td>{{notAss_etd_date_toShow[nRow]}}</td>
+                                        <td>{{notAss_receiveDate_toShow[nRow]}}</td>
+                                        <td>{{rowData.container_No}}</td>
+                                        <td>{{rowData.seal_No}}</td>
+                                        <td>{{rowData.vgM_Tare}}</td>
+                                        <td>{{rowData.size_container}}</td>
+                                        <td>{{notAss_returnDate_toShow[nRow]}}</td>
+                                        <td>-</td>
+                                        <td>{{notAss_lastUpdate_date_toShow[nRow]}} <br>
+                                            {{notAss_lastUpdate_time_toShow[nRow]}}</td>
+
+
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+</div>

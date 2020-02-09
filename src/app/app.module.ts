@@ -14,6 +14,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
+
+import {MatPaginatorModule} from '@angular/material/paginator';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
@@ -39,7 +42,7 @@ import { Ldlt3Component } from './components/ldlt3/ldlt3.component';
 import { RecallButtonComponent } from './components/recall-button/recall-button.component';
 import { DropdownListComponent } from './components/dropdown-list/dropdown-list.component';
 import { Ldlt4Component } from './components/ldlt4/ldlt4.component';
-import { Ldlt1Component } from './components/ldlt1/ldlt1.component';
+// import { Ldlt1Component } from './components/ldlt1/ldlt1.component';
 import { DeleteButtonComponent } from './components/delete-button/delete-button.component';
 import { QuotaButtonComponent } from './components/quota-button/quota-button.component';
 
@@ -68,22 +71,25 @@ import { Ldlt11Component } from './components/ldlt11/ldlt11.component';
 import { Dropdown2Component } from './components/dropdown2/dropdown2.component';
 import { TimePickerComponent } from './components/time-picker/time-picker.component';
 import { DialogBoxComponent } from './components/dialog-box/dialog-box.component';
+import { Copyldlt3Component } from './components/copyldlt3/copyldlt3.component';
+import { Copyldlt4Component } from './components/copyldlt4/copyldlt4.component';
 
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'vendor1', component: Vendor1Component },
-  { path: 'vendor2', component: Vendor2Component },
-  { path: 'vendor3', component: Vendor3Component },
   { path: 'ldlt3', component: Ldlt3Component },
   { path: 'ldlt4', component: Ldlt4Component },
   { path: 'ldlt5', component: Ldlt5Component },
-  { path: 'ldlt1', component: Ldlt1Component },
+  // { path: 'ldlt1', component: Ldlt1Component },
   { path: 'ldlt2', component: Ldlt2Component },
   { path: 'ldls1', component: Ldls1Component },
   { path: 'ldls2', component: Ldls2Component },
   { path: 'ldls3', component: Ldls3Component },
   { path: 'ldlt11', component: Ldlt11Component },
+  { path: 'copyldlt3', component: Copyldlt3Component },
+  { path: 'copyldlt4', component: Copyldlt4Component },
+
+
 
 
 
@@ -125,7 +131,7 @@ export const MY_FORMATS = {
     RecallButtonComponent,
     DropdownListComponent,
     Ldlt4Component,
-    Ldlt1Component,
+    // Ldlt1Component,
     DeleteButtonComponent,
     QuotaButtonComponent,
     TableFilterPipe,
@@ -142,6 +148,8 @@ export const MY_FORMATS = {
     Dropdown2Component,
     TimePickerComponent,
     DialogBoxComponent,
+    Copyldlt3Component,
+    Copyldlt4Component,
 
 
 
@@ -166,7 +174,8 @@ export const MY_FORMATS = {
     Ng2SearchPipeModule,
     MatCheckboxModule,
     MatAutocompleteModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    MatPaginatorModule //เพิ่มมมมม
 
   ],
   entryComponents:[

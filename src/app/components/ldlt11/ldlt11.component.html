@@ -257,7 +257,7 @@
                                     </ng-container> -->
 
                                             <mat-form-field>
-                                                <mat-select [formControl]="shipmentLink" [disabled]="bt_save[i]"
+                                                <mat-select [disabled]="bt_save[i]"
                                                     (selectionChange)="selectedShipLink($event,i)">
                                                     <ng-container
                                                         *ngIf="getResProSearchCarQuota.result[i] != undefined">
