@@ -55,66 +55,149 @@
                     </td>
                 </tr>
             </table>
-            <!-- 
-            <div class="card-body pad table-responsive">
-                <table class="table table-valign-middle text-center table-bordered">
-                    <thead>
-                        <tr>
-                            <th class="light-gray-bg" *ngFor="let head of TableHeader">{{head}}</th>
-                        </tr>
-                    </thead>
 
-                    <tbody>
-                        <tr *ngFor="let rowData of TableData; let nRow = index">
-                            <td>{{nRow + 1}}</td>
-                            <td *ngFor="let objKey of _object.keys(rowData);">{{rowData[objKey]}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div> -->
 
 
             <!-- try table form sim API -->
-            <div class="card-body pad table-responsive">
+            <ng-container *ngIf="GetResProcessSearchConNotAssign != null">
+                <div class="example-container mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort style="font-size: 30px;">
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-                <ng-container *ngIf="GetResProcessSearchConReg != undefined">
-                    <ng-container *ngIf="GetResProcessSearchConReg.message == 'OK'">
-                        <table class="table table-valign-middle text-center table-bordered">
+                        <ng-container matColumnDef="nRow">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                No. </th>
+                            <td mat-cell *matCellDef="let row"> {{row.nRow}} </td>
+                        </ng-container>
 
-                            <thead>
-                                <tr>
-                                    <th class="light-gray-bg" *ngFor="let head of TableHeader">{{head}}</th>
-                                </tr>
-                            </thead>
-                            <ng-container *ngIf="carrierID.value != null">
-                                <tbody>
-                                    <tr *ngFor="let rowData of GetResProcessSearchConReg.result; let nRow = index;">
-                                        <td>{{nRow + 1}}</td>
-                                        <td>{{RegCon_load_date_toShow[nRow]}}</td>
-                                        <td>{{rowData.invoice_no_text}}</td>
-                                        <td>{{rowData.agent_container_code}}</td>
-                                        <td>{{rowData.booinkg_No_text}}</td>
-                                        <td>{{rowData.pickup_at_code}}</td>
-                                        <td>{{rowData.pickup_return_code}}</td>
-                                        <td>{{RegCon_close_date_toShow[nRow]}}</td>
-                                        <td>{{RegCon_close_time_toShow[nRow]}}</td>
-                                        <td>{{RegCon_etd_date_toShow[nRow]}}</td>
-                                        <td>{{RegCon_receieveDate_toShow[nRow]}}</td>
-                                        <td>{{rowData.container_No}}</td>
-                                        <td>{{rowData.seal_No}}</td>
-                                        <td>{{rowData.vgM_Tare}}</td>
-                                        <td>{{rowData.size_container}}</td>
-                                        <td>{{RegCon_returnDate_toShow[nRow]}}</td>
-                                        <td>-</td>
-                                        <td>{{RegCon_lastUpdate_date_toShow[nRow]}}
-                                            <br>{{RegCon_lastUpdate_time_toShow[nRow]}}</td>
-                                    </tr>
-                                </tbody>
-                            </ng-container>
-                        </table>
-                    </ng-container>
-                </ng-container>
-            </div>
+                        <ng-container matColumnDef="receive_Date">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                วันที่เข้ารับสินค้า </th>
+                            <td mat-cell *matCellDef="let row"> {{row.receive_Date}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="invoiceNum">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                INVOICE NO. </th>
+                            <td mat-cell *matCellDef="let row"> {{row.invoiceNum}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="agentNum">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                Agent </th>
+                            <td mat-cell *matCellDef="let row"> {{row.agentNum}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="bookingNum">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                Booking No. </th>
+                            <td mat-cell *matCellDef="let row"> {{row.bookingNum}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="pickUpAt">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                รับตู้ <br>
+                                (Pick Up At) </th>
+                            <td mat-cell *matCellDef="let row"> {{row.pickUpAt}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="returnTo">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                คืนตู้ <br>
+                                (Return To) </th>
+                            <td mat-cell *matCellDef="let row"> {{row.returnTo}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="closingDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                Closing Date </th>
+                            <td mat-cell *matCellDef="let row"> {{row.closingDate}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="closingTime">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                Closing Time </th>
+                            <td mat-cell *matCellDef="let row"> {{row.closingTime}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="etd_lcb">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                ETD LCB </th>
+                            <td mat-cell *matCellDef="let row"> {{row.etd_lcb}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="emptyConta">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                วันที่รับตู้เปล่า </th>
+                            <td mat-cell *matCellDef="let row"> {{row.emptyConta}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="containerNum">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                Container No. </th>
+                            <td mat-cell *matCellDef="let row"> {{row.containerNum}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="sealNum">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                Seal No. </th>
+                            <td mat-cell *matCellDef="let row"> {{row.sealNum}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="vgmTare">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="width:10rem;">
+                                น้ำหนักตู้เปล่า <br>
+                                (VGM Tare) </th>
+                            <td mat-cell *matCellDef="let row"> {{row.vgmTare}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="containerSize">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                Container Size </th>
+                            <td mat-cell *matCellDef="let row"> {{row.containerSize}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="returnDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                วันที่คืนตู้หนัก </th>
+                            <td mat-cell *matCellDef="let row"> {{row.returnDate}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Remarks">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                วันที่คืนตู้หนัก </th>
+                            <td mat-cell *matCellDef="let row"> {{row.Remarks}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="latestTime">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="coin-bg text-center gray-back"
+                                style="max-width:5rem;">
+                                เวลาบันทึกล่าสุด </th>
+                            <td mat-cell *matCellDef="let row"> {{row.latestTime}} </td>
+                        </ng-container>
+
+
+                    </table>
+                </div>
+            </ng-container>
 
         </div>
     </div>
@@ -124,49 +207,146 @@
     <section class="content">
         <div class="card">
             <div class="card-body">
-                <div class="card-body pad table-responsive">
 
-                    <ng-container *ngIf="GetResProcessSearchConNotAssign != undefined">
-                        <ng-container *ngIf="GetResProcessSearchConNotAssign.message == 'OK'">
-                            <table class="table table-valign-middle text-center table-bordered">
+                <ng-container *ngIf="GetResProcessSearchConReg != null">
+                    <div class="example-container mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource2" matSort style="font-size: 30px;">
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
 
-                                <thead>
-                                    <tr>
-                                        <th class="light-gray-bg" *ngFor="let head of TableHeader">{{head}}</th>
-                                    </tr>
-                                </thead>
+                            <ng-container matColumnDef="nRow">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    No. </th>
+                                <td mat-cell *matCellDef="let row"> {{row.nRow}} </td>
+                            </ng-container>
 
-                                <tbody>
-                                    <tr
-                                        *ngFor="let rowData of GetResProcessSearchConNotAssign.result; let nRow = index;">
-                                        <td>{{nRow + 1}}</td>
-                                        <td>{{loading_date_NotAssign_toShow[nRow]}}</td>
-                                        <td>{{rowData.invoice_no_text}}</td>
-                                        <td>{{rowData.agent_container_code}}</td>
-                                        <td>{{rowData.booinkg_No_text}}</td>
-                                        <td>{{rowData.pickup_at_code}}</td>
-                                        <td>{{rowData.pickup_return_code}}</td>
-                                        <td>{{closing_date_notAssign_toShow[nRow]}}</td>
-                                        <td>{{closing_time_notAssign_toShow[nRow]}}</td>
-                                        <td>{{notAss_etd_date_toShow[nRow]}}</td>
-                                        <td>{{notAss_receiveDate_toShow[nRow]}}</td>
-                                        <td>{{rowData.container_No}}</td>
-                                        <td>{{rowData.seal_No}}</td>
-                                        <td>{{rowData.vgM_Tare}}</td>
-                                        <td>{{rowData.size_container}}</td>
-                                        <td>{{notAss_returnDate_toShow[nRow]}}</td>
-                                        <td>-</td>
-                                        <td>{{notAss_lastUpdate_date_toShow[nRow]}} <br>
-                                            {{notAss_lastUpdate_time_toShow[nRow]}}</td>
+                            <ng-container matColumnDef="receive_Date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    วันที่เข้ารับสินค้า </th>
+                                <td mat-cell *matCellDef="let row"> {{row.receive_Date}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="invoiceNum">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    INVOICE NO. </th>
+                                <td mat-cell *matCellDef="let row"> {{row.invoiceNum}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="agentNum">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    Agent </th>
+                                <td mat-cell *matCellDef="let row"> {{row.agentNum}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="bookingNum">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    Booking No. </th>
+                                <td mat-cell *matCellDef="let row"> {{row.bookingNum}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="pickUpAt">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    รับตู้ <br>
+                                    (Pick Up At) </th>
+                                <td mat-cell *matCellDef="let row"> {{row.pickUpAt}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="returnTo">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    คืนตู้ <br>
+                                    (Return To) </th>
+                                <td mat-cell *matCellDef="let row"> {{row.returnTo}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="closingDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    Closing Date </th>
+                                <td mat-cell *matCellDef="let row"> {{row.closingDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="closingTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    Closing Time </th>
+                                <td mat-cell *matCellDef="let row"> {{row.closingTime}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="etd_lcb">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    ETD LCB </th>
+                                <td mat-cell *matCellDef="let row"> {{row.etd_lcb}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="emptyConta">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    วันที่รับตู้เปล่า </th>
+                                <td mat-cell *matCellDef="let row"> {{row.emptyConta}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="containerNum">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    Container No. </th>
+                                <td mat-cell *matCellDef="let row"> {{row.containerNum}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="sealNum">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    Seal No. </th>
+                                <td mat-cell *matCellDef="let row"> {{row.sealNum}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="vgmTare">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="width:10rem;">
+                                    น้ำหนักตู้เปล่า <br>
+                                    (VGM Tare) </th>
+                                <td mat-cell *matCellDef="let row"> {{row.vgmTare}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="containerSize">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    Container Size </th>
+                                <td mat-cell *matCellDef="let row"> {{row.containerSize}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="returnDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    วันที่คืนตู้หนัก </th>
+                                <td mat-cell *matCellDef="let row"> {{row.returnDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Remarks">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    วันที่คืนตู้หนัก </th>
+                                <td mat-cell *matCellDef="let row"> {{row.Remarks}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="latestTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    เวลาบันทึกล่าสุด </th>
+                                <td mat-cell *matCellDef="let row"> {{row.latestTime}} </td>
+                            </ng-container>
 
 
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </ng-container>
-                    </ng-container>
-                </div>
+                        </table>
+                    </div>
+                </ng-container>
             </div>
         </div>
     </section>

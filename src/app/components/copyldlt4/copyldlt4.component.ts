@@ -4,6 +4,7 @@ import { MatSelectChange, MatDatepickerInputEvent, MatTableDataSource, MatPagina
 import { MatSort } from '@angular/material/sort';
 import * as Type from 'src/models/VariablesType';
 import * as moment from 'moment';
+import { splitAtColon } from '@angular/compiler/src/util';
 
 export interface searchwith {
   value: string;
@@ -51,7 +52,17 @@ export class Copyldlt4Component implements OnInit {
     { value: "sealNo", viewValue: "Seal No." },
   ];
 
+  //--------------------- matTable
+  displayedColumns = ["nRow", "receive_Date", "invoiceNum", "agentNum", "bookingNum", "pickUpAt", "returnTo", "closingDate", "closingTime",
+    "etd_lcb", "emptyConta", "containerNum", "sealNum", "vgmTare", "containerSize", "returnDate", "Remarks", "latestTime"];
+  dataSource: MatTableDataSource<UserData>;
 
+  displayedColumns2 = ["nRow", "receive_Date", "invoiceNum", "agentNum", "bookingNum", "pickUpAt", "returnTo", "closingDate", "closingTime",
+    "etd_lcb", "emptyConta", "containerNum", "sealNum", "vgmTare", "containerSize", "returnDate", "Remarks", "latestTime"];
+  dataSource2: MatTableDataSource<UserData2>;
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort; 
 
 
   //-------------api get carrier
@@ -447,149 +458,383 @@ export class Copyldlt4Component implements OnInit {
   getResponseTable() {
 
     //------------------------- table of assignCon
-    if (this.GetResProcessSearchConReg.message == "OK") {
-      if (this.GetResProcessSearchConReg.result.length > 1) {
-        for (let i = 0; i < this.GetResProcessSearchConReg.result.length; i++) {
-          this.closing_time[i] = this.GetResProcessSearchConReg.result[i].closing_datetime;
+    if (this.GetResProcessSearchConReg != null) {
+      if (this.GetResProcessSearchConReg.message == "OK") {
+        if (this.GetResProcessSearchConReg.result.length > 1) {
+          const users: UserData[] = [];
+          for (let i = 0; i < this.GetResProcessSearchConReg.result.length; i++) {
 
-          let loading = this.GetResProcessSearchConReg.result[i].loading_date;
-          if (loading != null) {
-            let loading1 = loading.toString().split("T");
-            this.RegCon_load_date_toShow[i] = loading1[0];
+            users.push(createNewRow(i, this.GetResProcessSearchConReg.result[i]));
+
+            this.closing_time[i] = this.GetResProcessSearchConReg.result[i].closing_datetime;
+
+            let loading = this.GetResProcessSearchConReg.result[i].loading_date;
+            if (loading != null) {
+              let loading1 = loading.toString().split("T");
+              this.RegCon_load_date_toShow[i] = loading1[0];
+
+            }
+            else {
+              this.RegCon_load_date_toShow[i] = null;
+
+            }
+            let closing = this.GetResProcessSearchConReg.result[i].closing_datetime;
+            if (closing != null) {
+              let closing1 = closing.toString().split("T");
+              this.RegCon_close_date_toShow[i] = closing1[0];
+              this.RegCon_close_time_toShow[i] = closing1[1];
+            }
+            else {
+              this.RegCon_close_date_toShow[i] = null;
+              this.RegCon_close_time_toShow[i] = null;
+            }
+
+            let receive = this.GetResProcessSearchConReg.result[i].recieve_date;
+            if (receive != null) {
+              let receive1 = receive.toString().split("T");
+              this.RegCon_receieveDate_toShow[i] = receive1[0];
+            }
+            else {
+              this.RegCon_receieveDate_toShow = null;
+            }
+
+            let etd = this.GetResProcessSearchConReg.result[i].etd_lcb;
+            if (etd != null) {
+              let etd1 = etd.toString().split("T");
+              this.RegCon_etd_date_toShow[i] = etd1[0];
+            }
+            else {
+              this.RegCon_etd_date_toShow[i] = null;
+            }
+
+
+            let return1 = this.GetResProcessSearchConReg.result[i].return_date;
+            if (return1 != null) {
+              let return11 = return1.toString().split("T");
+              this.RegCon_returnDate_toShow[i] = return11[0];
+            }
+            else {
+              this.RegCon_returnDate_toShow[i] = null;
+            }
+
+            let last = this.GetResProcessSearchConReg.result[i].last_update_datetime;
+            if (last != null) {
+              let last1 = last.toString().split("T");
+              this.RegCon_lastUpdate_date_toShow[i] = last1[0];
+              this.RegCon_lastUpdate_time_toShow[i] = last1[1];
+            }
+            else {
+              this.RegCon_lastUpdate_date_toShow[i] = null;
+              this.RegCon_lastUpdate_time_toShow[i] = null;
+            }
 
           }
-          else {
-            this.RegCon_load_date_toShow[i] = null;
 
-          }
-          let closing = this.GetResProcessSearchConReg.result[i].closing_datetime;
-          if (closing != null) {
-            let closing1 = closing.toString().split("T");
-            this.RegCon_close_date_toShow[i] = closing1[0];
-            this.RegCon_close_time_toShow[i] = closing1[1];
-          }
-          else {
-            this.RegCon_close_date_toShow[i] = null;
-            this.RegCon_close_time_toShow[i] = null;
-          }
-
-          let receive = this.GetResProcessSearchConReg.result[i].recieve_date;
-          if (receive != null) {
-            let receive1 = receive.toString().split("T");
-            this.RegCon_receieveDate_toShow[i] = receive1[0];
-          }
-          else {
-            this.RegCon_receieveDate_toShow = null;
-          }
-
-          let etd = this.GetResProcessSearchConReg.result[i].etd_lcb;
-          if (etd != null) {
-            let etd1 = etd.toString().split("T");
-            this.RegCon_etd_date_toShow[i] = etd1[0];
-          }
-          else {
-            this.RegCon_etd_date_toShow[i] = null;
-          }
-
-
-          let return1 = this.GetResProcessSearchConReg.result[i].return_date;
-          if (return1 != null) {
-            let return11 = return1.toString().split("T");
-            this.RegCon_returnDate_toShow[i] = return11[0];
-          }
-          else {
-            this.RegCon_returnDate_toShow[i] = null;
-          }
-
-          let last = this.GetResProcessSearchConReg.result[i].last_update_datetime;
-          if (last != null) {
-            let last1 = last.toString().split("T");
-            this.RegCon_lastUpdate_date_toShow[i] = last1[0];
-            this.RegCon_lastUpdate_time_toShow[i] = last1[1];
-          }
-          else {
-            this.RegCon_lastUpdate_date_toShow[i] = null;
-            this.RegCon_lastUpdate_time_toShow[i] = null;
-          }
-
+          this.dataSource = new MatTableDataSource(users);
         }
+
       }
 
-    }
 
+    }
 
     //------------------------- table of NotAssignCon
-    if (this.GetResProcessSearchConNotAssign.message == "OK") {
-      if (this.GetResProcessSearchConNotAssign.result.length > 1) {
-        for (let i = 0; i < this.GetResProcessSearchConNotAssign.result.length; i++) {
-          this.closing_time_notAssign[i] = this.GetResProcessSearchConNotAssign.result[i].closing_datetime;
+    if (this.GetResProcessSearchConNotAssign != null) {
+      if (this.GetResProcessSearchConNotAssign.message == "OK") {
+        if (this.GetResProcessSearchConNotAssign.result.length > 1) {
+          const users1: UserData2[] = [];
+          
+          for (let i = 0; i < this.GetResProcessSearchConNotAssign.result.length; i++) {
+            this.closing_time_notAssign[i] = this.GetResProcessSearchConNotAssign.result[i].closing_datetime;
+            users1.push(createNewRow2(i, this.GetResProcessSearchConNotAssign.result[i]));
 
-          let loadDate = this.GetResProcessSearchConNotAssign.result[i].loading_date;
-          if (loadDate != null) {
-            let loadDate1 = loadDate.toString().split("T");
-            this.loading_date_NotAssign_toShow[i] = loadDate1[0];
-          }
-          else {
-            this.loading_date_NotAssign_toShow[i] = null;
-          }
-          let receiveDate = this.GetResProcessSearchConNotAssign.result[i].recieve_date;
-          if (receiveDate != null) {
-            let receiveDate1 = receiveDate.toString().split("T");
-            this.notAss_receiveDate_toShow[i] = receiveDate1[0];
-          }
-          else {
-            this.notAss_receiveDate_toShow[i] = null;
+            let loadDate = this.GetResProcessSearchConNotAssign.result[i].loading_date;
+            if (loadDate != null) {
+              let loadDate1 = loadDate.toString().split("T");
+              this.loading_date_NotAssign_toShow[i] = loadDate1[0];
+            }
+            else {
+              this.loading_date_NotAssign_toShow[i] = null;
+            }
+            let receiveDate = this.GetResProcessSearchConNotAssign.result[i].recieve_date;
+            if (receiveDate != null) {
+              let receiveDate1 = receiveDate.toString().split("T");
+              this.notAss_receiveDate_toShow[i] = receiveDate1[0];
+            }
+            else {
+              this.notAss_receiveDate_toShow[i] = null;
 
-          }
+            }
 
-          let returnDate = this.GetResProcessSearchConNotAssign.result[i].return_date;
-          if (returnDate != null) {
-            let returnDate1 = returnDate.toString().split("T");
-            this.notAss_returnDate_toShow[i] = returnDate1[0];
-          }
-          else {
-            this.notAss_returnDate_toShow[i] = null;
-          }
-
-
-
-          let clos_dat_not = this.closing_time_notAssign[i];
-          if (clos_dat_not != null) {
-            let clos_dat_not1 = clos_dat_not.toString().split("T");
-            this.closing_date_notAssign_toShow[i] = clos_dat_not1[0];
-            this.closing_time_notAssign_toShow[i] = clos_dat_not1[1];
-          }
-          else {
-            this.closing_date_notAssign_toShow[i] = null;
-            this.closing_time_notAssign_toShow[i] = null;
-          }
-
-          let etd = this.GetResProcessSearchConNotAssign.result[i].etd_lcb;
-          if (etd != null) {
-            let etd1 = etd.toString().split("T");
-            this.notAss_etd_date_toShow[i] = etd1[0];
-          }
-          else {
-            this.notAss_etd_date_toShow[i] = null;
-
-          }
+            let returnDate = this.GetResProcessSearchConNotAssign.result[i].return_date;
+            if (returnDate != null) {
+              let returnDate1 = returnDate.toString().split("T");
+              this.notAss_returnDate_toShow[i] = returnDate1[0];
+            }
+            else {
+              this.notAss_returnDate_toShow[i] = null;
+            }
 
 
-          let last_update = this.GetResProcessSearchConNotAssign.result[i].last_update_datetime;
-          if (last_update != null) {
-            let last_update1 = last_update.toString().split("T");
-            this.notAss_lastUpdate_date_toShow[i] = last_update1[0];
-            this.notAss_lastUpdate_time_toShow[i] = last_update1[1];
+
+            let clos_dat_not = this.closing_time_notAssign[i];
+            if (clos_dat_not != null) {
+              let clos_dat_not1 = clos_dat_not.toString().split("T");
+              this.closing_date_notAssign_toShow[i] = clos_dat_not1[0];
+              this.closing_time_notAssign_toShow[i] = clos_dat_not1[1];
+            }
+            else {
+              this.closing_date_notAssign_toShow[i] = null;
+              this.closing_time_notAssign_toShow[i] = null;
+            }
+
+            let etd = this.GetResProcessSearchConNotAssign.result[i].etd_lcb;
+            if (etd != null) {
+              let etd1 = etd.toString().split("T");
+              this.notAss_etd_date_toShow[i] = etd1[0];
+            }
+            else {
+              this.notAss_etd_date_toShow[i] = null;
+
+            }
+
+
+            let last_update = this.GetResProcessSearchConNotAssign.result[i].last_update_datetime;
+            if (last_update != null) {
+              let last_update1 = last_update.toString().split("T");
+              this.notAss_lastUpdate_date_toShow[i] = last_update1[0];
+              this.notAss_lastUpdate_time_toShow[i] = last_update1[1];
+            }
+            else {
+              this.notAss_lastUpdate_date_toShow[i] = null;
+              this.notAss_lastUpdate_time_toShow[i] = null;
+            }
+
           }
-          else {
-            this.notAss_lastUpdate_date_toShow[i] = null;
-            this.notAss_lastUpdate_time_toShow[i] = null;
-          }
+
+          this.dataSource2 = new MatTableDataSource(users1);
+          console.log("====================NOT ASSIGN", this.dataSource2)
+
 
         }
       }
     }
 
+
   }
+
+}
+
+
+function createNewRow(j: number, data): UserData {
+  let loadingShow, closing_date, closing_time, returnShow, etdShow, receDate, updateShow;
+  if (data.loading_date != null) {
+
+    let recieve1 = data.loading_date.split("T");
+    let receivetime = recieve1[1].split(":");
+    loadingShow = moment(data.loading_date).format("DD/MM/YYYY") + "\n" + receivetime[0] + ":" + receivetime[1];
+  } else {
+    loadingShow = "";
+  }
+
+  if (data.closing_datetime != null) {
+    let close = data.closing_datetime.split("T");
+    let closetime = close[1].split(":");
+    closing_date = close[0];
+    closing_time = closetime[0] + ":" + closetime[1];
+  }
+  else {
+    closing_date = "";
+    closing_time = "";
+  }
+
+  if (data.return_date != null) {
+
+    let rett = data.return_date.split("T");
+    let rettTime = rett[1].split(":")
+    returnShow = rett[0];
+  } else {
+    returnShow = "";
+  }
+
+  if (data.etd_lcb != null) {
+    let etdd = data.etd_lcb.split("T");
+    let etdd1 = etdd[1].split(":");
+    etdShow = etdd[0] + "\n" + etdd1[0] + ":" + etdd1[1];
+
+  } else {
+    etdShow = "";
+
+  }
+
+  if (data.recieve_date != null) {
+    let rec = data.recieve_date.split("T");
+    let rec11 = rec[1].split(":");
+    receDate = rec[0] + "\n" + rec11[0] + ":" + rec11[1];
+  } else {
+    receDate = "";
+  }
+
+  if (data.last_update_datetime != null) {
+    let upd = data.last_update_datetime.split("T");
+    let upd11 = upd[1].split(":");
+    updateShow = upd[0] + "\n" + upd11[0] + ":" + upd11[1];
+
+  } else {
+    updateShow = "";
+  }
+
+
+  return {
+
+    nRow: j + 1,
+
+    receive_Date: loadingShow,
+    invoiceNum: data.invoice_no_text,
+    agentNum: data.agent_container_code,
+    bookingNum: data.booinkg_No_text,
+    pickUpAt: data.pickup_at_name,
+    returnTo: data.pickup_return_code,
+    closingDate: closing_date,
+    closingTime: closing_time,
+    etd_lcb: etdShow,
+    emptyConta: receDate,
+    containerNum: data.container_No,
+    sealNum: data.seal_No,
+    vgmTare: data.vgM_Tare,
+    containerSize: data.size_container,
+    returnDate: returnShow,
+    Remarks: "-",
+    latestTime: updateShow,
+
+  };
+}
+
+function createNewRow2(j: number, data): UserData2 {
+
+  console.log("_________________CREATE NEW ROW2:", data)
+  let loadingShow, closing_date, closing_time, returnShow, etdShow, receDate, updateShow;
+  if (data.loading_date != null) {
+
+    let recieve1 = data.loading_date.split("T");
+    let receivetime = recieve1[1].split(":");
+    loadingShow = moment(data.loading_date).format("DD/MM/YYYY") + "\n" + receivetime[0] + ":" + receivetime[1];
+  } else {
+    loadingShow = "";
+  }
+
+  if (data.closing_datetime != null) {
+    let close = data.closing_datetime.split("T");
+    let closetime = close[1].split(":");
+    closing_date = close[0];
+    closing_time = closetime[0] + ":" + closetime[1];
+  }
+  else {
+    closing_date = "";
+    closing_time = "";
+  }
+
+  if (data.return_date != null) {
+
+    let rett = data.return_date.split("T");
+    let rettTime = rett[1].split(":")
+    returnShow = rett[0];
+  } else {
+    returnShow = "";
+  }
+
+  if (data.etd_lcb != null) {
+    let etdd = data.etd_lcb.split("T");
+    let etdd1 = etdd[1].split(":");
+    etdShow = etdd[0] + "\n" + etdd1[0] + ":" + etdd1[1];
+
+  } else {
+    etdShow = "";
+
+  }
+
+  if (data.recieve_date != null) {
+    let rec = data.recieve_date.split("T");
+    let rec11 = rec[1].split(":");
+    receDate = rec[0] + "\n" + rec11[0] + ":" + rec11[1];
+  } else {
+    receDate = "";
+  }
+
+  if (data.last_update_datetime != null) {
+    let upd = data.last_update_datetime.split("T");
+    let upd11 = upd[1].split(":");
+    updateShow = upd[0] + "\n" + upd11[0] + ":" + upd11[1];
+
+  } else {
+    updateShow = "";
+  }
+
+
+  return {
+
+    nRow: j + 1,
+    receive_Date: loadingShow,
+    invoiceNum: data.invoice_no_text,
+    agentNum: data.agent_container_code,
+    bookingNum: data.booinkg_No_text,
+    pickUpAt: data.pickup_at_name,
+    returnTo: data.pickup_return_code,
+    closingDate: closing_date,
+    closingTime: closing_time,
+    etd_lcb: etdShow,
+    emptyConta: receDate,
+    containerNum: data.container_No,
+    sealNum: data.seal_No,
+    vgmTare: data.vgM_Tare,
+    containerSize: data.size_container,
+    returnDate: returnShow,
+    Remarks: "-",
+    latestTime: updateShow,
+
+  };
+}
+
+export interface UserData {
+  nRow: number
+  receive_Date: any
+  invoiceNum: string
+  agentNum: string
+  bookingNum: string
+  pickUpAt: string
+  returnTo: string
+  closingDate: string
+  closingTime: string
+  etd_lcb: string
+  emptyConta: string
+  containerNum: string
+  sealNum: string
+  vgmTare: string
+  containerSize: string
+  returnDate: string
+  Remarks: string
+  latestTime: string
+
+}
+
+export interface UserData2 {
+  nRow: number
+  receive_Date: any
+  invoiceNum: string
+  agentNum: string
+  bookingNum: string
+  pickUpAt: string
+  returnTo: string
+  closingDate: string
+  closingTime: string
+  etd_lcb: string
+  emptyConta: string
+  containerNum: string
+  sealNum: string
+  vgmTare: string
+  containerSize: string
+  returnDate: string
+  Remarks: string
+  latestTime: string
 
 }

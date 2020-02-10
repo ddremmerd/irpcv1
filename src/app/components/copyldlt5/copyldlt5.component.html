@@ -1,0 +1,226 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<app-footer></app-footer>
+<div class="content-wrapper">
+    <section class="content" style="padding: 10px;">
+        <div class="card">
+            <div class="card-body" style="font-size: 20px;">
+                <app-content-header [ContentHeader]="content_header_name"></app-content-header>
+
+                <div class="row">
+                    <!-- <br> -->
+                    <div style="padding-left: 20px; max-width: 100%;">
+                        <table>
+                            <tr>
+                                <td style="padding: 5px;">ประเภทงาน:</td>
+                                <td style="padding: 5px;">ผู้ขนส่ง:</td>
+                                <td style="padding: 5px;">สถานะรถ:</td>
+                                <td style="padding: 5px;"></td>
+                                <td style="padding: 5px;"></td>
+                                <td style="padding: 5px;"></td>
+
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 5px;">
+                                    <!-- <mat-form-field style="width:100%;">
+                                        <mat-select [formControl]="ShipType" multiple>
+                                            <mat-option *ngFor="let ship of shipTypeList" [value]="ship">{{ship}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field> -->
+
+                                    <mat-form-field style="widows: 100%;">
+                                        <mat-select [formControl]="ShipType2" multiple>
+                                            <ng-container *ngIf="getShipmentType != undefined">
+                                                <ng-container *ngIf="getShipmentType.message =='OK'">
+                                                    <mat-option *ngFor="let ship of getShipmentType.result"
+                                                        [value]="ship.shipmenttypeid">{{ship.description}}
+                                                    </mat-option>
+                                                </ng-container>
+                                            </ng-container>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+
+                                <td style="padding: 5px;">
+                                    <mat-form-field style="width:100%;">
+                                        <mat-select [formControl]="transportName" multiple>
+                                            <ng-container *ngIf="getCarrier != undefined">
+                                                <ng-container *ngIf="getCarrier.message =='OK'">
+                                                    <mat-option *ngFor="let transName of getCarrier.result"
+                                                        [value]="transName.carrierid">
+                                                        {{transName.name}}
+                                                    </mat-option>
+                                                </ng-container>
+                                            </ng-container>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+
+                                <td style="padding: 5px;">
+                                    <mat-form-field style="width:100%;">
+                                        <mat-select [formControl]="tranStatus" multiple>
+                                            <mat-option *ngFor="let transtat of tranStatusList"
+                                                [value]="transtat.value">
+                                                {{transtat.show}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+
+                                <td style="padding: 5px;">
+                                    <mat-form-field class="example-full-width"
+                                        style="width:100%; display: inline-block;">
+                                        <input matInput placeholder="Shipment No." [formControl]="shipNum">
+                                    </mat-form-field>
+                                </td>
+
+                                <td style="padding: 5px;">
+                                    <mat-form-field class="example-full-width"
+                                        style="width:100%; display: inline-block;">
+                                        <input matInput placeholder="License No." [formControl]="licenseNum">
+                                    </mat-form-field>
+                                </td>
+
+                                <td style="padding: 5px; padding-bottom: 30px;">
+                                    <app-find-button style="width: rem;" class="d-inline-block"
+                                        (click)="datatoSearch()">
+                                    </app-find-button>
+                                </td>
+
+
+                            </tr>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- table and gmap section -->
+            <div class="card-body" style="font-size: 20px;">
+                <div class="row">
+
+                    <div class="col-lg-4">
+                        <div class="card-body pad" style="height: 600px;">
+
+                            <ng-container *ngIf="getResProTruckTrack != undefined">
+                                <ng-container *ngIf="getResProTruckTrack.message == 'OK'">
+                                    <div class="example-container mat-elevation-z8">
+                                        <table mat-table [dataSource]="dataSource" matSort style="font-size: 30px;">
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;" (click)="showLocation(i)"></tr>
+
+                                            <ng-container matColumnDef="nRow">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                                    No. </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.nRow}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="shipNum">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                                    Shipemnt No. </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.shipNum}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="carStatus">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                                    สถานะรถ </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.carStatus}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="carrier">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                                    ผู้ขนส่ง </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.carrier}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="carLicense">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                                    ทะเบียนรถ </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.carLicense}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="driverName">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                                    ชื่อสกุล </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.driverName}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="carInFacZone">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                                    รถเข้าโซนโรงงาน </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.carInFacZone}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="carInFac">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                                    รถเข้าโรงงาน </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.carInFac}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="carDepart">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                                    รถออก </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.carDepart}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="carArriveFeed">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                                    รถถึง Feed </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.carArriveFeed}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="carArrivCus">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                                    รถถึงลูกค้า </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.carArrivCus}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="carInLate">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                                    รถเข้าสาย </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.carInLate}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="carArriveLate">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                                    รถถึงลูกค้าสาย </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.carArriveLate}} </td>
+                                            </ng-container>
+
+                                        </table>
+                                    </div>
+
+                                </ng-container>
+                            </ng-container>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-8" style="background-color: rgb(61, 146, 101); height: 600px;">
+                        LIOOOONNN KINGGGF
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+</div>

@@ -73,6 +73,8 @@ import { TimePickerComponent } from './components/time-picker/time-picker.compon
 import { DialogBoxComponent } from './components/dialog-box/dialog-box.component';
 import { Copyldlt3Component } from './components/copyldlt3/copyldlt3.component';
 import { Copyldlt4Component } from './components/copyldlt4/copyldlt4.component';
+import { Copyldlt1Component } from './components/copyldlt1/copyldlt1.component';
+import { Copyldlt5Component } from './components/copyldlt5/copyldlt5.component';
 
 
 const appRoutes: Routes = [
@@ -88,6 +90,9 @@ const appRoutes: Routes = [
   { path: 'ldlt11', component: Ldlt11Component },
   { path: 'copyldlt3', component: Copyldlt3Component },
   { path: 'copyldlt4', component: Copyldlt4Component },
+  { path: 'copyldlt1', component: Copyldlt1Component },
+  { path: 'copyldlt5', component: Copyldlt5Component },
+
 
 
 
@@ -150,6 +155,8 @@ export const MY_FORMATS = {
     DialogBoxComponent,
     Copyldlt3Component,
     Copyldlt4Component,
+    Copyldlt1Component,
+    Copyldlt5Component,
 
 
 

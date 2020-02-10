@@ -1,5 +1,6 @@
 .example-container {
-    height: 500px;
+    height: 550px;
+    width: 350px;
     overflow: auto;
   }
   
@@ -8,6 +9,7 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
     width: 2rem; 
     font-size: 20px;
     text-align: center;
+    padding: 20px;
     /* border: 1px solid black; */
     /* background-color: red; */
 
@@ -19,6 +21,8 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
 td.mat-cell, td.mat-footer-cell, th.mat-header-cell{
     width: 10rem;
     font-size: 20px;
+    padding: 10px;
+
     text-align: center;
     font-weight: bold;
 
