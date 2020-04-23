@@ -12,10 +12,6 @@
                             <tr>
                                 <td style="padding-left: 20px; padding-bottom: 0%;">ประเภทงาน:</td>
                                 <td style="padding-left: 20px; padding-bottom: 0%;">
-                                    <!-- <app-dropdown [options]="AllAgentOptions" [selectValue]="SelectedAgent"
-                                        [ddName]="'agent'" (SelectedDdValue)="SelectedToSearch($event)">
-                                    </app-dropdown> -->
-
                                     <mat-form-field style="padding-bottom: 0%; width: 10rem;">
                                         <mat-select [formControl]="ShipType">
                                             <ng-container *ngIf="getShipType != undefined">
@@ -162,508 +158,510 @@
 
         <div class="card" style="font-size: 20px;">
             <div style="padding: 20px; width: 40%;">
-                <form class="example-form">
-                    <mat-form-field class="example-full-width" style="width:70%">
-                        <input matInput placeholder="Shipment No., Booking No., ทะเบียนรถ" value=""
-                            [(ngModel)]="search1" [formControl]="searchkeyword">
 
-                    </mat-form-field>
-                    <mat-icon matDatepickerToggleIcon>search</mat-icon>
-
-                </form>
             </div>
+            <div class="card-body">
 
-            <ng-container *ngIf="statuToShow =='Create Shipment'">
-                <ng-container *ngIf="getResProSearchCarQuota != undefined">
-                    <ng-container *ngIf="getResProSearchCarQuota.message =='OK'">
-                        <div class="example-container mat-elevation-z8">
-                            <table mat-table [dataSource]="dataSource" matSort style="font-size: 30px;">
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <mat-form-field>
+                    <mat-label>Shipment No., Booking No., ทะเบียนรถ</mat-label>
+                    <input matInput (keyup)="applyFilter($event)">
+                </mat-form-field>
+                <mat-icon matDatepickerToggleIcon>search</mat-icon>
 
-                                <ng-container matColumnDef="nRow">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        No. </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.nRow}} </td>
-                                </ng-container>
 
-                                <ng-container matColumnDef="shipNum">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Shipment No. </th>
+                <ng-container *ngIf="statuToShow =='Create Shipment'">
+                    <ng-container *ngIf="getResProSearchCarQuota != undefined">
+                        <ng-container *ngIf="getResProSearchCarQuota.message =='OK'">
+                            <div class="example-container mat-elevation-z8">
+                                <table mat-table [dataSource]="dataSource" matSort style="font-size: 30px;">
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-                                    <td mat-cell *matCellDef="let row"> {{row.shipNum}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="nRow">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            No. </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.nRow}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="deliveryNum">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Delivery No. </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.deliveryNum}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="shipNum">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Shipment No. </th>
 
-                                <ng-container matColumnDef="invoiceNum">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Invoice No. </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.invoiceNum}} </td>
-                                </ng-container>
+                                        <td mat-cell *matCellDef="let row"> {{row.shipNum}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="bookingNum">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Booking No. </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.bookingNum}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="deliveryNum">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Delivery No. </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.deliveryNum}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="closingTime">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Closing Time</th>
-                                    <td mat-cell *matCellDef="let row"> {{row.closingTime}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="invoiceNum">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Invoice No. </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.invoiceNum}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="grade">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Grade</th>
-                                    <td mat-cell *matCellDef="let row"> {{row.grade}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="bookingNum">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Booking No. </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.bookingNum}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="quant_kg">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Qty </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.quant_kg}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="closingTime">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Closing Time</th>
+                                        <td mat-cell *matCellDef="let row"> {{row.closingTime}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="truckLoad">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Truck Load </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.truckLoad}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="grade">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Grade</th>
+                                        <td mat-cell *matCellDef="let row"> {{row.grade}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="CarType">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        ประเภทรถ </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        <ng-container *ngIf="AllVehicleOption.length > 0">
-                                            <app-dropdown [options]="AllVehicleOption"
-                                                [selectValue]="SelectedVehicleGroup[i]" [ddName]="'vehicleGroup'"
-                                                [index_row]="i"
-                                                (SelectedDdValue)="SelectedToSearch($event); SelectedVHC($event,i)">
-                                            </app-dropdown>
-                                        </ng-container>
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="quant_kg">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Qty </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.quant_kg}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="shipmentTail">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Shipment (หาง) </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        <mat-form-field>
-                                            <mat-select [disabled]="bt_save[i]"
-                                                (selectionChange)="selectedShipLink($event,i)">
-                                                <ng-container *ngIf="getResProSearchCarQuota.result[i] != undefined">
-                                                    <ng-container *ngIf="shipLinkOption != undefined">
-                                                        <mat-option *ngFor="let shiplink of shipLinkOption"
-                                                            [value]="shiplink">
-                                                            {{shiplink.shipment_No}}
-                                                        </mat-option>
+                                    <ng-container matColumnDef="truckLoad">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Truck Load </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.truckLoad}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="CarType">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            ประเภทรถ </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            <ng-container *ngIf="AllVehicleOption.length > 0">
+                                                <app-dropdown [options]="AllVehicleOption"
+                                                    [selectValue]="SelectedVehicleGroup[i]" [ddName]="'vehicleGroup'"
+                                                    [index_row]="i"
+                                                    (SelectedDdValue)="SelectedToSearch($event); SelectedVHC($event,i)">
+                                                </app-dropdown>
+                                            </ng-container>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="shipmentTail">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            Shipment (หาง) </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            <mat-form-field>
+                                                <mat-select [disabled]="bt_save[i]"
+                                                    (selectionChange)="selectedShipLink($event,i)">
+                                                    <ng-container
+                                                        *ngIf="getResProSearchCarQuota.result[i] != undefined">
+                                                        <ng-container *ngIf="shipLinkOption != undefined">
+                                                            <mat-option *ngFor="let shiplink of shipLinkOption"
+                                                                [value]="shiplink">
+                                                                {{shiplink.shipment_No}}
+                                                            </mat-option>
+                                                        </ng-container>
                                                     </ng-container>
-                                                </ng-container>
-                                            </mat-select>
-                                        </mat-form-field>
+                                                </mat-select>
+                                            </mat-form-field>
 
-                                    </td>
-                                </ng-container>
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="isUrgent">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        รถตีด่วน </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        <ng-container *ngIf="AllIsStatOption.length > 0">
-                                            <app-dropdown [options]="AllIsStatOption" [selectValue]="SelectedYesNo[i]"
-                                                [ddName]="'UrgentCar'" [index_row]="i"
-                                                (SelectedDdValue)="SelectedToSearch($event)">
-                                            </app-dropdown>
-                                        </ng-container>
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="isUrgent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            รถตีด่วน </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            <ng-container *ngIf="AllIsStatOption.length > 0">
+                                                <app-dropdown [options]="AllIsStatOption"
+                                                    [selectValue]="SelectedYesNo[i]" [ddName]="'UrgentCar'"
+                                                    [index_row]="i" (SelectedDdValue)="SelectedToSearch($event)">
+                                                </app-dropdown>
+                                            </ng-container>
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="reqEquip">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        ต้องการอุปกรณ์ </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        <ng-container *ngIf="AllReqEquipOptions.length > 0">
-                                            <app-dropdown [options]="AllReqEquipOptions"
-                                                [selectValue]="SelectedReqEquip[i]" [ddName]="'ReqEquip'"
-                                                [index_row]="i" (SelectedDdValue)="SelectedToSearch($event)">
-                                            </app-dropdown>
-                                        </ng-container>
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="reqEquip">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            ต้องการอุปกรณ์ </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            <ng-container *ngIf="AllReqEquipOptions.length > 0">
+                                                <app-dropdown [options]="AllReqEquipOptions"
+                                                    [selectValue]="SelectedReqEquip[i]" [ddName]="'ReqEquip'"
+                                                    [index_row]="i" (SelectedDdValue)="SelectedToSearch($event)">
+                                                </app-dropdown>
+                                            </ng-container>
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="prodPack">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="width:10rem;">
-                                        คนบรรจุสินค้า</th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        <ng-container *ngIf="AllTypePackingOPtions.length > 0">
-                                            <app-dropdown [options]="AllTypePackingOPtions"
-                                                [selectValue]="SelectedTypePack[i]" [ddName]="'TypePacking'"
-                                                [index_row]="i" (SelectedDdValue)="SelectedToSearch($event)">
-                                            </app-dropdown>
-                                        </ng-container>
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="prodPack">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="width:10rem;">
+                                            คนบรรจุสินค้า</th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            <ng-container *ngIf="AllTypePackingOPtions.length > 0">
+                                                <app-dropdown [options]="AllTypePackingOPtions"
+                                                    [selectValue]="SelectedTypePack[i]" [ddName]="'TypePacking'"
+                                                    [index_row]="i" (SelectedDdValue)="SelectedToSearch($event)">
+                                                </app-dropdown>
+                                            </ng-container>
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="Remarks">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Remarks </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        <ng-container *ngIf="getResProSearchCarQuota.result[i].remark != null">
-                                            <button class="square_bt_enable btn-danger"
-                                                (click)="toggleRemark(i); toggleModal(i)"></button>
-                                        </ng-container>
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="Remarks">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Remarks </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            <ng-container *ngIf="getResProSearchCarQuota.result[i].remark != null">
+                                                <button class="square_bt_enable btn-danger"
+                                                    (click)="toggleModal(i)"></button>
+                                            </ng-container>
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="PickUpAt">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Pick Up At </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.PickUpAt}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="PickUpAt">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Pick Up At </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.PickUpAt}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="ReturnTo">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Return To </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.ReturnTo}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="ReturnTo">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Return To </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.ReturnTo}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="Route">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Route </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        <ng-container *ngIf="AllRouteOption.length > 0">
-                                            <app-dropdown [options]="AllRouteOption" [selectValue]="SelectedRoute[i]"
-                                                [ddName]="'route'" [index_row]="i"
-                                                (SelectedDdValue)="SelectedToSearch($event)">
-                                            </app-dropdown>
-                                        </ng-container>
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="Route">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            Route </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            <ng-container *ngIf="AllRouteOption.length > 0">
+                                                <app-dropdown [options]="AllRouteOption"
+                                                    [selectValue]="SelectedRoute[i]" [ddName]="'route'" [index_row]="i"
+                                                    (SelectedDdValue)="SelectedToSearch($event)">
+                                                </app-dropdown>
+                                            </ng-container>
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="isOutside">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        รับของข้างนอก </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        <ng-container *ngIf="AllIsStatOption.length > 0">
-                                            <app-dropdown [options]="AllIsStatOption" [selectValue]="SelectedYesNo[i]"
-                                                [ddName]="'isOutside'" [index_row]="i"
-                                                (SelectedDdValue)="SelectedToSearch($event)">
-                                            </app-dropdown>
-                                        </ng-container>
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="isOutside">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            รับของข้างนอก </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            <ng-container *ngIf="AllIsStatOption.length > 0">
+                                                <app-dropdown [options]="AllIsStatOption"
+                                                    [selectValue]="SelectedYesNo[i]" [ddName]="'isOutside'"
+                                                    [index_row]="i" (SelectedDdValue)="SelectedToSearch($event)">
+                                                </app-dropdown>
+                                            </ng-container>
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="workerNum">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        จำนวนคนงาน </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.workerNum}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="workerNum">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            จำนวนคนงาน </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.workerNum}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="planningDate">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Planning Date </th>
-                                    <td mat-cell *matCellDef="let row; let i =index;">
-                                        <app-date-picker (FindDateSelected)="GetDatePlanning($event,i)">
-                                        </app-date-picker>
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="planningDate">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            Planning Date </th>
+                                        <td mat-cell *matCellDef="let row; let i =index;">
+                                            <app-date-picker (FindDateSelected)="GetDatePlanning($event,i)">
+                                            </app-date-picker>
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="planningTime">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Planning Time </th>
-                                    <td mat-cell *matCellDef="let row; let i =index;">
-                                        <app-time-picker (SelectedTime)="GetTimeSelected($event)" [setDate]=""
-                                            [index_row]="i" [datepickName]="'planningTime'">
-                                        </app-time-picker>
+                                    <ng-container matColumnDef="planningTime">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            Planning Time </th>
+                                        <td mat-cell *matCellDef="let row; let i =index;">
+                                            <app-time-picker (SelectedTime)="GetTimeSelected($event)" [setDate]=""
+                                                [index_row]="i" [datepickName]="'planningTime'">
+                                            </app-time-picker>
 
-                                    </td>
-                                </ng-container>
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="carrier">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        ผู้ขนส่ง </th>
-                                    <td mat-cell *matCellDef="let row; let i =index;">
-                                        <mat-form-field>
-                                            <mat-select [formControl]="CarrierName1"
-                                                (selectionChange)="carrierQuota($event.value,i);">
-                                                <ng-container *ngIf="getCarrierName != undefined">
-                                                    <ng-container *ngIf="getCarrierName.message == 'OK'">
-                                                        <mat-option *ngFor="let transName of Carrier_Name"
-                                                            [value]="transName">
-                                                            {{transName}}
-                                                        </mat-option>
+                                    <ng-container matColumnDef="carrier">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            ผู้ขนส่ง </th>
+                                        <td mat-cell *matCellDef="let row; let i =index;">
+                                            <mat-form-field>
+                                                <mat-select [formControl]="CarrierName1"
+                                                    (selectionChange)="carrierQuota($event.value,i);">
+                                                    <ng-container *ngIf="getCarrierName != undefined">
+                                                        <ng-container *ngIf="getCarrierName.message == 'OK'">
+                                                            <mat-option *ngFor="let transName of Carrier_Name"
+                                                                [value]="transName">
+                                                                {{transName}}
+                                                            </mat-option>
+                                                        </ng-container>
                                                     </ng-container>
-                                                </ng-container>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </td>
-                                </ng-container>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="button">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                    </th>
-                                    <td mat-cell *matCellDef="let row; let i =index;">
-                                        <button type="button" class="btn btn-block btn-success btn-sm"
-                                            (click)="AssignVendor(i)">ส่ง
-                                            Quota</button>
-                                    </td>
-                                </ng-container>
-
+                                    <ng-container matColumnDef="button">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        </th>
+                                        <td mat-cell *matCellDef="let row; let i =index;">
+                                            <button type="button" class="btn btn-block btn-success btn-sm"
+                                                (click)="AssignVendor(i)">ส่ง
+                                                Quota</button>
+                                        </td>
+                                    </ng-container>
 
 
-                            </table>
-                        </div>
+
+                                </table>
+                            </div>
 
 
+                        </ng-container>
                     </ng-container>
                 </ng-container>
-            </ng-container>
 
-            <ng-container *ngIf="statuToShow =='Planning'">
-                <ng-container *ngIf="getResProSearchCarQuota != undefined">
-                    <ng-container *ngIf="getResProSearchCarQuota.message =='OK'">
-                        <div class="example-container mat-elevation-z8">
-                            <table mat-table [dataSource]="dataSource" matSort style="font-size: 30px;">
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <ng-container *ngIf="statuToShow =='Planning'">
+                    <ng-container *ngIf="getResProSearchCarQuota != undefined">
+                        <ng-container *ngIf="getResProSearchCarQuota.message =='OK'">
+                            <div class="example-container mat-elevation-z8">
+                                <table mat-table [dataSource]="dataSource" matSort style="font-size: 30px;">
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-                                <ng-container matColumnDef="nRow">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        No. </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.nRow}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="nRow">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            No. </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.nRow}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="shipNum">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Shipment No. </th>
+                                    <ng-container matColumnDef="shipNum">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Shipment No. </th>
 
-                                    <td mat-cell *matCellDef="let row"> {{row.shipNum}} </td>
-                                </ng-container>
+                                        <td mat-cell *matCellDef="let row"> {{row.shipNum}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="deliveryNum">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Delivery No. </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.deliveryNum}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="deliveryNum">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Delivery No. </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.deliveryNum}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="invoiceNum">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Invoice No. </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.invoiceNum}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="invoiceNum">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Invoice No. </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.invoiceNum}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="bookingNum">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Booking No. </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.bookingNum}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="bookingNum">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Booking No. </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.bookingNum}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="closingTime">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Closing Time</th>
-                                    <td mat-cell *matCellDef="let row"> {{row.closingTime}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="closingTime">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Closing Time</th>
+                                        <td mat-cell *matCellDef="let row"> {{row.closingTime}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="grade">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Grade</th>
-                                    <td mat-cell *matCellDef="let row"> {{row.grade}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="grade">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Grade</th>
+                                        <td mat-cell *matCellDef="let row"> {{row.grade}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="quant_kg">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Qty </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.quant_kg}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="quant_kg">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Qty </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.quant_kg}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="truckLoad">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Truck Load </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.truckLoad}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="truckLoad">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Truck Load </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.truckLoad}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="CarType">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        ประเภทรถ </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        {{row.CarType}}
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="CarType">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            ประเภทรถ </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            {{row.CarType}}
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="shipmentTail">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Shipment (หาง) </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        {{row.shipmentTail}}
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="shipmentTail">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            Shipment (หาง) </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            {{row.shipmentTail}}
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="isUrgent">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        รถตีด่วน </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        {{row.isUrgent}}
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="isUrgent">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            รถตีด่วน </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            {{row.isUrgent}}
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="reqEquip">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        ต้องการอุปกรณ์ </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        {{row.reqEquip}}
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="reqEquip">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            ต้องการอุปกรณ์ </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            {{row.reqEquip}}
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="prodPack">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="width:10rem;">
-                                        คนบรรจุสินค้า</th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        {{row.prodPack}}
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="prodPack">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="width:10rem;">
+                                            คนบรรจุสินค้า</th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            {{row.prodPack}}
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="Remarks">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Remarks </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        <ng-container *ngIf="getResProSearchCarQuota.result[i].remark != null">
-                                            <button class="square_bt_enable btn-danger"
-                                                (click)="toggleRemark(i); toggleModal(i)"></button>
-                                        </ng-container>
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="Remarks">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Remarks </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            <ng-container *ngIf="getResProSearchCarQuota.result[i].remark != null">
+                                                <button class="square_bt_enable btn-danger"
+                                                    (click)="toggleModal(i)"></button>
+                                            </ng-container>
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="PickUpAt">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Pick Up At </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.PickUpAt}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="PickUpAt">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Pick Up At </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.PickUpAt}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="ReturnTo">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Return To </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.ReturnTo}} </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="ReturnTo">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            Return To </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.ReturnTo}} </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="Route">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Route </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        {{row.Route}}
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="Route">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            Route </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            {{row.Route}}
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="isOutside">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        รับของข้างนอก </th>
-                                    <td mat-cell *matCellDef="let row; let i = index;">
-                                        {{row.isOutside}}
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="isOutside">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            รับของข้างนอก </th>
+                                        <td mat-cell *matCellDef="let row; let i = index;">
+                                            {{row.isOutside}}
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="workerNum">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        จำนวนคนงาน </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.workerNum}}</td>
-                                </ng-container>
+                                    <ng-container matColumnDef="workerNum">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                            จำนวนคนงาน </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.workerNum}}</td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="planningDate">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Planning Date </th>
-                                    <td mat-cell *matCellDef="let row; let i =index;">
-                                        {{row.planningDate}}
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="planningDate">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            Planning Date </th>
+                                        <td mat-cell *matCellDef="let row; let i =index;">
+                                            {{row.planningDate}}
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="planningTime">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        Planning Time </th>
-                                    <td mat-cell *matCellDef="let row; let i =index;">
-                                        {{row.planningTime}}
+                                    <ng-container matColumnDef="planningTime">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            Planning Time </th>
+                                        <td mat-cell *matCellDef="let row; let i =index;">
+                                            {{row.planningTime}}
 
-                                    </td>
-                                </ng-container>
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="carrier">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                        ผู้ขนส่ง </th>
-                                    <td mat-cell *matCellDef="let row; let i =index;">
-                                        {{row.carrier}}
-                                    </td>
-                                </ng-container>
+                                    <ng-container matColumnDef="carrier">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center yellow-bg" style="max-width:5rem;">
+                                            ผู้ขนส่ง </th>
+                                        <td mat-cell *matCellDef="let row; let i =index;">
+                                            {{row.carrier}}
+                                        </td>
+                                    </ng-container>
 
-                                <ng-container matColumnDef="button">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
-                                    </th>
-                                    <td mat-cell *matCellDef="let row; let i =index;">
-                                        <app-delete-button (click)="returnQuota(i)"></app-delete-button>
+                                    <ng-container matColumnDef="button">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        </th>
+                                        <td mat-cell *matCellDef="let row; let i =index;">
+                                            <app-delete-button (click)="returnQuota(i)"></app-delete-button>
 
-                                    </td>
-                                </ng-container>
-
+                                        </td>
+                                    </ng-container>
 
 
-                            </table>
-                        </div>
+
+                                </table>
+                            </div>
 
 
+                        </ng-container>
                     </ng-container>
                 </ng-container>
-            </ng-container>
+            </div>
         </div>
 
     </section>

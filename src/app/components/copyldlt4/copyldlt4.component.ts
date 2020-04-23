@@ -4,7 +4,6 @@ import { MatSelectChange, MatDatepickerInputEvent, MatTableDataSource, MatPagina
 import { MatSort } from '@angular/material/sort';
 import * as Type from 'src/models/VariablesType';
 import * as moment from 'moment';
-import { splitAtColon } from '@angular/compiler/src/util';
 
 export interface searchwith {
   value: string;
@@ -61,8 +60,6 @@ export class Copyldlt4Component implements OnInit {
     "etd_lcb", "emptyConta", "containerNum", "sealNum", "vgmTare", "containerSize", "returnDate", "Remarks", "latestTime"];
   dataSource2: MatTableDataSource<UserData2>;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort; 
 
 
   //-------------api get carrier
@@ -358,31 +355,6 @@ export class Copyldlt4Component implements OnInit {
     "message": "OK"
   }
 
-
-
-  //---------------array to display for AssignCon
-  closing_time = [];
-  RegCon_load_date_toShow = [];
-  RegCon_close_date_toShow = [];
-  RegCon_close_time_toShow = [];
-  RegCon_receieveDate_toShow = [];
-  RegCon_returnDate_toShow = [];
-  RegCon_lastUpdate_date_toShow = [];
-  RegCon_lastUpdate_time_toShow = [];
-  RegCon_etd_date_toShow = [];
-
-  //---------------array to display for NotAssignCon
-  loading_date_NotAssign_toShow = [];
-  closing_time_notAssign = [];
-  closing_date_notAssign_toShow = [];
-  closing_time_notAssign_toShow = [];
-  notAss_receiveDate_toShow = [];
-  notAss_returnDate_toShow = [];
-  notAss_lastUpdate_date_toShow = [];
-  notAss_lastUpdate_time_toShow = [];
-  notAss_etd_date_toShow = [];
-
-
   constructor() { }
 
 
@@ -435,13 +407,7 @@ export class Copyldlt4Component implements OnInit {
 
       if (this.GetResProcessSearchConReg.message == "OK" && this.GetResProcessSearchConNotAssign.message == 'OK') {
         if (this.GetResProcessSearchConReg.result.length > 0 && this.GetResProcessSearchConNotAssign.result.length > 0) {
-          let closing_time, RegCon_close_date_toShow, RegCon_close_time_toShow, RegCon_receieveDate_toShow,
-            RegCon_returnDate_toShow, RegCon_lastUpdate_date_toShow, RegCon_lastUpdate_time_toShow, RegCon_etd_date_toShow = new Array(this.GetResProcessSearchConReg.result.length);
-
-          let closing_time_notAssign, closing_date_notAssign_toShow, closing_time_notAssign_toShow, notAss_receiveDate_toShow,
-            notAss_returnDate_toShow, notAss_lastUpdate_date_toShow, notAss_etd_date_toShow = new Array(this.GetResProcessSearchConNotAssign.result.length);
-
-          // console.log(this.closing_time)
+       
           this.getResponseTable()
         }
       }
@@ -465,69 +431,6 @@ export class Copyldlt4Component implements OnInit {
           for (let i = 0; i < this.GetResProcessSearchConReg.result.length; i++) {
 
             users.push(createNewRow(i, this.GetResProcessSearchConReg.result[i]));
-
-            this.closing_time[i] = this.GetResProcessSearchConReg.result[i].closing_datetime;
-
-            let loading = this.GetResProcessSearchConReg.result[i].loading_date;
-            if (loading != null) {
-              let loading1 = loading.toString().split("T");
-              this.RegCon_load_date_toShow[i] = loading1[0];
-
-            }
-            else {
-              this.RegCon_load_date_toShow[i] = null;
-
-            }
-            let closing = this.GetResProcessSearchConReg.result[i].closing_datetime;
-            if (closing != null) {
-              let closing1 = closing.toString().split("T");
-              this.RegCon_close_date_toShow[i] = closing1[0];
-              this.RegCon_close_time_toShow[i] = closing1[1];
-            }
-            else {
-              this.RegCon_close_date_toShow[i] = null;
-              this.RegCon_close_time_toShow[i] = null;
-            }
-
-            let receive = this.GetResProcessSearchConReg.result[i].recieve_date;
-            if (receive != null) {
-              let receive1 = receive.toString().split("T");
-              this.RegCon_receieveDate_toShow[i] = receive1[0];
-            }
-            else {
-              this.RegCon_receieveDate_toShow = null;
-            }
-
-            let etd = this.GetResProcessSearchConReg.result[i].etd_lcb;
-            if (etd != null) {
-              let etd1 = etd.toString().split("T");
-              this.RegCon_etd_date_toShow[i] = etd1[0];
-            }
-            else {
-              this.RegCon_etd_date_toShow[i] = null;
-            }
-
-
-            let return1 = this.GetResProcessSearchConReg.result[i].return_date;
-            if (return1 != null) {
-              let return11 = return1.toString().split("T");
-              this.RegCon_returnDate_toShow[i] = return11[0];
-            }
-            else {
-              this.RegCon_returnDate_toShow[i] = null;
-            }
-
-            let last = this.GetResProcessSearchConReg.result[i].last_update_datetime;
-            if (last != null) {
-              let last1 = last.toString().split("T");
-              this.RegCon_lastUpdate_date_toShow[i] = last1[0];
-              this.RegCon_lastUpdate_time_toShow[i] = last1[1];
-            }
-            else {
-              this.RegCon_lastUpdate_date_toShow[i] = null;
-              this.RegCon_lastUpdate_time_toShow[i] = null;
-            }
-
           }
 
           this.dataSource = new MatTableDataSource(users);
@@ -545,70 +448,7 @@ export class Copyldlt4Component implements OnInit {
           const users1: UserData2[] = [];
           
           for (let i = 0; i < this.GetResProcessSearchConNotAssign.result.length; i++) {
-            this.closing_time_notAssign[i] = this.GetResProcessSearchConNotAssign.result[i].closing_datetime;
             users1.push(createNewRow2(i, this.GetResProcessSearchConNotAssign.result[i]));
-
-            let loadDate = this.GetResProcessSearchConNotAssign.result[i].loading_date;
-            if (loadDate != null) {
-              let loadDate1 = loadDate.toString().split("T");
-              this.loading_date_NotAssign_toShow[i] = loadDate1[0];
-            }
-            else {
-              this.loading_date_NotAssign_toShow[i] = null;
-            }
-            let receiveDate = this.GetResProcessSearchConNotAssign.result[i].recieve_date;
-            if (receiveDate != null) {
-              let receiveDate1 = receiveDate.toString().split("T");
-              this.notAss_receiveDate_toShow[i] = receiveDate1[0];
-            }
-            else {
-              this.notAss_receiveDate_toShow[i] = null;
-
-            }
-
-            let returnDate = this.GetResProcessSearchConNotAssign.result[i].return_date;
-            if (returnDate != null) {
-              let returnDate1 = returnDate.toString().split("T");
-              this.notAss_returnDate_toShow[i] = returnDate1[0];
-            }
-            else {
-              this.notAss_returnDate_toShow[i] = null;
-            }
-
-
-
-            let clos_dat_not = this.closing_time_notAssign[i];
-            if (clos_dat_not != null) {
-              let clos_dat_not1 = clos_dat_not.toString().split("T");
-              this.closing_date_notAssign_toShow[i] = clos_dat_not1[0];
-              this.closing_time_notAssign_toShow[i] = clos_dat_not1[1];
-            }
-            else {
-              this.closing_date_notAssign_toShow[i] = null;
-              this.closing_time_notAssign_toShow[i] = null;
-            }
-
-            let etd = this.GetResProcessSearchConNotAssign.result[i].etd_lcb;
-            if (etd != null) {
-              let etd1 = etd.toString().split("T");
-              this.notAss_etd_date_toShow[i] = etd1[0];
-            }
-            else {
-              this.notAss_etd_date_toShow[i] = null;
-
-            }
-
-
-            let last_update = this.GetResProcessSearchConNotAssign.result[i].last_update_datetime;
-            if (last_update != null) {
-              let last_update1 = last_update.toString().split("T");
-              this.notAss_lastUpdate_date_toShow[i] = last_update1[0];
-              this.notAss_lastUpdate_time_toShow[i] = last_update1[1];
-            }
-            else {
-              this.notAss_lastUpdate_date_toShow[i] = null;
-              this.notAss_lastUpdate_time_toShow[i] = null;
-            }
 
           }
 

@@ -322,21 +322,7 @@ export class Copyldlt5Component implements OnInit {
     },
   ];
 
-  //-------------------- array to display date and time
-  date_truck_in_area = [];
-  time_truck_in_area = [];
-  date_truck_regist = [];
-  time_truck_regist = [];
-  date_truck_outArea = [];
-  time_truck_outArea = [];
-  date_truck_feed = [];
-  time_truck_feed = [];
-  date_truck_toCus = [];
-  time_truck_toCus = [];
-  date_truck_late = [];
-  time_truck_late = [];
-  date_truck_olate = [];
-  time_truck_olate = [];
+ 
 
   myControl = new FormControl();
   options: string[] = ['One', 'Two', 'Three'];
@@ -349,12 +335,7 @@ export class Copyldlt5Component implements OnInit {
     this.getShipmentType = this.sim_ShipType as Type.ResponseShipmentType;
     this.getCarrier = this.sim_Carrier as Type.ResponseCarrier;
 
-    // this.filteredOptions = this.myControl.valueChanges
-    //   .pipe(
-    //     startWith(''),
-    //     map(value => this._filter(value))
-    //   );
-
+  
   }
 
   private _filter(value: string): string[] {
@@ -447,85 +428,6 @@ export class Copyldlt5Component implements OnInit {
     const users: UserData[] = [];
     for (let i = 0; i < this.getResProTruckTrack.result.length; i++) {
       users.push(createNewRow(i, this.getResProTruckTrack.result[i]));
-
-      // let dt_truck_in_area = this.getResProTruckTrack.result[i].truck_in_area;
-      if (this.getResProTruckTrack.result[i].truck_in_area != null) {
-        let dt_truck_in_area = this.getResProTruckTrack.result[i].truck_in_area.toString().split("T");
-        this.date_truck_in_area[i] = dt_truck_in_area[0];
-        this.time_truck_in_area[i] = dt_truck_in_area[1];
-
-      }
-      else {
-        this.date_truck_in_area[i] = "";
-        this.time_truck_in_area[i] = "";
-      }
-
-      if (this.getResProTruckTrack.result[i].truck_register_time != null) {
-        let dt_truck_regist = this.getResProTruckTrack.result[i].truck_register_time.toString().split("T");
-        this.date_truck_regist[i] = dt_truck_regist[0];
-        this.time_truck_regist[i] = dt_truck_regist[1];
-
-      }
-      else {
-        this.date_truck_regist[i] = "";
-        this.time_truck_regist[i] = "";
-      }
-
-      if (this.getResProTruckTrack.result[i].truck_out_area != null) {
-        let dt_truck_out = this.getResProTruckTrack.result[i].truck_out_area.toString().split("T");
-        this.date_truck_outArea[i] = dt_truck_out[0];
-        this.time_truck_outArea[i] = dt_truck_out[1];
-
-      }
-      else {
-        this.date_truck_outArea[i] = "";
-        this.time_truck_outArea[i] = "";
-      }
-
-      if (this.getResProTruckTrack.result[i].truck_arrived_feed != null) {
-        let dt_truck_feed = this.getResProTruckTrack.result[i].truck_arrived_feed.toString().split("T");
-        this.date_truck_feed[i] = dt_truck_feed[0];
-        this.time_truck_feed[i] = dt_truck_feed[1];
-
-      }
-      else {
-        this.date_truck_feed[i] = "";
-        this.time_truck_feed[i] = "";
-      }
-
-      if (this.getResProTruckTrack.result[i].truck_to_customer != null) {
-        let dt_truck_cus = this.getResProTruckTrack.result[i].truck_to_customer.toString().split("T");
-        this.date_truck_toCus[i] = dt_truck_cus[0];
-        this.time_truck_toCus[i] = dt_truck_cus[1];
-
-      }
-      else {
-        this.date_truck_toCus[i] = "";
-        this.time_truck_toCus[i] = "";
-      }
-
-      if (this.getResProTruckTrack.result[i].truck_in_area != null) {
-        let dt_truck_late = this.getResProTruckTrack.result[i].truck_in_area.toString().split("T");
-        this.date_truck_late[i] = dt_truck_late[0];
-        this.time_truck_late[i] = dt_truck_late[1];
-
-      }
-      else {
-        this.date_truck_late[i] = "";
-        this.time_truck_late[i] = "";
-      }
-
-      if (this.getResProTruckTrack.result[i].truck_out_late != null) {
-        let dt_truck_outLa = this.getResProTruckTrack.result[i].truck_out_late.toString().split("T");
-        this.date_truck_olate[i] = dt_truck_outLa[0];
-        this.time_truck_olate[i] = dt_truck_outLa[1];
-
-      }
-      else {
-        this.date_truck_olate[i] = "";
-        this.time_truck_olate[i] = "";
-      }
-
     }
     this.dataSource = new MatTableDataSource(users);
     console.log("^^^^^^^^CREATE DATASOURCE", this.dataSource)

@@ -75,6 +75,7 @@ import { Copyldlt3Component } from './components/copyldlt3/copyldlt3.component';
 import { Copyldlt4Component } from './components/copyldlt4/copyldlt4.component';
 import { Copyldlt1Component } from './components/copyldlt1/copyldlt1.component';
 import { Copyldlt5Component } from './components/copyldlt5/copyldlt5.component';
+import { Copyldls1Component } from './components/copyldls1/copyldls1.component';
 
 
 const appRoutes: Routes = [
@@ -92,6 +93,7 @@ const appRoutes: Routes = [
   { path: 'copyldlt4', component: Copyldlt4Component },
   { path: 'copyldlt1', component: Copyldlt1Component },
   { path: 'copyldlt5', component: Copyldlt5Component },
+  { path: 'copyldls1', component: Copyldls1Component },
 
 
 
@@ -157,6 +159,7 @@ export const MY_FORMATS = {
     Copyldlt4Component,
     Copyldlt1Component,
     Copyldlt5Component,
+    Copyldls1Component,
 
 
 

@@ -531,7 +531,6 @@ export class Copyldlt1Component implements OnInit {
   search1;
 
   //-------------toggel disable
-  bt_save11: Array<boolean> = [false];
   bt_save: Array<boolean> = [true];
   public remark: boolean = false;
 
@@ -549,7 +548,6 @@ export class Copyldlt1Component implements OnInit {
     "message": "OK"
   }
 
-  statToShow: any;
 
   //--------------- array for selected option
 
@@ -583,7 +581,6 @@ export class Copyldlt1Component implements OnInit {
 
 
   @Input() SelectedDdValue: Array<{}>
-  // @Output() bt_save = new EventEmitter();
 
   constructor(public dialog: MatDialog) { }
 
@@ -593,8 +590,6 @@ export class Copyldlt1Component implements OnInit {
     this.date_to = moment().format("YYYY-MM-DDTHH:mm:ss");
     this.date_planning = moment().format("YYYY-MM-DDT");
 
-    // let nowTime = moment().format("HH:mm:ss");
-    // console.log("time now", nowTime);
 
     this.getShipType = this.sim_shipType as Type.ResponseShipmentType;
     this.getStatus = this.sim_status as Type.ResponseStatus;
@@ -631,12 +626,10 @@ export class Copyldlt1Component implements OnInit {
 
 
     if (this.ShipType.value == null) {
-      // console.warn("null ship value")
       this.sel_shiptype = "null";
     }
 
     if (this.CarrierName.value == null) {
-      // console.warn("null carrier value")
       this.sel_carrierID = "null";
     }
 
@@ -645,7 +638,6 @@ export class Copyldlt1Component implements OnInit {
     }
 
     if (this.CarrierName.value != null) {
-      // console.log("carrierName", this.CarrierName.value)
       this.carrierNameSelected(this.CarrierName.value);
     }
 
@@ -654,14 +646,12 @@ export class Copyldlt1Component implements OnInit {
 
     if (this.shipmentStatus.value == "Planning") {
       status_id = 2;
-      // console.log("status(P)", status_id)
 
     }
 
     else if (this.shipmentStatus.value == "Create Shipment") {
       status_id = 1;
       this.statuToShow = "Create Shipment";
-      // console.log("status(C)", status_id)
     }
 
     //--------- api sendProcessSearchCarrierQuota
@@ -784,13 +774,9 @@ export class Copyldlt1Component implements OnInit {
         let list_ary = [];
         for (let l = 0; l < this.getShipType.result.length; l++) {
           list_ary[l] = this.getShipType.result[l].description;
-          // console.log("i",l,"data ddl:", list_ary);
-
-          // agent_list_ary[l] = "{name:" + this.getPlantNum.result[l].name + ",id:" + this.getPlantNum.result[l].id + "}";
         }
         this.shipmentOption = list_ary;
         this.CreateCarrierOption()
-        // console.log("getdropdoen loop:", this.shipmentOption)
       }
       else {
         console.warn("message NOT OK")
@@ -896,8 +882,6 @@ export class Copyldlt1Component implements OnInit {
 
   SelectedVHC(sel, i) {
 
-    // this.CreateShipmentLinkOption()
-
     console.log("selected VHC:", sel, i)
 
     let sel1;
@@ -911,39 +895,6 @@ export class Copyldlt1Component implements OnInit {
       console.log("yes tail")
       this.bt_save[sel.rowIndex] = false;
       this.CreateShipmentLinkOption(sel.rowIndex);
-
-      // let new_options: Array<{
-      //   shipment_id: number;
-      //   shipment_No: string
-      // }> = [];
-
-      // let all_options = this.getResProSearchCarQuota.result;
-      // console.log(this.sim_ResProcessSearch.result.length)
-
-      // let a = all_options.filter(e => e.shipment_id != this.sim_ResProcessSearch.result[sel.rowIndex].shipment_id)
-
-
-      // for (let j = 0; j < a.length; j++) {
-      //   let obj: any = {};
-      //   obj = {
-      //     shipment_id: a[j].shipment_id,
-      //     shipment_No: a[j].shipment_No
-      //   };
-      //   this.new_options.push(obj);
-      // }
-      // console.log("new option for row:", i, this.new_options)
-
-      // for (let b = 0; b < a.length; b++) {
-
-      //   console.log(this.new_options[b]);
-      //   this.AllShipmentLinkOption[b] = {
-      //     id: this.new_options[b].shipment_id,
-      //     name: this.new_options[b].shipment_No
-      //   }
-      // }
-
-      // console.log("create allshipmentlink", this.AllShipmentLinkOption)
-
     }
     else {
       this.bt_save[i] = true;
@@ -1070,47 +1021,32 @@ export class Copyldlt1Component implements OnInit {
     console.log(evt)
 
     if (evt.dropdownName == "vehicleGroup") {
-      // console.log("vehicle group id", evt.selectedId, "row:", evt.rowIndex);
       this.sel_selectedVHD[evt.rowIndex] = evt.selectedId;
-      // console.log("selected to serach", this.sel_selectedVHD)
     }
 
     else if (evt.dropdownName == "UrgentCar") {
 
       this.sel_yesno_isStat_ary[evt.rowIndex] = evt.selectedId;
-      // console.log("UrgentCar yesno id", evt.selectedId, "row:", evt.rowIndex);
-      // console.log("selected to serach", this.sel_yesno_isStat_ary)
 
     }
 
     else if (evt.dropdownName == "ReqEquip") {
       this.sel_req_ary[evt.rowIndex] = evt.selectedId;
-      // console.log("ReqEquip id", evt.selectedId, "row:", evt.rowIndex);
-      // console.log("selected to serach", this.sel_req_ary)
 
     }
 
     else if (evt.dropdownName == "TypePacking") {
       this.sel_typePack_ary[evt.rowIndex] = evt.selectedId;
-      // console.log("TypePacking id", evt.selectedId, "row:", evt.rowIndex);
     }
 
     else if (evt.dropdownName == "route") {
       this.sel_route_ary[evt.rowIndex] = evt.selectedId;
-      // console.log("route id", evt.selectedId, "row:", evt.rowIndex);
     }
 
     else if (evt.dropdownName == "isOutside") {
       this.sel_isOutside_ary[evt.rowIndex] = evt.selectedId;
-      // console.log("isOutside id", evt.selectedId, "row:", evt.rowIndex);
     }
 
-
-  }
-
-  toggleRemark(i) {
-    // this.remark = !this.remark;
-    // console.log("toggle Remark" + i);
 
   }
 
@@ -1248,6 +1184,11 @@ export class Copyldlt1Component implements OnInit {
 
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
 }
 
 function createNewRow(j: number, data): UserData {
@@ -1279,7 +1220,7 @@ function createNewRow(j: number, data): UserData {
     isOutside: data.isOutside,
     workerNum: data.total_worker,
     planningDate: plan[0],
-    planningTime: plan1[0]+":"+plan1[1],
+    planningTime: plan1[0] + ":" + plan1[1],
     carrier: data.carrier_id,
     button: "",
 

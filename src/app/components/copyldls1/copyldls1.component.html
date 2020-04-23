@@ -1,0 +1,390 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<app-footer></app-footer>
+<div class="content-wrapper">
+    <section class="content" style="padding: 10px;">
+        <div class="card">
+            <div class="card-body" style="font-size: 20px;">
+                <app-content-header [ContentHeader]="content_header_name"></app-content-header>
+                <div class="row">
+
+                    <table>
+                        <tr>
+                            <td style="padding-left: 30px;">Loading Date:</td>
+                            <td>
+                                <app-date-picker (FindDateSelected)="GetDate($event)"></app-date-picker>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td style="padding-left: 30px;">WH:</td>
+                            <td>
+                                <mat-form-field style="width: 10rem;">
+                                    <mat-select [formControl]="warehouseNum" multiple>
+                                        <ng-container *ngIf="getWarehouse != undefined">
+                                            <ng-container *ngIf="getWarehouse.message == 'OK'">
+                                                <mat-option *ngFor="let wareno of getWarehouse.result"
+                                                    [value]="wareno.storageid">{{wareno.storage_name}}
+                                                </mat-option>
+                                            </ng-container>
+                                        </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td style="padding-left: 30px;">สถานะ:</td>
+                            <td>
+                                <mat-form-field style="width: 10rem;">
+                                    <mat-select [formControl]="statusNum">
+                                        <mat-option *ngFor="let stat of statusList" [value]="stat.statusid">
+                                            {{stat.statusName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td></td>
+
+                            <td style="text-align: right;">
+                                <div class="btn-group" style="text-align: right; width: 100%">
+                                    <app-find-button style="width: 10rem;" class="d-inline-block"
+                                        (click)="datatoSearch()">
+                                    </app-find-button>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="card-body pad table-responsive" style="font-size: 20px;">
+                <div class="row">
+                    <ng-container *ngIf="statusID == '12'">
+                        <div class="example-container mat-elevation-z8">
+                            <table mat-table [dataSource]="dataSource" matSort style="font-size: 30px;">
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></tr>
+
+                                <ng-container matColumnDef="nRow">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        No. </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.nRow}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ShipType">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        Shipment No. </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.ShipType}} </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="VehicleLicense">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        ทะเบียนรถ </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.VehicleLicense}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="DockNum">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        หน้าท่า </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.DockNum}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ProdNum">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        ช่องบรรจุสินค้า </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.ProdNum}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ShipNum">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        Shipment No. </th>
+                                    <td mat-cell *matCellDef="let row; let i =index;">
+                                        <ng-container *ngIf="sameShipNo[i] == 'none'">
+                                            {{row.ShipNum}}
+                                        </ng-container>
+
+                                        <ng-container *ngIf="sameShipNo[i] == 'same'">
+
+                                        </ng-container>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="DeliverNum">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        Delivery No. </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.DeliverNum}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="Grade">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        Grade </th>
+                                    <td mat-cell *matCellDef="let row; let i = index;">
+                                        <ul style="list-style-type:none; padding-inline-start:5px;">
+
+                                            <li style="padding-top: 1.4rem;" *ngFor="let grade of grade_qty[i].grade">
+                                                {{grade}}</li>
+                                        </ul>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="qty">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        Qty </th>
+                                    <td mat-cell *matCellDef="let row; let i = index;">
+                                        <ng-container *ngFor="let qty of grade_qty[i].quantity">
+                                            <div style="padding: 10px;">
+                                                {{qty}} <br>
+                                            </div>
+                                        </ng-container>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="UDType">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        ประเภทขา </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.UDType}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="vehicleType">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        ประเภท </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.vehicleType}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="worker_1">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        คนงานที่ 1 </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.worker_1}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="worker_2">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        คนงานที่ 2 </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.worker_2}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="button">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    </th>
+                                    <td mat-cell *matCellDef="let row; let i = index;">
+                                        <ng-container *ngIf="sel_status == 'รอจบงาน'">
+                                            <button type="button" class="btn btn-block btn-warning btn-sm"
+                                                (click)="sendEnd(i)">จบงาน</button>
+                                        </ng-container>
+                                    </td>
+                                </ng-container>
+
+
+                            </table>
+                        </div>
+                    </ng-container>
+
+
+                    <ng-container *ngIf="statusID == '11'">
+                        <div class="example-container mat-elevation-z8">
+                            <table mat-table [dataSource]="dataSource" matSort style="font-size: 30px;">
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></tr>
+
+                                <ng-container matColumnDef="nRow">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        No. </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.nRow}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ShipType">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        Shipment No. </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.ShipType}} </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="VehicleLicense">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        ทะเบียนรถ </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.VehicleLicense}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="DockNum">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        หน้าท่า </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.DockNum}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ProdNum">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        ช่องบรรจุสินค้า </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.ProdNum}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ShipNum">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        Shipment No. </th>
+                                    <td mat-cell *matCellDef="let row; let i = index;">
+                                        <ng-container *ngIf="sameShipNo[i] == 'none'">
+                                            {{row.ShipNum}}
+                                        </ng-container>
+
+                                        <ng-container *ngIf="sameShipNo[i] == 'same'">
+
+                                        </ng-container>
+
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="DeliverNum">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        Delivery No. </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.DeliverNum}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="Grade">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        Grade </th>
+                                    <td mat-cell *matCellDef="let row; let i = index;">
+                                        <ul style="list-style-type:none; padding-inline-start:5px;">
+
+                                            <li style="padding-top: 1.4rem;" *ngFor="let grade of grade_qty[i].grade">
+                                                {{grade}}</li>
+                                        </ul>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="qty">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        Qty </th>
+                                    <td mat-cell *matCellDef="let row; let i = index;">
+                                        <ng-container *ngFor="let qty of grade_qty[i].quantity; let y = index;">
+                                            <mat-form-field class="example-full-width"
+                                                style="width: 5rem;text-align: center;">
+                                                <input matInput type="number" [ngModel]="this.grade_qty[i].quantity[y]"
+                                                    (ngModelChange)="OnchangeQty($event,i,y)">
+                                            </mat-form-field>
+                                        </ng-container>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="UDType">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        ประเภทขา </th>
+                                    <td mat-cell *matCellDef="let row; let i = index;">
+                                        <mat-form-field style="width:100%;">
+                                            <mat-select [formControl]="typeUD"
+                                                (selectionChange)="selectedToSave($event.value,i, 'updown')">
+                                                <mat-option *ngFor="let prod of typeUDList" [value]="prod.up_downID">
+                                                    {{prod.up_downName}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="vehicleType">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        ประเภท </th>
+                                    <td mat-cell *matCellDef="let row; let i = index;">
+                                        <mat-form-field style="width:100%;">
+                                            <mat-select [formControl]="prodPack"
+                                                (selectionChange)="selectedToSave($event.value, i, 'forklift')">
+                                                <mat-option *ngFor="let prod of prodPackList"
+                                                    [value]="prod.isFolkLiftID">
+                                                    {{prod.isFolkLiftName}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="worker_1">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        คนงานที่ 1 </th>
+                                    <td mat-cell *matCellDef="let row; let i = index;">
+                                        <mat-form-field style="width:100%;">
+                                            <mat-select [disabled]="bt_save[i]"
+                                                (selectionChange)="selectedToSave($event.value,i, 'workerID1')">
+
+                                                <mat-option *ngFor="let work1 of getLabour.result"
+                                                    [value]="work1.lobour_id">
+                                                    {{work1.lobour_name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="worker_2">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                        คนงานที่ 2 </th>
+                                    <td mat-cell *matCellDef="let row; let i = index;">
+                                        <mat-form-field style="width:100%;">
+                                            <mat-select [disabled]="bt_save[i]"
+                                                (selectionChange)="selectedToSave($event.value,i, 'workerID2')">
+                                                <mat-option *ngFor="let work2 of getLabour.result"
+                                                    [value]="work2.lobour_id">
+                                                    {{work2.lobour_name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="button">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        class="coin-bg text-center gray-back" style="max-width:5rem;">
+                                    </th>
+                                    <td mat-cell *matCellDef="let row; let i = index;">
+                                        <button type="button" class="btn btn-block btn-success btn-sm"
+                                            (click)="sendStart(i)">เริ่ม</button>
+                                    </td>
+                                </ng-container>
+
+
+                            </table>
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+</div>

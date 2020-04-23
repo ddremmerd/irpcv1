@@ -1,22 +1,20 @@
-import { Input,Component, OnInit, ElementRef, Directive } from '@angular/core';
-import { MatSelectChange, MatDatepickerInputEvent } from '@angular/material';
+import { Input, Component, OnInit, ElementRef, Directive, ViewChild } from '@angular/core';
+import { MatSelectChange, MatDatepickerInputEvent, MatTableDataSource, MatSort } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
-import { NgControl, FormControl, FormGroupDirective, FormGroup, NgForm, Validators, FormArray, FormBuilder,FormsModule } from '@angular/forms';
+import { NgControl, FormControl, FormGroupDirective, FormGroup, NgForm, Validators, FormArray, FormBuilder, FormsModule } from '@angular/forms';
 import * as Type from 'src/models/VariablesType';
 import * as Comp from 'src/models/ComponentClass';
 import * as moment from 'moment';
 
-
-
 @Component({
-  selector: 'app-ldls1',
-  templateUrl: './ldls1.component.html',
-  styleUrls: ['./ldls1.component.css']
+  selector: 'app-copyldls1',
+  templateUrl: './copyldls1.component.html',
+  styleUrls: ['./copyldls1.component.css']
 })
-export class Ldls1Component implements OnInit {
+export class Copyldls1Component implements OnInit {
 
-  content_header_name = "ระบบ Manual สำหรับเริ่มงาน / สำหรับ Forklift ------(COPY)";
+  content_header_name = "ระบบ Manual สำหรับเริ่มงาน / สำหรับ Forklift";
 
   warehouseNum = new FormControl();
   warehouseList: string[] = ['WH1', 'WH2', 'WH3', 'WH4', 'WH5', 'WH6', 'WH7'];
@@ -197,6 +195,21 @@ export class Ldls1Component implements OnInit {
         "isforklift": null,
         "labor_id1": null,
         "labor_id2": null
+      },
+      {
+        "shipemnt_type": "Z103",
+        "vehicle_text": "7555555สค",
+        "storage": null,
+        "storage_id": 35,
+        "dock": null,
+        "shipment_no": 54,
+        "shipment_id": 52,
+        "delivery_no": "3140153881",
+        "delivery_id": 222,
+        "matno_Qty": "1100NK^9000.00",
+        "isforklift": null,
+        "labor_id1": null,
+        "labor_id2": null
       }
     ],
     "message": "OK"
@@ -204,6 +217,10 @@ export class Ldls1Component implements OnInit {
 
   TableHeader = ["ลำดับ", "Shipment Type", "ทะเบียน", "หน้าท่า", "ช่องบรรจุสินค้า", "Shipment No.", "Deliver No.", "Grade", "Qty", "ประเภทขา",
     "ประเภท", "คนงานที่ 1", "คนงานที่ 2", ""];
+
+  displayedColumns = ["nRow", "ShipType", "VehicleLicense", "DockNum", "ProdNum", "ShipNum", "DeliverNum", "Grade", "qty", "vehicleType", "UDType",
+    "worker_1", "worker_2", "button"];
+  dataSource: MatTableDataSource<UserData>;
 
   //---------------date
   loading_date: string;
@@ -224,10 +241,6 @@ export class Ldls1Component implements OnInit {
 
     this.loading_date = moment().format("YYYY-MM-DDTHH:mm:ss");
     this.getWarehouse = this.sim_getStorage as Type.ResponseCbStorage;
-
-    this.quantityForm = this.formBuilder.group({
-      quants: this.formBuilder.array([this.createQuantityFormGroup()])
-    });
 
   }
 
@@ -273,17 +286,31 @@ export class Ldls1Component implements OnInit {
         this.sel_status = "รอจบงาน";
       }
       this.getResProSearchLab = this.sim_resProSeaLab as Type.ResponseProcessSearchLabour;
-      if (this.getResProSearchLab.message == 'OK') {
-        this.GradeToShow();
-        this.sameShipNo[0] = 'none';
-        for (let i = 1; i < this.getResProSearchLab.result.length; i++) {
-          if (this.getResProSearchLab.result[i].shipment_no == this.getResProSearchLab.result[i - 1].shipment_no) {
-            // console.log("-----------------same shipnment no")
-            this.sameShipNo[i] = 'same';
-          } else {
-            this.sameShipNo[i] = 'none';
+      if (this.getResProSearchLab != null) {
+        if (this.getResProSearchLab.message == 'OK') {
+          const users: UserData[] = [];
+          this.GradeToShow();
+          this.sameShipNo[0] = 'none';
+          for (let i = 0; i < this.getResProSearchLab.result.length; i++) {
+            users.push(createNewRow(i, this.getResProSearchLab.result[i]));
+            for (let j = 1; j < this.getResProSearchLab.result.length; j++) {
+              if (this.getResProSearchLab.result[j].shipment_no == this.getResProSearchLab.result[j - 1].shipment_no) {
+                this.sameShipNo[j] = 'same';
+              } else {
+                this.sameShipNo[j] = 'none';
+              }
+            }
+
           }
+
+          this.dataSource = new MatTableDataSource(users);
+
+
         }
+
+      }
+      else {
+        console.error("DATA IS NOT LOAD");
       }
 
 
@@ -300,7 +327,7 @@ export class Ldls1Component implements OnInit {
     if (this.getResProSearchLab.message == "OK") {
 
       this.getLabour = this.sim_getLabour as Type.ResponseLabour;
-      for(let u=0; u < this.getResProSearchLab.result.length; u++){
+      for (let u = 0; u < this.getResProSearchLab.result.length; u++) {
         this.bt_save[u] = true;
       }
 
@@ -309,40 +336,14 @@ export class Ldls1Component implements OnInit {
 
   }
 
-  public addQuantityFormGroup(l) {
-    let quants = this.quantityForm.get('quants') as FormArray
-    // quants = null;
-    console.log("-----------", l)
-    console.log("before", quants.value)
-    for (let i = 0; i < l.length - 1; i++) {
-      quants.push(this.createQuantityFormGroup())
-    }
-
-    console.log("after", quants.value);
-
-
-
-  }
-
-  private createQuantityFormGroup(): FormGroup {
-    return new FormGroup({
-      'qquantity': new FormControl('')
-    })
-  }
-
-
-
   grade_qty = [];
   save_grade_qty = [];
-
   grade_quant = [];
 
   GradeToShow() {
-    // console.log(this.grade_qty);
     for (let r = 0; r < this.getResProSearchLab.result.length; r++) {
+
       this.grade_quant[r] = this.getResProSearchLab.result[r].matno_Qty.split('|');
-
-
       let gradee = [];
       let quantityyy = [];
 
@@ -367,12 +368,11 @@ export class Ldls1Component implements OnInit {
       this.grade_qty.push(now_obj);
       this.save_grade_qty.push(now_obj2);
 
-      // console.log(this.grade_qty[r].quantity)
-
-      // this.addQuantityFormGroup(this.grade_qty[r].grade);
-      // console.log(this.grade_qty)
     }
+
   }
+
+
 
   qty: string;
   selectedToSave(evt, i, type) {
@@ -384,11 +384,9 @@ export class Ldls1Component implements OnInit {
         this.labor_id1_ary[i] = 0;
         this.labor_id2_ary[i] = 0;
         this.bt_save[i] = true;
-        // this.worker1.disable();
       }
       else {
         this.Isforklift_ary[i] = evt;
-        // this.worker1.enable();
         this.bt_save[i] = false;
       }
     }
@@ -411,9 +409,6 @@ export class Ldls1Component implements OnInit {
   sendStart(i) {
 
     console.log("-------grade and qty", this.save_grade_qty[i].quantity);
-
-
-    // console.log(i, "updwon:", this.up_down_ary, "forklift:", this.Isforklift_ary, "worker1:", this.labor_id1_ary, "worker2:", this.labor_id2_ary)
     let deliverid = this.getResProSearchLab.result[i].delivery_id;
     let wh_do = this.getResProSearchLab.result[i].storage_id;
     let up_down = this.up_down_ary[i];
@@ -428,21 +423,18 @@ export class Ldls1Component implements OnInit {
         gr_qt[j] = this.save_grade_qty[i].grade[j] + '^' + this.save_grade_qty[i].quantity[j];
 
       }
-      let mat_qty = gr_qt.toString().replace(/,/g,'|');
-      console.log("MORE THAN 1 GRADE", i, mat_qty)
+      let mat_qty = gr_qt.toString().replace(/,/g, '|');
 
     }
     else {
       let mat_qty = this.save_grade_qty[i].grade + '^' + this.save_grade_qty[i].quantity;
-      console.log("======= 1 GRADE", mat_qty)
     }
 
-    console.log("00000000000000CEHCK",this.Isforklift_ary,"worker1", this.labor_id1_ary,"worker2",this.labor_id2_ary)
+    console.log("00000000000000CEHCK", this.Isforklift_ary, "worker1", this.labor_id1_ary, "worker2", this.labor_id2_ary)
 
     //----------api/v1/Process/ProcessManualStartLabourForklift?deliverid=111&wh_do=11&up_down=U&Isforklift=N&labor_id1=2&labor_id2=3&userId=999
 
     // console.log("sendtoStart:", i, "deliverID:", deliverid, "wh_no:", wh_do, "updown:", up_down, "isforklift", isforklift, "worker1:", labor_id1, "worker2:", labor_id2);
-
     // console.log("-------**** QUANT", this.grade_qty[i].quantity)
   }
 
@@ -452,28 +444,55 @@ export class Ldls1Component implements OnInit {
     let deliverid = this.getResProSearchLab.result[i].delivery_id;
     let wh_do = this.getResProSearchLab.result[i].storage_id;
     let userId = 999;
-    console.log("sendtoEnd", i, "deliverId:", deliverid, "wh_do:", wh_do);
   }
 
 
 
   OnchangeQty(quant, row, y) {
-
-    
-
     this.save_grade_qty[row].quantity[y] = quant;
-
-    // let save_grade_qty = new Array(this.getResProSearchLab.result.length)
-    // let now_obj = {
-    //   rowIndex: row,
-    //   grade: this.grade_qty[row],
-    //   quantity: quant
-    // }
-    // this.save_grade_qty[row].push(now_obj);
-
-   
     console.log(">>>>", quant, this.save_grade_qty[row]);
-    // console.log(">>>>", quant, this.save_grade_qty);
- 
+
   }
+
+}
+
+function createNewRow(j: number, data): UserData {
+
+  return {
+    nRow: j + 1,
+    ShipType: data.shipemnt_type,
+    VehicleLicense: data.VehicleLicense,
+    DockNum: data.dock,
+    ProdNum: data.storageid,
+    ShipNum: data.shipment_no,
+    DeliverNum: data.delivery_no,
+    Grade: data.grade,
+    qty: data.matno_Qty,
+    vehicleType: data.vehicleType,
+    UDType: data.isforklift,
+    worker_1: data.labor_id1,
+    worker_2: data.labor_id2,
+    button: ""
+
+  }
+
+
+}
+
+
+export interface UserData {
+  nRow: number
+  ShipType: string
+  VehicleLicense: string
+  DockNum: string
+  ProdNum: string
+  ShipNum: string
+  DeliverNum: string
+  Grade: string
+  qty: string
+  vehicleType: string
+  UDType: string
+  worker_1: string
+  worker_2: string
+  button: string
 }

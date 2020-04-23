@@ -38,17 +38,6 @@ export class Copyldlt3Component implements OnInit {
 
   content_header_name = "ระบบจัดการคิว (Queue Management)----------COPY";
 
-  ListHeader1 = "WH: ";
-
-  wh_no: string;
-  Droplist2: any;
-  search: any;
-
-  DropdownHeader1 = ["WH41", "WH42", "WH43"];
-
-
-  warehouseNum = ["41", "42", "43"];
-
   sim_storage = {
     "result": [
       {
@@ -65,61 +54,11 @@ export class Copyldlt3Component implements OnInit {
     "message": "OK"
   }
 
-  // displayedColumns1: string[] = ['shipment_no', 'booinkg_No', 'invoice_No', 'plannig_Datetime', 'storage',
-  //   'vehicle_group_Desc', 'driver_Checkin_Datetime', 'driver_text', 'vehicle_plate', 'queue_number'];
 
-  // dataSource1 = new MatTableDataSource(this.sim_resGetQueList.result);
-  // id: any;
-
-  displayedColumns = ["nRow", "ShipNum", "BookingNum", "InvoiceNum", "PlanTime", "WareHouse", "CarType", "CarLicense", "DriverCheckTime","queueNum","recallAgain"];
+  displayedColumns = ["nRow", "ShipNum", "BookingNum", "InvoiceNum", "PlanTime", "WareHouse", "CarType", "CarLicense", "DriverCheckTime", "queueNum", "recallAgain"];
   dataSource: MatTableDataSource<UserData>;
 
-
-  // TableHeader = ["No.", "Shipment No.", "Booking No.", "Invoice No.", "Planning Time", "WH", "ประเภทรถ", "ทะเบียนรถ", "Driver Checking Time", "ลำดับคิว", ""]
-  // TableData: TableDat[] = [
-
-  //   {
-  //     shipment_no: "6000vvv11", booking_no: "BK-0002", invoice_no: "INV-0002", planning_time: "09:00", wareNum: "41", shipment_type: "รถ 10 ล้อเปิดข้าง",
-  //     ship_license: "70-1111รย", driver_check_time: "08:57", queue_no: "B001"
-  //   },
-  //   {
-  //     shipment_no: "6000vvv11", booking_no: "BK-0542", invoice_no: "INV-0002", planning_time: "09:00", wareNum: "41", shipment_type: "รถ 10 ล้อเปิดข้าง",
-  //     ship_license: "88-1254รย", driver_check_time: "09:01", queue_no: "A001"
-  //   },
-  //   {
-  //     shipment_no: "6000vvv22", booking_no: "BK-0322", invoice_no: "INV-01112", planning_time: "09:00", wareNum: "42", shipment_type: "รถ 10 ล้อพ่วง คอกสูง",
-  //     ship_license: "75-1254รย", driver_check_time: "09:01", queue_no: "A003"
-  //   },
-  //   {
-  //     shipment_no: "6000vvv33", booking_no: "BK-1102", invoice_no: "INV-022772", planning_time: "09:00", wareNum: "42", shipment_type: "รถ 16 ล้อเปิดข้าง",
-  //     ship_license: "75-1254รย", driver_check_time: "09:01", queue_no: "A005"
-  //   },
-  //   {
-  //     shipment_no: "6000vvv33", booking_no: "BK-1102", invoice_no: "INV-022772", planning_time: "09:00", wareNum: "42", shipment_type: "รถ 16 ล้อเปิดข้าง",
-  //     ship_license: "75-1254รย", driver_check_time: "09:01", queue_no: "A005"
-  //   },
-  //   {
-  //     shipment_no: "6000vvv33", booking_no: "BK-1102", invoice_no: "INV-022772", planning_time: "09:00", wareNum: "42", shipment_type: "รถ 16 ล้อเปิดข้าง",
-  //     ship_license: "75-1254รย", driver_check_time: "09:01", queue_no: "A005"
-  //   }
-  // ];
-
-  // _object = Object;
-
-  // sortedData: TableDat[];
-  // dataSource: MatTableDataSource<TableDat>;
-
-  //---------------------- arrayto display 
-  planningTime_toShow = [];
-  planningDate_toShow = [];
-  DriverTime_toShow = [];
-  DriverDate_toShow = [];
-
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-
   constructor() {
-    // this.sortedData = this.TableData.slice();
   }
 
   ngOnInit() {
@@ -171,10 +110,6 @@ export class Copyldlt3Component implements OnInit {
       // console.log("warehouse id:", this.sel_wareHouseID);
       this.getResponseQueListTable()
     }
-    // console.log(this.getResQueList)
-
-
-
   }
 
   sim_resGetQueList = new Array();
@@ -289,42 +224,13 @@ export class Copyldlt3Component implements OnInit {
       if (this.getTable.message == 'OK') {
         if (this.getTable.result.length > 0) {
           for (let j = 0; j < this.getTable.result.length; j++) {
-            // console.log("====================GET TABLE",j,this.getTable.result[j])
-
-            // users.push(createNewRow(j, this.getTable.result[j]));
-
-            let planning = this.getTable.result[j].plannig_Datetime;
-            if (planning != null) {
-              let planning1 = planning.toString().split("T");
-              this.planningDate_toShow[j] = planning1[0];
-              this.planningTime_toShow[j] = planning1[1];
-
-            }
-            else {
-              this.planningDate_toShow[j] = null;
-              this.planningTime_toShow[j] = null;
-
-            }
-            let driverCheck = this.getTable.result[j].driver_Checkin_Datetime;
-            if (driverCheck != null) {
-              let driverCheck1 = driverCheck.toString().split("T");
-              this.DriverDate_toShow[j] = driverCheck1[0];
-              this.DriverTime_toShow[j] = driverCheck1[1];
-            }
-            else {
-              this.DriverDate_toShow[j] = null;
-              this.DriverTime_toShow[j] = null;
-            }
             users.push(createNewRow(j, this.getTable.result[j]));
 
-
           }
-          
+
 
           this.dataSource = new MatTableDataSource(users);
-          this.dataSource.paginator = this.paginator;
 
-          // console.log("+++++++++++++++++++DATA SOURCE", this.dataSource)
         }
       }
     }
@@ -332,46 +238,9 @@ export class Copyldlt3Component implements OnInit {
   }
 
 
-
-  // applyFilter(filterValue: string) {
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  // }
-
-
-
-  // sortData(sort: Sort) {
-  //   const data = this.TableData.slice();
-  //   if (!sort.active || sort.direction === '') {
-  //     this.sortedData = data;
-  //     return;
-  //   }
-
-  //   this.sortedData = data.sort((a, b) => {
-  //     const isAsc = sort.direction === 'asc';
-  //     switch (sort.active) {
-  //       case 'queue_no': return this.compare(a.queue_no, b.queue_no, isAsc);
-  //       default: return 0;
-  //     }
-  //   });
-  // }
-
-  // compare(a: number | string, b: number | string, isAsc: boolean) {
-  //   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-  // }
-
-
-  
-
   toRecall(row) {
-    console.log("=====recall",row)
+    console.log("=====recall", row)
   }
-
-  ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
-  }
-
-
 
 }
 
@@ -382,25 +251,19 @@ function createNewRow(j: number, data): UserData {
 
   let dt1 = data.driver_Checkin_Datetime.split("T");
   let tt1 = dt1[1].split(":");
-  // console.log("***********CREATE NEW ROW",j,tt)
-
-  // console.log("***********CREATE NEW ROW",j, data.plannig_Datetime)
 
   return {
     nRow: j + 1,
     ShipNum: data.shipment_no,
     BookingNum: data.booinkg_No,
     InvoiceNum: data.invoice_No,
-    PlanTime: moment(data.closing_datetime).format("DD/MM/YYYY")+"\n"+tt[0]+":"+tt[1],
-    // PlanTime: this.planningDate_toShow[j] +"<br>"+ this.planningTime_toShow[j],
+    PlanTime: moment(data.closing_datetime).format("DD/MM/YYYY") + "\n" + tt[0] + ":" + tt[1],
     WareHouse: data.storage,
     CarType: data.vehicle_group_Desc,
     CarLicense: data.vehicle_plate,
-    DriverCheckTime: moment(data.driver_Checkin_Datetime).format("DD/MM/YYYY")+"\n"+tt1[0]+":"+tt1[1],
+    DriverCheckTime: moment(data.driver_Checkin_Datetime).format("DD/MM/YYYY") + "\n" + tt1[0] + ":" + tt1[1],
     queueNum: data.queue_number,
     recallAgain: "-"
-    // DriverCheckTime: this.driver_check_time[j]
-
   };
 }
 

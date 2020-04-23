@@ -8,7 +8,6 @@
                 <app-content-header [ContentHeader]="content_header_name"></app-content-header>
 
                 <div class="row">
-                    <!-- <br> -->
                     <div style="padding-left: 20px; max-width: 100%;">
                         <table>
                             <tr>
@@ -23,13 +22,6 @@
 
                             <tr>
                                 <td style="padding: 5px;">
-                                    <!-- <mat-form-field style="width:100%;">
-                                        <mat-select [formControl]="ShipType" multiple>
-                                            <mat-option *ngFor="let ship of shipTypeList" [value]="ship">{{ship}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field> -->
-
                                     <mat-form-field style="widows: 100%;">
                                         <mat-select [formControl]="ShipType2" multiple>
                                             <ng-container *ngIf="getShipmentType != undefined">
@@ -103,11 +95,11 @@
                 <div class="row">
 
                     <div class="col-lg-4">
-                        <div class="card-body pad" style="height: 600px;">
+                        <div class="card-body" >
 
                             <ng-container *ngIf="getResProTruckTrack != undefined">
                                 <ng-container *ngIf="getResProTruckTrack.message == 'OK'">
-                                    <div class="example-container mat-elevation-z8">
+                                    <div class="example-container mat-elevation-z8" style="padding-bottom: 10px;">
                                         <table mat-table [dataSource]="dataSource" matSort style="font-size: 30px;">
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                             <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;" (click)="showLocation(i)"></tr>
@@ -214,7 +206,6 @@
 
 
                     <div class="col-lg-8" style="background-color: rgb(61, 146, 101); height: 600px;">
-                        LIOOOONNN KINGGGF
                     </div>
 
                 </div>
